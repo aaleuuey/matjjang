@@ -16,11 +16,21 @@ import svc.*;
 public class CtrlConfig {	
 	@Autowired
 	private IndexSvc indexSvc;
+	
+	@Autowired
+	private ReviewSvc reviewSvc;
 
 	@Bean
 	public IndexCtrl indexCtrl() {
 		IndexCtrl indexCtrl = new IndexCtrl();
 		indexCtrl.setIndexSvc(indexSvc);
 		return indexCtrl;
+	}
+	
+	@Bean
+	public ReviewCtrl reviewCtrl() {
+		ReviewCtrl reviewCtrl = new ReviewCtrl();
+		reviewCtrl.setReviewSvc(reviewSvc);
+		return reviewCtrl;
 	}
 }

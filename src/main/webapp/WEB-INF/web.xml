@@ -24,6 +24,7 @@
 				config.CtrlConfig
 				config.IndexConfig
 				config.DbConfig
+				config.ReviewConfig
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
