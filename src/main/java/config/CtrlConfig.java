@@ -20,6 +20,9 @@ public class CtrlConfig {
 	@Autowired
 	private ReviewSvc reviewSvc;
 
+	@Autowired
+	private CommendSvc commendSvc;
+
 	@Bean
 	public IndexCtrl indexCtrl() {
 		IndexCtrl indexCtrl = new IndexCtrl();
@@ -32,5 +35,12 @@ public class CtrlConfig {
 		ReviewCtrl reviewCtrl = new ReviewCtrl();
 		reviewCtrl.setReviewSvc(reviewSvc);
 		return reviewCtrl;
+	}
+	
+	@Bean
+	public CommendCtrl commendCtrl() {
+		CommendCtrl commendCtrl = new CommendCtrl();
+		commendCtrl.setCommendSvc(commendSvc);
+		return commendCtrl;
 	}
 }
