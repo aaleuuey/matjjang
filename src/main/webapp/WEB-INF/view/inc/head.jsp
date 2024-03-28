@@ -26,6 +26,7 @@
 	.marketing .btn {color:#fff;}
 	.marketing .btn:hover {background:#fff; color:#f4b183; border:1px solid #f4b183;}
 	.carousel-item {height:400px;}
+	a {text-decoration:none;}
 </style>
 <body>
 
@@ -39,13 +40,13 @@
 	
 		<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 			<!-- <li><a href="#" class="nav-link px-4 tx-main">맛집 등록</a></li> -->
-			<li><a href="javascript:void(0);" class="nav-link px-4 tx-main">맛집 추천</a></li>
+			<li><a href="/matjjang/commendList" class="nav-link px-4 tx-main">맛집 추천</a></li>
 			<li><a href="/matjjang/reviewList" class="nav-link px-4 tx-main">맛집 후기 게시판</a></li>
 			<li><a href="#" class="nav-link px-4 tx-main">문의하기</a></li>
 		</ul>
 	
 		<div class="col-md-3 text-end">
-			<button type="button" class="btn btn-outline-warning me-2">Login</button>
-			<button type="button" class="btn btn-warning">Sign-up</button>
+			<button type="button" class="btn btn-outline-warning me-2">로그인</button>
+			<button type="button" class="btn btn-warning">회원가입</button>
 		</div>
 	</header>
