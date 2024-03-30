@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="inc/head.jsp" %>
+<%@ include file="inc/header.jsp" %>
 </head>
 <body>
 	<div id="myCarousel" class="carousel slide mb-6 pointer-event" data-bs-ride="carousel">

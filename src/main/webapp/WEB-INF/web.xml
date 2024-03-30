@@ -22,10 +22,12 @@
 			<param-value>
 				config.MvcConfig
 				config.CtrlConfig
+				config.LoginConfig
 				config.IndexConfig
 				config.DbConfig
 				config.ReviewConfig
-				config.CommendConfig
+				config.CommendConfig	
+				config.MemberConfig
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

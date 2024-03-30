@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/head.jsp" %>
+<%@ include file="../inc/header.jsp" %>
 <style>
 	.butBox {margin:30px 0;}
 	.comBtn {padding:5px 0; color:#ffc107; border:1px solid #ffc107; background:transparent; margin-right:5px;}

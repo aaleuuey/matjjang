@@ -22,6 +22,19 @@ public class CtrlConfig {
 
 	@Autowired
 	private CommendSvc commendSvc;
+	
+	@Autowired
+	private LoginSvc loginSvc;
+	
+	@Autowired
+	private MemberSvc memberSvc;
+	
+	@Bean
+	public LoginCtrl loginCtrl() {
+		LoginCtrl loginCtrl = new LoginCtrl();
+		loginCtrl.setLoginSvc(loginSvc);
+		return loginCtrl;
+	}
 
 	@Bean
 	public IndexCtrl indexCtrl() {
@@ -42,5 +55,12 @@ public class CtrlConfig {
 		CommendCtrl commendCtrl = new CommendCtrl();
 		commendCtrl.setCommendSvc(commendSvc);
 		return commendCtrl;
+	}
+	
+	@Bean
+	public MemberCtrl memberCtrl() {
+		MemberCtrl memberCtrl = new MemberCtrl();
+		memberCtrl.setMemberSvc(memberSvc);
+		return memberCtrl;
 	}
 }
