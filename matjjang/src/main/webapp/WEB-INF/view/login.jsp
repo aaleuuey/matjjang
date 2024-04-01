@@ -34,7 +34,7 @@
 		</div>
 		
 		<button class="btn btn-warning w-100 py-2 mb-2" type="submit">로그인</button>
-		<a href="javascript:void(0);" class="btn btn-dark w-100 py-2 mb-4">회원가입</a>
+		<a href="/matjjang/joinForm" class="btn btn-dark w-100 py-2 mb-4">회원가입</a>
 		<a href="javascript:void(0);" class="btn btn-dark w-100 py-2" style="background:#fae100; border:1px solid #fae100;"><img src="/matjjang/resources/img/kakao_login.png" class="simg">카카오톡으로 시작하기</a>
 	</form>
 </div>
