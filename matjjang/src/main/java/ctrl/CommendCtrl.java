@@ -22,4 +22,11 @@ public class CommendCtrl {
 		return "commend/commendList";
 		
 	}
+	
+	@GetMapping("/commendView")
+	public String commendView(Model model, HttpServletRequest request) throws Exception {
+		
+		return "commend/commendView";
+		
+	}
 }

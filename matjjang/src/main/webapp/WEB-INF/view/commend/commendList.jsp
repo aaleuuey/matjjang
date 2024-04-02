@@ -29,7 +29,7 @@
 	</div>
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 		<div class="col">
-			<a href="javascript:void(0);" class="card shadow-sm">
+			<a href="/matjjang/commendView" class="card shadow-sm">
 				<img class="bd-placeholder-img" width="100%" height="225" src="resources/img/food.png">
 		  		<div class="card-body">
 		  			<span class="text-body-secondary"><img width="12" height="12" style="vertical-align:baseline;" src="resources/img/star.png"> 4.5</span>
