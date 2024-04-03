@@ -17,6 +17,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/addr_api.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9fobun4st8"></script>
 <title>Insert title here</title>
 </head>
 <style>

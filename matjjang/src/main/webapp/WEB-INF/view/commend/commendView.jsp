@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/head.jsp" %>
 <%@ include file="../inc/header.jsp" %>
-
 <style>
 	.ttop {display:flex; margin-left:20px; margin-bottom:20px;}
 	.ttop h3 {font-weight:bold;}
@@ -23,6 +22,7 @@
 	.store_info3 {position: relative; padding: 15px 20px; border: 1px solid #ddd; box-sizing: border-box; border-radius: 10px; margin-bottom: 12px; margin-top: 20px;}
 	.store_info3 .store_info3_title {font-size: 20px; font-weight: bold; color: #000; text-align: left; margin-bottom: 20px;}
 	.store_info3 .text {font-size: 16px; color: #000; line-height: 1.6;}
+	.map {margin:30px 0;}
 </style>
 
 <section id="content" style="width:1000px; margin:0 auto;">
@@ -143,7 +143,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="store_info3 pc_only">
+	<div class="store_info3">
 		<div class="store_info3_title">매장소개</div>
 		<div class="text">
 			청담동 조용한 골목가에 위치한 스테이크 하우스입니다. 
@@ -153,6 +153,21 @@
 			이렇게 구워낸 스테이크는 일반적인 조리법에 비해 마치 수비드한 것과 같이 부드러운 식감과 육즙이 살아있습니다.
 		</div>
 	</div>
+	<div id="map" class="map" style="width:100%;height:400px;"></div>
+	
+	<div class="review">
+		<h3>식신 리뷰 (172)</h3>
+	</div>
+
 </section>
+
+<script>
+	var mapOptions = {
+	    center: new naver.maps.LatLng(37.3595704, 127.105399),
+	    zoom: 10
+	};
+	
+	var map = new naver.maps.Map('map', mapOptions);
+</script>
 
 <%@ include file="../inc/foot.jsp" %>
