@@ -1,61 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/head.jsp" %>
 <%@ include file="../inc/header.jsp" %>
-<style>
-	.ttop {display:flex; margin-left:20px; margin-bottom:20px;}
-	.ttop h3 {font-weight:bold;}
-	.ttop img {margin:6px 0 0 5px;}
-	.ttop span {height:30px; margin:-2px 0 0 5px; font-size:25px; font-weight:bold; color:#eca600;}
-	.tbom {margin-left:20px;}
-	.tbom .info_text .inline-div {display: inline-block; margin-right: 5px; vertical-align: top;}
-	.tbom .info_text table tr {display:block; margin-bottom:20px;}
-	.tbom .info_text table th {width: 130px; vertical-align: top; line-height: 2.5; text-align: left;}
-	.tbom .info_text table th h3 {margin-bottom:0; font-size: 18px; font-weight: 400; color: #999;}
-	.tbom .info_text table td p {font-size: 14px; font-weight: 400; color: #666; line-height: 1;}
-	.tbom .info_text table td p span {display: inline-block; width: 40px; line-height: 20px; border-radius: 5px; font-size: 14px; color: #999; border: 1px solid #ddd; text-align: center; margin-right: 5px;}
-	.tbom .info_text table td .label {display: inline-block; vertical-align: middle; line-height: 16px; border-radius: 5px; font-size: 12px; font-weight: 600; color: #ff7400; border: 1px solid #ff7400; text-align: center; margin-top:4px; margin-left: 10px; padding: 0 5px;}
-	.store_fonction {width: 100%; margin: 73px 0 0 20px; background-color: transparent; padding: 8px 0; display: flex; justify-content: space-between; cursor:pointer; cursor:pointer;}
-	.store_fonction input[type=checkbox] {display:none;}
-	.store_fonction label {cursor:pointer;}
-	.store_fonction a {color:#000;}
-	.store_fonction label img, .store_fonction a img {display:inline-block; height:20px;}
-	.store_fonction label img, .store_fonction span {vertical-align:middle;}
-	.store_info3 {position: relative; padding: 15px 20px; border: 1px solid #ddd; box-sizing: border-box; border-radius: 10px; margin-bottom: 12px; margin-top: 20px;}
-	.store_info3 .store_info3_title {font-size: 20px; font-weight: bold; color: #000; text-align: left; margin-bottom: 20px;}
-	.store_info3 .text {font-size: 16px; color: #000; line-height: 1.6;}
-	.map {margin:30px 0;}
-	.store_review {position: relative; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; margin-top: 20px; padding: 0 20px 40px;}
-	.store_review .review_title {position: relative; font-size: 18px; color: #000; text-align: left; padding: 15px 0; border-bottom: 1px solid #ddd;}
-	.store_review .review_title h3 {display:contents; font-size:18px;}
-	.store_review .review_title input {display:none;}
-	.store_review .review_title input + label {position: absolute; top: 50%; transform: translateY(-50%); right: 0; font-size: 16px; font-weight: bold; color: #ff7400; padding-right: 18px; background-image: url(resources/img/bg_arrow.png); background-position: top 8px right; background-repeat: no-repeat; background-size: 12px; cursor: pointer;}
-	.store_review .review_write {padding:40px 0 50px;}
-	.store_review .review_write .review_write_title {font-size:25px; font-weight:500; color:#000; text-align:center;}
-	.store_review .review_write .scoreBox {margin:60px 0; text-align:center;}
-	.store_review .review_write .scoreBox img {display:inline-block; width:36px; margin-right:5px; vertical-align:top;}
-	.store_review .review_write .scoreBox select {width:80px; height:35px; border: var(--bs-border-width) solid var(--bs-border-color); border-radius: var(--bs-border-radius);}
-	.txtbox {border: 1px solid #d7d7d7; position: relative; overflow: hidden; background: #fff; padding: 0 0 0 15px;}
-	.txtbox label.label {position: absolute; left: 0; top: 0; width: 100%; padding: 14px 0 0 16px; color: #999; font-size: 1.250em; cursor: text;}
-	.txtbox textarea {width: 100%; height: 10rem; resize: none; background: #fff; border: none; outline: none; padding-top: 16px; margin-top: 1px; font-size: 1.250em;}
-	.store_review .review_write .file_list {position: relative; margin-top: 20px;}
-	.store_review .review_write .file_list ul {text-align: left; padding-right: 50px; padding-left:0;}
-	.store_review .review_write .file_list ul li {position: relative; display: inline-block; vertical-align: middle; width: 80px; height: 80px; background-image: url(resources/img/bg_photo_file03.gif); background-position: center; background-repeat: no-repeat; background-size: contain; margin-right: 5px;}
-	.store_review .review_write .file_list ul li input[type=file] {width: 80px; height: 80px; opacity: 0;}
-	.store_review .review_write .file_list .btn {position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: 600; color: #ffc107; cursor: pointer;}
-	.store_review .place_review_list {position: relative; display: table-cell; width: 100%; padding: 10px 10px; box-sizing: border-box; vertical-align: top; border-top: 1px solid lightgray; overflow-x: auto;}
-	.store_review .place_review_list .name {font-size: 18px; color: #000; display: inline-block;}
-	.store_review .place_review_list .name .score {font-size: 18px; font-weight: bold; color: #ffc107; margin-left: 10px;}
-	.store_review .place_review_list .action {display: inline-block; float: right;}
-	.store_review .place_review_list .review_action {font-size: 12px; color: #999; text-decoration: underline; background: none !important; margin-left: 5px; padding: 0px !important;}
-	.store_review .place_review_list .review_text {font-size: 14px; color: #666; margin-top: 10px; line-height: 1.4; overflow-y: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
-	.store_review .place_review_list .img_list a {display: inline-block; vertical-align: middle; width: 80px; height: 70px; margin-top: 5px; margin-right: 5px;}
-	.store_review .place_review_list .img_list a img {display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;}
-	.store_review .place_review_list .review_status {width: 100%; height: 1.5rem; color: gray; font-size: 0.7rem; padding-top: 10px;}
-	.store_review .place_review_list .review_status button {border: none; background: none; padding: 0;}
-	.store_review .place_review_list .review_status button span {font-size:13px;}
-	.store_review .place_review_list .review_status button span.black {color: gray;}
-	.store_review .place_review_list .review_status button span svg {vertical-align: top; margin-top:3px; overflow: hidden;}
-</style>
 
 <section id="content" style="width:1000px; margin:0 auto;">
 	<div class="comBox" style="display:flex; margin-top:60px;">
@@ -235,6 +180,7 @@
 		</div>
 		<div class="place_review_list">
 			<div class="name">이한나
+				<img src="resources/img/star.png" alt="별점" width="15" style="vertical-align:baseline;">
 				<span class="score">5</span>
 			</div>
 			<div class="action">
@@ -268,7 +214,9 @@
 				</button>
 			</div>
 		</div>
+		<a href="#" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a>
 	</div>
+
 </section>
 
 <script>

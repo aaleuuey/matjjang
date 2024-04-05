@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-warning" style="width: 250px; height:100%;">
+<style>
+	.header {position:absolute; width: 250px; height:100%; top:0; left:0;}
+</style>
+
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-warning header">
 	<a href="/ad_matjjang" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 	  <img class="bi" width="140" height="80" role="img" aria-label="Bootstrap" src="resources/img/matj-logo.png">
 	</a>
