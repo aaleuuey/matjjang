@@ -2,16 +2,13 @@
 <%@ include file="../inc/head.jsp" %>
 <%@ include file="../inc/header.jsp" %>
 <style>
-	.commend {padding-top:100px;}
-	.commend > h3 {font-size:23px; color:#ffc107;}
 	.commend table {margin:20px 0; border:1px solid #dee2e6; color:#828282;}
 	.commend table a {color:#828282;}
 	.commend table a:hover {color:#dc3545;}
 	.commend table td {border:1px solid #dee2e6;}
 </style>
-<div class="commend" style="width:1000px; margin-left:400px;">
-	<h3>맛집 등록</h3>
-
+<div class="commend" style="width:1000px;">
+	<h3>맛집 관리</h3>
 	<table width="100%" cellpadding="15" cellspacing="0">
 		<tbody>
 			<tr align="center">
@@ -21,7 +18,7 @@
 				<td>조회수</td>
 			</tr>
 			<tr align="center" onmouseover="this.bgColor='#efefef';" onmouseout="this.bgColor='';" bgcolor="">
-				<td>4</td>
+				<td>1</td>
 				<td width="50%">
 					<a href="productUp?piid=AAaa834">
 						<img src="/ad_potted/resources/images/product/무늬 담쟁이1.jpg" width="100" height="100" border="0" align="left">
@@ -66,7 +63,7 @@
 				</ul>
 			</nav>
 		</div>
-		<button type="button" class="btn btn-outline-warning" style="position:absolute; right:0;">맛집 등록</button>
+		<a href="/ad_matjjang/commendIn" class="btn btn-outline-warning" style="position:absolute; right:0;">맛집 등록</a>
 	</div>
 </div>
 <%@ include file="../inc/foot.jsp" %>

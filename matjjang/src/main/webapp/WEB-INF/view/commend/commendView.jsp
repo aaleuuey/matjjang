@@ -220,12 +220,42 @@
 </section>
 
 <script>
-	var mapOptions = {
-	    center: new naver.maps.LatLng(37.3595704, 127.105399),
-	    zoom: 10
-	};
-	
-	var map = new naver.maps.Map('map', mapOptions);
+var HOME_PATH = window.HOME_PATH || '.';
+var position = new naver.maps.LatLng(37.3595704, 127.105399);
+
+var mapOptions = {
+    center: position,
+    zoom: 15,
+    zoomControl: true,
+    zoomControlOptions: {
+        style: naver.maps.ZoomControlStyle.SMALL,
+        position: naver.maps.Position.TOP_RIGHT
+    }
+};
+
+var map = new naver.maps.Map('map', mapOptions);
+
+var markerOptions = {
+    position: position,
+    map: map,
+    icon: {
+        url: HOME_PATH +'/img/example/pin_default.png',
+        size: new naver.maps.Size(22, 35),
+        origin: new naver.maps.Point(0, 0),
+        anchor: new naver.maps.Point(11, 35)
+    },
+    shape: {
+        coords: [11, 0, 9, 0, 6, 1, 4, 2, 2, 4,
+                0, 8, 0, 12, 1, 14, 2, 16, 5, 19,
+                5, 20, 6, 23, 8, 26, 9, 30, 9, 34,
+                13, 34, 13, 30, 14, 26, 16, 23, 17, 20,
+                17, 19, 20, 16, 21, 14, 22, 12, 22, 12,
+                22, 8, 20, 4, 18, 2, 16, 1, 13, 0],
+        type: 'poly'
+    }
+};
+
+var marker = new naver.maps.Marker(markerOptions);
 </script>
 
 <%@ include file="../inc/foot.jsp" %>
