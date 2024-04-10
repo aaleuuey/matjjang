@@ -99,8 +99,14 @@
 			</tr>
 			<tr>
 				<th class="title">주소</th>
-				<td>
-					<input type="text" name="pi_price" style="width:253px; padding:10px; margin-right:10px; border:1px solid #dee2e6; border-radius:0.375rem;" placeholder="상품판매가를 입력해주세요.">원
+				<td colspan="2" style="display:flex;">
+					<input type="text" id="sample4_postcode" placeholder="우편번호" style="display:none;">
+					<input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
+					<input type="text" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
+					<input type="text" class="form-control mb-2" id="sample4_roadAddress" style="width:253px; padding:10px; margin-right:10px; border:1px solid #dee2e6; border-radius:0.375rem;" placeholder="주소를 입력해주세요." required>
+					<span class="text-muted">
+						<input id="addrFind" type="button" value="찾기" onclick="sample4_execDaumPostcode()" style="height:45px; border-radius:4px; border:1.5px solid #ced4da;" /><br /><span id="guide" style="color:#999;display:none; position:absolute; top:-500px; left:-500px;"></span>
+					</span>
 				</td>
 			</tr>
 			<tr>
