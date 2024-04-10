@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/head.jsp" %>
 <style>
-
+	.selc {width:100px; height:37px; margin-right:10px; border:var(--bs-border-width) solid var(--bs-border-color); border-radius:var(--bs-border-radius);}
 </style>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between px-3 py-2 border-bottom">
 	<div class="col-md-3 mb-2 mb-md-0">
@@ -42,14 +42,69 @@
 				</div>
 				<div class="mb-3">
 					<label for="email" class="mb-2">이메일</label>
-					<input type="text" class="form-control" id="email" placeholder="metadog@example.com" required="required" required> 
-					<span class="emailchk"></span>
+					<div style="display:flex;">
+						<input type="text" class="form-control" style="width:150px; margin-right:10px;" id="email" placeholder="이메일 아이디" required="required" required><span style="margin-top:5px;">@</span>
+						<input type="text" class="form-control" style="width:150px; margin-left:10px; margin-right:10px;" id="email" placeholder="이메일 도메인" required="required" required> 
+						<select style="width:180px; margin-right:10px; border:var(--bs-border-width) solid var(--bs-border-color); border-radius:var(--bs-border-radius);">
+							<option>도메인 선택</option>
+							<option>naver.com</option>
+							<option>gmail.com</option>
+							<option>nate.com</option>
+							<option>직접 입력</option>
+						</select>
+						<span class="emailchk"></span>
+					</div>
 				</div>
 	
 				<div class="mb-3">
 					<label for="phoneNumber" class="mb-2">휴대폰 번호</label> 
-					<input type="text" class="form-control" id="phoneNumber" required> 
-					<span class="phchk"></span>
+					<div style="display:flex;">
+						<select class="selc">
+							<option>010</option>
+							<option>011</option>
+							<option>016</option>
+							<option>017</option>
+							<option>018</option>
+							<option>019</option>
+						</select>
+						<input type="text" class="form-control" id="phoneNumber" style="width:150px; margin-right:10px;" required>
+						<input type="text" class="form-control" id="phoneNumber" style="width:150px;" required>  
+						<span class="phchk"></span>
+					</div>
+				</div>
+				
+				<div class="mb-3">
+					<label for="email" class="mb-2">생년월일</label>
+					<div style="display:flex;">
+						<select class="selc" name="year" onchange="">
+							<option selected="selected">2024</option>
+						</select><span style="margin:5px 10px 0 0;">년</span>
+						<select class="selc" name="month" onchange="">
+							<option></option>
+						</select><span style="margin:5px 10px 0 0;">월</span>
+						<select class="selc"name="day">
+							<option>30</option>
+						</select><span style="margin:5px 10px 0 0;">일</span>
+					</div>
+				</div>
+				
+				<div class="mb-3">
+					<label for="email" class="mb-2">성별</label>
+					<div style="display:flex;">
+						<label>
+							 <input type="radio" id="male" name="mi_gender" checked="checked" value="남" /> 남
+						</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<label> <input type="radio" name="mi_gender" value="여" id="female" /> 여</label>
+						<span class="emailchk"></span>
+					</div>
+				</div>
+				
+				<div class="mb-3">
+					<label for="email" class="mb-2">이메일</label>
+					<div style="display:flex;">
+						<input type="text" class="form-control" id="email" placeholder="matjjang@example.com" required="required" required> 
+						<span class="emailchk"></span>
+					</div>
 				</div>
 			
 				<div class="mb-3">
