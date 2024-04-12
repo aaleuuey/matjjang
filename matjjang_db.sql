@@ -27,3 +27,82 @@ create table t_member_info (
 );
 insert into t_member_info values ('test', '1234', '이한나', '010-9182-6545', '2001-03-02', '여', 'lhn@naver.com', 'a', now(), null);
 
+-- 회원 주소록 테이블
+create table t_member_addr (
+	ma_idx int primary key auto_increment,	-- 일련번호
+	mi_id varchar(20) not null,				-- 회원아이디
+	ma_zip char(5) not null,				-- 우편번호
+	ma_addr1 varchar(50) not null,			-- 주소1
+	ma_addr2 varchar(50) not null,			-- 주소2
+	ma_date datetime default now(),			-- 등록일
+    constraint fk_t_member_addr_mi_id foreign key(mi_id) references t_member_info(mi_id)
+);
+
+select * from t_member_addr;
+insert into t_member_addr (mi_id, ma_zip, ma_addr1, ma_addr2) values ('test', '12345', '부산시 연제구 연산동', '987-654');
+
+-- 음식점 분류 테이블
+create table t_store_ctgr (
+   sc_id char(4) primary key,      	-- 분류 코드
+   sc_name varchar(20) not null   	-- 분류 이름
+);
+
+insert into t_store_ctgr (sc_id, sc_name) values ('AA', '한식');
+insert into t_store_ctgr (sc_id, sc_name) values ('BB', '양식');
+insert into t_store_ctgr (sc_id, sc_name) values ('CC', '중식');
+insert into t_store_ctgr (sc_id, sc_name) values ('DD', '일식');
+insert into t_store_ctgr (sc_id, sc_name) values ('EE', '디저트');
+
+
+-- 음식점 테이블
+create table t_store_info (
+   si_id char(7) primary key,			-- 맛집ID
+   sc_id char(2) not null,				-- 분류 코드
+   si_name varchar(50) not null,		-- 음식점명
+   pi_img1 varchar(50) not null,		-- 음식 이미지1
+   pi_img2 varchar(50) default '',		-- 음식 이미지2
+   pi_img3 varchar(50) default '',		-- 음식 이미지3
+   pi_read int default 0,				-- 조회수
+   pi_review int default 0,				-- 후기 개수
+   pi_isview char(1) default 'n',		-- 게시여부
+   pi_date datetime default now(),      -- 등록일
+   ai_idx int not null,            		-- 등록관리자
+   pi_last datetime default now(),		-- 최종 수정일
+   pi_admin int default 0,				-- 최종 수정자
+   constraint fk_store_info_sc_id foreign key (sc_id) references t_store_ctgr(sc_id),
+   constraint fk_store_info_ai_idx foreign key (ai_idx) references t_admin_info(ai_idx)
+);
+
+-- 맛집게시판 테이블
+create table t_free_list (
+	fl_idx int primary key auto_increment,	-- 글번호
+    mi_id varchar(20) not null,            	-- 회원아이디
+	fl_ismem char(1) default 'y',			-- 회원여부
+	fl_writer varchar(20) not null,			-- 작성자
+	fl_title varchar(100) not null,			-- 제목
+	fl_content text not null,				-- 내용
+	fl_reply int default 0,					-- 댓글갯수
+	fl_read int default 0,					-- 조회수
+    fl_good int default 0,					-- 좋아요 수
+	fl_img1 varchar(50) default '',			-- 이미지1
+	fl_img2 varchar(50) default '',			-- 이미지2
+    fl_img3 varchar(50) default '',			-- 이미지3
+	fl_isview char(1) default 'y',			-- 게시여부
+	fl_date datetime default now()			-- 작성일
+);
+
+-- 맛집게시판 댓글 테이블
+create table t_free_reply (
+	fr_idx int primary key auto_increment,	-- 댓글번호
+	fl_idx int not null,					-- 게시글번호
+	mi_id varchar(20) not null,				-- 회원아이디
+	fr_ismem char(1) default 'y',			-- 회원여부
+	fr_content varchar(200) not null,		-- 내용
+	fr_isview char(1) default 'y',			-- 게시여부
+	fr_date datetime default now(),			-- 작성일
+    constraint fk_t_free_reply_fl_idx foreign key (fl_idx) references t_free_list(fl_idx),
+    constraint fk_t_member_info_mi_id foreign key (mi_id) references t_member_info(mi_id)
+);
+
+
+

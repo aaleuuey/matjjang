@@ -22,7 +22,57 @@
 	.btnBox {float:right; margin-right: 139px;}
 	.btnBox a {width:100px;}
 	.btnBox input {width:100px;}
+	.is-active {background: #ffc107 !important; color:#fff !important;}
+	.timebtn, .parkingbtn {border:1px solid #ffc107; width:40px; height:40px; border-radius:5px; background:transparent; color:#ffc107;}
+	.parkingbtn {width:50px;}
 </style>
+<script>
+window.onload = function () { 
+	new Vue({
+		el: '#app', // Vue 인스턴스가 연결될 HTML 요소를 지정
+		data: { // Vue 인스턴스의 데이터를 정의
+		  activeButtons: [] // 선택된 버튼들의 상태를 저장할 배열
+		},
+		methods: { // Vue 인스턴스의 메소드를 정의
+			isActive: function(day) { // 주어진 요일이 선택된 상태인지 확인하는 메소드
+			  return this.activeButtons.includes(day); // activeButtons 배열에 요일이 포함되어 있는지 확인하여 그 결과를 반환
+			},
+			toggleActive: function(day) { // 요일의 선택 상태를 토글하는 메소드
+				if (this.isActive(day)) { // 만약 주어진 요일이 이미 선택된 상태이면,
+				  const index = this.activeButtons.indexOf(day); // 해당 요일이 activeButtons 배열에서의 인덱스를 찾음
+				  if (index !== -1) { // 만약 요일이 배열에 존재하면,
+				    this.activeButtons.splice(index, 1); // 해당 요일을 배열에서 제거
+				  }
+				} else { // 주어진 요일이 선택되지 않은 상태이면,
+			    	this.activeButtons.push(day); // 해당 요일을 배열에 추가하여 선택됨을 나타냄
+			  	}
+			}	
+		}
+	});
+	
+	new Vue({
+		el: '#app2',
+		data: {
+		  activeAnotherOptions: []
+		},
+		methods: {
+			isActiveAnother: function(option) {
+			  return this.activeAnotherOptions.includes(option);
+			},
+			toggleActiveAnother: function(option) {
+				if (this.isActiveAnother(option)) {
+				  const index = this.activeAnotherOptions.indexOf(option);
+				  if (index !== -1) {
+				    this.activeAnotherOptions.splice(index, 1);
+				  }
+				} else {
+			    	this.activeAnotherOptions.push(option);
+			  	}
+			}	
+		}
+	});
+}
+</script>
 <div class="commend">
 	<h3>맛집 등록</h3>
 	<table>
@@ -77,13 +127,15 @@
 			<tr>
 				<th class="title">영업시간</th>
 				<td colspan="3">
-					<button type="button" class="btn btn-outline-warning timebtn">월</button>
-					<button type="button" class="btn btn-outline-warning timebtn">화</button>
-					<button type="button" class="btn btn-outline-warning timebtn">수</button>
-					<button type="button" class="btn btn-outline-warning timebtn">목</button>
-					<button type="button" class="btn btn-outline-warning timebtn">금</button>
-					<button type="button" class="btn btn-outline-warning timebtn">토</button>
-					<button type="button" class="btn btn-outline-warning timebtn">일</button>
+					<div id="app">
+						<button type="button" class="timebtn" @click="toggleActive('월')" v-bind:class="{ 'is-active': isActive('월') }">월</button>
+						<button type="button" class="timebtn" @click="toggleActive('화')" v-bind:class="{ 'is-active': isActive('화') }">화</button>
+						<button type="button" class="timebtn" @click="toggleActive('수')" v-bind:class="{ 'is-active': isActive('수') }">수</button>
+						<button type="button" class="timebtn" @click="toggleActive('목')" v-bind:class="{ 'is-active': isActive('목') }">목</button>
+						<button type="button" class="timebtn" @click="toggleActive('금')" v-bind:class="{ 'is-active': isActive('금') }">금</button>
+						<button type="button" class="timebtn" @click="toggleActive('토')" v-bind:class="{ 'is-active': isActive('토') }">토</button>
+						<button type="button" class="timebtn" @click="toggleActive('일')" v-bind:class="{ 'is-active': isActive('일') }">일</button>
+					</div>
 					<p class="time">
 						<input type="time"> ~ <input type="time">
 					</p>
@@ -92,9 +144,10 @@
 			<tr>
 				<th class="title">주차가능 여부</th>
 				<td>
-					<button type="button" class="btn btn-outline-warning timebtn">주차</button>
-					<button type="button" class="btn btn-outline-warning timebtn">발렛</button>
-					<button type="button" class="btn btn-outline-warning timebtn">없음</button>
+					<div id="app2">
+					    <button type="button" class="parkingbtn" @click="toggleActiveAnother('주차')" v-bind:class="{ 'is-active': isActiveAnother('주차') }">주차</button>
+					    <button type="button" class="parkingbtn" @click="toggleActiveAnother('발렛')" v-bind:class="{ 'is-active': isActiveAnother('발렛') }">발렛</button>
+					</div>
 				</td>
 			</tr>
 			<tr>
