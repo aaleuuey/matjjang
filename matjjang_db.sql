@@ -56,22 +56,32 @@ insert into t_store_ctgr (sc_id, sc_name) values ('EE', '디저트');
 
 -- 음식점 테이블
 create table t_store_info (
-   si_id char(7) primary key,			-- 맛집ID
-   sc_id char(2) not null,				-- 분류 코드
-   si_name varchar(50) not null,		-- 음식점명
-   pi_img1 varchar(50) not null,		-- 음식 이미지1
-   pi_img2 varchar(50) default '',		-- 음식 이미지2
-   pi_img3 varchar(50) default '',		-- 음식 이미지3
-   pi_read int default 0,				-- 조회수
-   pi_review int default 0,				-- 후기 개수
-   pi_isview char(1) default 'n',		-- 게시여부
-   pi_date datetime default now(),      -- 등록일
-   ai_idx int not null,            		-- 등록관리자
-   pi_last datetime default now(),		-- 최종 수정일
-   pi_admin int default 0,				-- 최종 수정자
+	si_id char(7) primary key,			-- 맛집ID
+	sc_id varchar(10) not null,			-- 분류 코드
+	si_name varchar(50) not null,		-- 음식점명
+	si_img1 varchar(50) not null,		-- 음식 이미지1
+	si_img2 varchar(50) default '',		-- 음식 이미지2
+	si_img3 varchar(50) default '',		-- 음식 이미지3
+	si_week varchar(50) not null,		-- 영업 요일
+	si_open varchar(20) not null,		-- 영업 시간 오픈
+	si_close varchar(20) not null,		-- 영업 시간 마감
+	si_parking char(2) not null,		-- 주차 여부
+	si_addr1 varchar(50) not null,		-- 주소
+	si_addr2 varchar(50) not null,		-- 지번주소
+    si_number varchar(50) not null,		-- 전화번호
+	si_explan varchar(500),				-- 매장소개
+	si_read int default 0,				-- 조회수
+	si_review int default 0,			-- 후기 개수
+	si_isview char(1) default 'y',		-- 게시여부
+	si_date datetime default now(),     -- 등록일
+	ai_idx int not null,            	-- 등록관리자
+	si_last datetime default now(),		-- 최종 수정일
+	si_admin int default 0,				-- 최종 수정자
    constraint fk_store_info_sc_id foreign key (sc_id) references t_store_ctgr(sc_id),
    constraint fk_store_info_ai_idx foreign key (ai_idx) references t_admin_info(ai_idx)
 );
+
+
 
 -- 맛집게시판 테이블
 create table t_free_list (
