@@ -1,6 +1,6 @@
 package vo;
 
-public class CommendInfo {
+public class StoreInfo {
 	private String si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_number, si_explan, si_isview, si_date, si_last;
 	private int si_read, si_review, ai_idx, si_admin;
 	

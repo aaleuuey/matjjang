@@ -21,7 +21,7 @@ public class CtrlConfig {
 	private ReviewSvc reviewSvc;
 
 	@Autowired
-	private CommendSvc commendSvc;
+	private StoreSvc storeSvc;
 	
 	@Autowired
 	private LoginSvc loginSvc;
@@ -51,10 +51,10 @@ public class CtrlConfig {
 	}
 	
 	@Bean
-	public CommendCtrl commendCtrl() {
-		CommendCtrl commendCtrl = new CommendCtrl();
-		commendCtrl.setCommendSvc(commendSvc);
-		return commendCtrl;
+	public StoreCtrl storeCtrl() {
+		StoreCtrl storeCtrl = new StoreCtrl();
+		storeCtrl.setStoreSvc(storeSvc);
+		return storeCtrl;
 	}
 	
 	@Bean

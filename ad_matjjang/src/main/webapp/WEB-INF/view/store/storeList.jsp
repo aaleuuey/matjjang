@@ -63,7 +63,7 @@
 				</ul>
 			</nav>
 		</div>
-		<a href="/ad_matjjang/commendIn" class="btn btn-outline-warning" style="position:absolute; right:0;">맛집 등록</a>
+		<a href="/ad_matjjang/storeIn" class="btn btn-outline-warning" style="position:absolute; right:0;">맛집 등록</a>
 	</div>
 </div>
 <%@ include file="../inc/foot.jsp" %>

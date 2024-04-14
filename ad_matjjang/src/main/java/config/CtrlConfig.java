@@ -18,7 +18,7 @@ public class CtrlConfig {
 	private IndexSvc indexSvc;
 	
 	@Autowired
-	private CommendSvc commendSvc;
+	private StoreSvc storeSvc;
 
 	@Bean
 	public IndexCtrl indexCtrl() {
@@ -28,10 +28,10 @@ public class CtrlConfig {
 	}
 	
 	@Bean
-	public CommendCtrl commendCtrl() {
-		CommendCtrl commendCtrl = new CommendCtrl();
-		commendCtrl.setCommendSvc(commendSvc);
-		return commendCtrl;
+	public StoreCtrl storeDaoCtrl() {
+		StoreCtrl storeDaoCtrl = new StoreCtrl();
+		storeDaoCtrl.setStoreSvc(storeSvc);
+		return storeDaoCtrl;
 	}
 
 }

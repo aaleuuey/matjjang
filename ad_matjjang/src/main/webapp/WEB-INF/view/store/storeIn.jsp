@@ -77,7 +77,7 @@ window.onload = function () {
 </script>
 <div class="commend">
 	<h3>맛집 등록</h3>
-	<form name="frm" action="commendProcIn" method="post"  enctype="multipart/form-data" onsubmit="posArr();">
+	<form name="frm" action="storeProcIn" method="post"  enctype="multipart/form-data" onsubmit="posArr();">
 	<!-- <input type="hidden" name="si_week" id="si_week"> -->
 	<table>
 		<tbody>
@@ -183,7 +183,7 @@ window.onload = function () {
 	</table>
 	<div class="btnBox">
 		<input type="submit" class="btn btn-outline-warning" value="맛집 등록" />
-		<a href="commendList" class="btn btn-outline-dark">취소</a>
+		<a href="storeList" class="btn btn-outline-dark">취소</a>
 	</div>
 	</form>
 </div>

@@ -14,7 +14,7 @@
 		<li><a href="" class="nav-link px-4 tx-main text-white">회원 관리</a></li>
 		<li><a href="#" class="nav-link px-4 tx-main text-white">일정 관리</a></li>
 		<li><a href="#" class="nav-link px-4 tx-main text-white">배너 설정</a></li>
-		<li><a href="/ad_matjjang/commendList" class="nav-link px-4 tx-main text-white">맛집 관리</a></li>
+		<li><a href="/ad_matjjang/storeList" class="nav-link px-4 tx-main text-white">맛집 관리</a></li>
 		<li><a href="#" class="nav-link px-4 tx-main text-white">게시판 관리</a></li>
 		
 	</ul>

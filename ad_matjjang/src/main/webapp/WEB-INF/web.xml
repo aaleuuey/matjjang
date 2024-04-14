@@ -25,14 +25,14 @@
 				config.LoginConfig
 				config.IndexConfig
 				config.DbConfig
-				config.CommendConfig
+				config.StoreConfig
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		
 		<!-- 파일 업로드를 위한 추가부분 -->
 		<multipart-config>
-			<location>C:\Users\naeha\eclipse-workspace\potted\ad_potted\src\main\webapp\resources\images\product</location>
+			<location>C:\Users\naeha\eclipse-workspace\matjjang\ad_matjjang\src\main\webapp\resources\images\commend</location>
 			<max-file-size>20971520</max-file-size> <!-- 최대크기 20M -->
 			<max-request-size>41943040</max-request-size> <!-- 한번에 올릴 최대 크기 40M -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 메모리 -->
