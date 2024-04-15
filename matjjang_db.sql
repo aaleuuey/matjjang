@@ -43,9 +43,12 @@ insert into t_member_addr (mi_id, ma_zip, ma_addr1, ma_addr2) values ('test', '1
 
 -- 음식점 분류 테이블
 create table t_store_ctgr (
-   sc_id char(4) primary key,      	-- 분류 코드
+   sc_id char(2) primary key,   -- 분류 코드
    sc_name varchar(20) not null   	-- 분류 이름
 );
+
+drop table t_store_ctgr;
+select * from t_store_ctgr;
 
 insert into t_store_ctgr (sc_id, sc_name) values ('AA', '한식');
 insert into t_store_ctgr (sc_id, sc_name) values ('BB', '양식');
@@ -56,8 +59,8 @@ insert into t_store_ctgr (sc_id, sc_name) values ('EE', '디저트');
 
 -- 음식점 테이블
 create table t_store_info (
-	si_id char(7) primary key,			-- 맛집ID
-	sc_id varchar(10) not null,			-- 분류 코드
+	si_id char(5) primary key,			-- 맛집ID
+	sc_id char(2) not null,				-- 분류 코드
 	si_name varchar(50) not null,		-- 음식점명
 	si_img1 varchar(50) not null,		-- 음식 이미지1
 	si_img2 varchar(50) default '',		-- 음식 이미지2
@@ -65,10 +68,10 @@ create table t_store_info (
 	si_week varchar(50) not null,		-- 영업 요일
 	si_open varchar(20) not null,		-- 영업 시간 오픈
 	si_close varchar(20) not null,		-- 영업 시간 마감
-	si_parking char(2) not null,		-- 주차 여부
+	si_parking varchar(10) not null,	-- 주차 여부
 	si_addr1 varchar(50) not null,		-- 주소
 	si_addr2 varchar(50) not null,		-- 지번주소
-    si_number varchar(50) not null,		-- 전화번호
+    si_number varchar(13) not null,		-- 전화번호
 	si_explan varchar(500),				-- 매장소개
 	si_read int default 0,				-- 조회수
 	si_review int default 0,			-- 후기 개수
@@ -80,6 +83,11 @@ create table t_store_info (
    constraint fk_store_info_sc_id foreign key (sc_id) references t_store_ctgr(sc_id),
    constraint fk_store_info_ai_idx foreign key (ai_idx) references t_admin_info(ai_idx)
 );
+
+insert into t_store_info(si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_number, si_explan, si_read, si_review, si_isview, ai_idx, si_last, si_admin) 
+values ('AA101', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
+
+select * from t_store_info;
 
 
 

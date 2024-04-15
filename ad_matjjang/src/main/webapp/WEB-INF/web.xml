@@ -32,7 +32,7 @@
 		
 		<!-- 파일 업로드를 위한 추가부분 -->
 		<multipart-config>
-			<location>C:\Users\naeha\eclipse-workspace\matjjang\ad_matjjang\src\main\webapp\resources\images\commend</location>
+			<location>C:\Users\naeha\eclipse-workspace\matjjang\ad_matjjang\src\main\webapp\resources\img\store</location>
 			<max-file-size>20971520</max-file-size> <!-- 최대크기 20M -->
 			<max-request-size>41943040</max-request-size> <!-- 한번에 올릴 최대 크기 40M -->
 			<file-size-threshold>20971520</file-size-threshold> <!-- 메모리 -->

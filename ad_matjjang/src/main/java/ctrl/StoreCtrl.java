@@ -1,6 +1,6 @@
 package ctrl;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
 import svc.*;
@@ -40,35 +41,39 @@ public class StoreCtrl {
 	
 	@PostMapping("/storeProcIn")
 	public String storeProcIn(HttpServletRequest request, @RequestPart("si_img1") Part siImg1,
-	        @RequestPart("si_img1") Part siImg2, @RequestPart("si_img1") Part siImg3) throws Exception {
+	        @RequestPart("si_img2") Part siImg2, @RequestPart("si_img3") Part siImg3, @RequestParam("si_week") List<String> selectedDays, @RequestParam("si_parking") List<String> selectedOptions) throws Exception {
 		
 		request.setCharacterEncoding("utf-8");
 		
-		StoreInfo ci = new StoreInfo();
+		// 선택된 요일을 사용하여 필요한 작업 수행
+	   
+		String day = String.join(",", selectedDays);	// 요일 사이 ,로 묶음
+		String option = String.join(",", selectedOptions);
+	   	
+		
+		StoreInfo si = new StoreInfo();
 		String uploadFiles = "";
 		
-		ci.setSi_id(request.getParameter("si_id"));
-		ci.setSc_id(request.getParameter("sc_id"));
-		
-		System.out.println(request.getParameter("sc_id"));
-		System.out.println(request.getParameter("si_name"));
-		System.out.println(getUploadFileName(siImg1.getHeader("content-disposition")));
-		System.out.println(getUploadFileName(siImg2.getHeader("content-disposition")));
-		System.out.println(getUploadFileName(siImg2.getHeader("content-disposition")));
-		System.out.println(request.getParameter("si_open"));
-		System.out.println(request.getParameter("si_close"));
-		System.out.println(request.getParameter("si_week"));
-		System.out.println(request.getParameter("si_parking"));
-		System.out.println(request.getParameter("si_addr1"));
-		System.out.println(request.getParameter("si_addr2"));
-		System.out.println(request.getParameter("si_number"));
-		System.out.println(request.getParameter("si_explan"));
-		
-		ci.setSi_id(request.getParameter("si_id"));
+		si.setSi_id(request.getParameter("si_id"));
+		si.setSc_id(request.getParameter("sc_id"));
+		si.setSi_name(request.getParameter("si_name"));
+		si.setSi_img1(getUploadFileName(siImg1.getHeader("content-disposition")));
+		si.setSi_img2(getUploadFileName(siImg1.getHeader("content-disposition")));
+		si.setSi_img3(getUploadFileName(siImg1.getHeader("content-disposition")));
+		si.setSi_open(request.getParameter("si_open"));
+		si.setSi_close(request.getParameter("si_close"));
+		si.setSi_week(day);
+		si.setSi_parking(option);
+		si.setSi_addr1(request.getParameter("si_addr1"));
+		si.setSi_addr2(request.getParameter("si_addr2"));
+		si.setSi_number(request.getParameter("si_number"));
+		si.setSi_explan(request.getParameter("si_explan"));
+		si.setSi_isview(request.getParameter("si_isview"));
+		si.setAi_idx(1);
 		
 		// 상품 등록 이미지 저장
 		for (Part part : request.getParts()) {	// 모든 part들을 가져옴
-			if (part.getName().startsWith("si_img")) {	// 파트의 이름이 "pi_img"로 시작하거나 이름이 "pi_desc"인 경우에만 처리
+			if (part.getName().startsWith("si_img")) {	// 파트의 이름이 si_img"로 시작하는 경우에만 처리
 				String cd =  part.getHeader("content-disposition");	// 파트의 content-disposition 헤더를 읽어 옴
 				String uploadName = getUploadFileName(cd); // getUploadFileName(cd)를 호출하여 업로드된 파일의 이름을 추출 이 이름은 실제 파일의 이름
 				if (!uploadName.equals("")) { // 업로드된 파일의 이름이 비어 있지 않은 경우, 즉 파일이 실제로 업로드되었다면, 해당 파일을 서버에 저장  part.write(uploadName)을 사용하여 파일을 저장	
@@ -79,6 +84,8 @@ public class StoreCtrl {
 			}
 		}
 		if (!uploadFiles.equals(""))	uploadFiles = uploadFiles.substring(2); // 만약 uploadFiles가 비어 있지 않다면, 즉 파일이 업로드되었다면 맨 앞의 ,를 제거하여 정리
+		
+		int result = storeSvc.storeInsert(si);
 		
 		return "redirect:/storeList";
 	
