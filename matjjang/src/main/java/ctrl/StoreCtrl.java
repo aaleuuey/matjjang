@@ -1,5 +1,7 @@
 package ctrl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import svc.*;
+import vo.*;
 
 @Controller
 public class StoreCtrl {
@@ -20,8 +23,14 @@ public class StoreCtrl {
 	}
 	
 	@GetMapping("/storeList")
-	public String commendList(Model model, HttpServletRequest request) throws Exception {
+	public String storeList(Model model, HttpServletRequest request) throws Exception {
+		List<StoreInfo> storeList = storeSvc.getStoreList();
 		
+		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5, num = 0;
+		
+		rcnt = storeSvc.getStoreListCount();
+		
+		model.addAttribute("storeList", storeList);
 		return "store/storeList";
 		
 	}

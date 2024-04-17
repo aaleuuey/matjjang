@@ -10,7 +10,7 @@ public class DbConfig {
 	public static DataSource dataSource() {
 		DataSource ds = new DataSource();
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUrl("jdbc:mysql://localhost/potted?characterEncoding=utf8");
+		ds.setUrl("jdbc:mysql://localhost/matjjang?characterEncoding=utf8");
 		ds.setUsername("root");
 		ds.setPassword("1234");
 		ds.setInitialSize(2);

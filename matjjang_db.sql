@@ -65,6 +65,7 @@ create table t_store_info (
 	si_img1 varchar(50) not null,		-- 음식 이미지1
 	si_img2 varchar(50) default '',		-- 음식 이미지2
 	si_img3 varchar(50) default '',		-- 음식 이미지3
+    si_star float not null,				-- 음식점 별점
 	si_week varchar(50) not null,		-- 영업 요일
 	si_open varchar(20) not null,		-- 영업 시간 오픈
 	si_close varchar(20) not null,		-- 영업 시간 마감
@@ -85,7 +86,7 @@ create table t_store_info (
 );
 
 insert into t_store_info(si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_number, si_explan, si_read, si_review, si_isview, ai_idx, si_last, si_admin) 
-values ('AA101', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
+values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
 
 select * from t_store_info;
 

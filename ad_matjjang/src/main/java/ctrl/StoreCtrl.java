@@ -78,9 +78,10 @@ public class StoreCtrl {
 		si.setSi_id(request.getParameter("si_id"));
 		si.setSc_id(request.getParameter("sc_id"));
 		si.setSi_name(request.getParameter("si_name"));
+		si.setSi_star(request.getParameter("si_star"));
 		si.setSi_img1(getUploadFileName(siImg1.getHeader("content-disposition")));
-		si.setSi_img2(getUploadFileName(siImg1.getHeader("content-disposition")));
-		si.setSi_img3(getUploadFileName(siImg1.getHeader("content-disposition")));
+		si.setSi_img2(getUploadFileName(siImg2.getHeader("content-disposition")));
+		si.setSi_img3(getUploadFileName(siImg3.getHeader("content-disposition")));
 		si.setSi_open(request.getParameter("si_open"));
 		si.setSi_close(request.getParameter("si_close"));
 		si.setSi_week(day);

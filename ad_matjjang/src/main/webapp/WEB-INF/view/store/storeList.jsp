@@ -21,7 +21,7 @@
 			<c:forEach items="${storeList}" var="store">
 			<tr align="center" onmouseover="this.bgColor='#efefef';" onmouseout="this.bgColor='';" bgcolor="">
 				<td width="50%">
-					<a href="productUp?piid=AAaa834">
+					<a href="storeUp">
 						<img src="/ad_matjjang/resources/img/store/${store.si_img1}" width="100" height="100" border="0" align="left">
 						<input type="hidden" name="piid" value="AAaa834">
 						<div style="float:left; margin-left:15px;">${store.si_name}</div>

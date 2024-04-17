@@ -130,6 +130,24 @@ window.onload = function () {
 				</td>
 			</tr>	
 			<tr>
+				<th class="title">별점</th>
+				<td>
+					<div style="width:100%">
+						<select name="si_star" style="width: 80px; height: 35px; border: var(--bs-border-width) solid var(--bs-border-color); border-radius: var(--bs-border-radius);">
+							<option>1</option>
+							<option>1.5</option>
+							<option>2</option>
+							<option>2.5</option>
+							<option>3</option>
+							<option>3.5</option>
+							<option>4</option>
+							<option>4.5</option>
+							<option>5</option>
+						</select>
+					</div>
+				</td>
+			</tr> 
+			<tr>
 				<th class="title">영업시간</th>
 				<td colspan="3">
 					<div id="app">
