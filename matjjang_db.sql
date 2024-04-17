@@ -90,7 +90,6 @@ values ('AA101', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', '월~금', '9:00'
 select * from t_store_info;
 
 
-
 -- 맛집게시판 테이블
 create table t_free_list (
 	fl_idx int primary key auto_increment,	-- 글번호

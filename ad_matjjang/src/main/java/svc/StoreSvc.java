@@ -1,7 +1,9 @@
 package svc;
 
+import java.util.List;
+
 import dao.*;
-import vo.StoreInfo;
+import vo.*;
 
 public class StoreSvc {
 	private StoreDao storeDao;
@@ -15,4 +17,16 @@ public class StoreSvc {
 		
 		return result;
 	}
+
+	public List<StoreInfo> getStoreList(PageInfo pi) {
+		List<StoreInfo> storeList = storeDao.getStoreList(pi);
+		return storeList;
+	}
+	
+	public int getStoreListCount() {
+		int result = storeDao.getStoreListCount();
+		return result;
+	}
+
+	
 }
