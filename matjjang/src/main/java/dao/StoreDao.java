@@ -16,8 +16,10 @@ public class StoreDao {
 		this.jdbc = new JdbcTemplate(dataSource);
 	}
 
-	public List<StoreInfo> getStoreList() {
-		String sql = "select * from t_store_info"; 
+	public List<StoreInfo> getStoreList(PageInfo pi) {
+		String sql = "select * from t_store_info a, t_store_ctgr b where si_isview = 'y' and a.sc_id = '" + pi.getSc() + "' and a.sc_id = b.sc_id group by a.si_id" + pi.getOrderby() + " limit " + ((pi.getCpage() - 1) * pi.getPsize()) + ", " + pi.getPsize();
+		
+		System.out.println(sql);
 		List<StoreInfo> storeList = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
 			StoreInfo si = new StoreInfo();
 			si.setSi_name(rs.getString("si_name"));

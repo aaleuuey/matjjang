@@ -54,23 +54,23 @@
 		<div class="row">
 			<div class="col-lg-4">
 				<img class="bd-placeholder-img rounded-circle" width="140" height="140" src="resources/img/korean.png">
-				<p><a class="btn bg-main mt-2" href="#">한식 »</a></p>
+				<p><a class="btn bg-main mt-2" href="/matjjang/storeList?sc=AA">한식 »</a></p>
 			</div><!-- /.col-lg-4 -->
 			<div class="col-lg-4">
 				<img class="bd-placeholder-img rounded-circle" width="140" height="140" src="resources/img/western.png">
-				<p><a class="btn bg-main mt-2" href="#">양식 »</a></p>
+				<p><a class="btn bg-main mt-2" href="/matjjang/storeList?sc=BB">양식 »</a></p>
 			</div><!-- /.col-lg-4 -->
 			<div class="col-lg-4">
 				<img class="bd-placeholder-img rounded-circle" width="140" height="140" src="resources/img/chinese.png">
-				<p><a class="btn bg-main mt-2" href="#">중식 »</a></p>
+				<p><a class="btn bg-main mt-2" href="/matjjang/storeList?sc=CC">중식 »</a></p>
 			</div><!-- /.col-lg-4 -->
 			<div class="col-lg-4">
 				<img class="bd-placeholder-img rounded-circle" width="140" height="140" src="resources/img/japanese.png">
-				<p><a class="btn bg-main mt-2" href="#">일식 »</a></p>
+				<p><a class="btn bg-main mt-2" href="/matjjang/storeList?sc=DD">일식 »</a></p>
 			</div><!-- /.col-lg-4 -->
 			<div class="col-lg-4">
 				<img class="bd-placeholder-img" width="140" height="140" src="resources/img/cafe.png">
-				<p><a class="btn bg-main mt-2" href="#">디저트 »</a></p>
+				<p><a class="btn bg-main mt-2" href="/matjjang/storeList?sc=EE">디저트 »</a></p>
 			</div><!-- /.col-lg-4 -->
 		</div><!-- /.row -->	
 	</div>

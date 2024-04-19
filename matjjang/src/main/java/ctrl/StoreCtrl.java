@@ -24,9 +24,46 @@ public class StoreCtrl {
 	
 	@GetMapping("/storeList")
 	public String storeList(Model model, HttpServletRequest request) throws Exception {
-		List<StoreInfo> storeList = storeSvc.getStoreList();
+		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5;
+		// 페이지번호,  페이지 크기,  블록크기,  레코드(게시글),  페이지개수 등을 저장할 변수
 		
-		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5, num = 0;
+		if (request.getParameter("cpage") != null)
+			cpage = Integer.parseInt(request.getParameter("cpage"));
+
+		// String where = " where si_isview = 'y' and ", schargs = "";
+		String sc = request.getParameter("sc");
+		String orderBy = " order by ";
+		String ob = request.getParameter("ob");
+		String obargs = "&ob=" + ob;
+		
+		if (ob == null || ob.equals(""))	ob = "a";	// 기본값 최신 순
+		
+		switch (ob) {
+		case "a" :	
+			orderBy += " a.si_date desc ";		break;	// 최신 순
+		case "b" :
+			orderBy += " a.si_read desc ";		break;	// 인기 순
+		case "c" :
+			orderBy += " a.si_name asc ";		break; 	// 이름 순
+		}
+		
+		rcnt = storeSvc.getStoreListCount();
+		
+		pcnt = rcnt / psize;	if(rcnt % psize > 0)	pcnt++;
+		spage = (cpage - 1) / bsize * bsize + 1;
+		
+		PageInfo pi = new PageInfo();
+		pi.setBsize(bsize);			pi.setCpage(cpage);
+		pi.setPcnt(pcnt);			pi.setPsize(psize);
+		pi.setRcnt(rcnt);			pi.setSpage(spage);
+		pi.setObargs(obargs);		pi.setOrderby(orderBy);
+		if (sc != null && !sc.equals("")) {
+			pi.setSc(sc);
+		}
+		
+		List<StoreInfo> storeList = storeSvc.getStoreList(pi);
+		
+		
 		
 		rcnt = storeSvc.getStoreListCount();
 		

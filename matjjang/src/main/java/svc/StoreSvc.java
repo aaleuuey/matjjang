@@ -13,8 +13,8 @@ public class StoreSvc {
 		this.storeDao = storeDao;	
 	}
 
-	public List<StoreInfo> getStoreList() {
-		List<StoreInfo> storeList = storeDao.getStoreList();
+	public List<StoreInfo> getStoreList(PageInfo pi) {
+		List<StoreInfo> storeList = storeDao.getStoreList(pi);
 		return storeList;
 	}
 

@@ -29,7 +29,7 @@ public class StoreCtrl {
 	public String storeList(Model model, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		
-		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5, num = 0;
+		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5;
 		// 페이지번호,  페이지 크기,  블록크기,  레코드(게시글),  페이지개수 등을 저장할 변수
 		
 		if (request.getParameter("cpage") != null)
@@ -39,12 +39,11 @@ public class StoreCtrl {
 		
 		pcnt = rcnt / psize;	if(rcnt % psize > 0)	pcnt++;
 		spage = (cpage - 1) / bsize * bsize + 1;
-		num = rcnt - (psize * (cpage - 1)); 
+		
 		PageInfo pi = new PageInfo();
 		pi.setBsize(bsize);			pi.setCpage(cpage);
 		pi.setPcnt(pcnt);			pi.setPsize(psize);
 		pi.setRcnt(rcnt);			pi.setSpage(spage);
-		pi.setNum(num);
 		
 		List<StoreInfo> storeList = storeSvc.getStoreList(pi);
 		

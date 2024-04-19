@@ -3,6 +3,7 @@
 <%@ include file="../inc/header.jsp" %>
 <style>
 	.butBox {margin:30px 0;}
+	.butBox .all {background:#ffc107; color:#fff;}
 	.comBtn {padding:5px 0; color:#ffc107; border:1px solid #ffc107; background:transparent; margin-right:5px;}
 	.comBtn img {width:20px; height:20px; margin-right:3px; vertical-align:sub;}
 	.comBtn.active {background:#ffc107; color:#fff;}
@@ -14,14 +15,21 @@
 	.inline-div p {font-size: 14px; font-weight: 400; color: #666; line-height: 1;}
 	.inline-div p span {display: inline-block; width: 40px; line-height: 20px; border-radius: 5px; font-size: 14px; color: #999; border: 1px solid #ddd; text-align: center; margin-right: 5px;}
 </style>
+<script>
+window.onload = function () { 
+	new Vue({
+		
+	});
+};
+</script>
 <section id="content" style="width:1000px; margin:0 auto;">
 	<div class="butBox">
-		<button class="comBtn btn-outline-warning rounded-pill px-3" type="button">전체</button>
-		<button class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/korean.png">한식</button>
-		<button class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/western.png">양식</button>
-		<button class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/chinese.png">중식</button>
-		<button class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/japanese.png">일식</button>
-		<button class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img" src="resources/img/cafe.png">디저트</button>
+		<a href="/matjjang/storeList" class="comBtn btn-outline-warning rounded-pill px-3 all" type="button">전체</a>
+		<a href="/matjjang/storeList?sc=AA" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/korean.png">한식</a>
+		<a href="/matjjang/storeList?sc=BB" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/western.png">양식</a>
+		<a href="/matjjang/storeList?sc=CC" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/chinese.png">중식</a>
+		<a href="/matjjang/storeList?sc=DD" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/japanese.png">일식</a>
+		<a href="/matjjang/storeList?sc=EE" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img" src="resources/img/cafe.png">디저트</a>
 	</div>
 	<form class="d-flex" role="search" style="justify-content:flex-end; margin-bottom:25px;">
 		<select name="schtype" style="margin-right:10px; border:var(--bs-border-width) solid var(--bs-border-color); border-radius:var(--bs-border-radius);">
@@ -59,9 +67,4 @@
 	</div>
 
 </section>
-<script>
-$('.comBtn').click(function(){
-	$(this).toggleClass('active');
-});
-</script>
 <%@ include file="../inc/foot.jsp" %>
