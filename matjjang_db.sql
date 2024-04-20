@@ -43,7 +43,7 @@ insert into t_member_addr (mi_id, ma_zip, ma_addr1, ma_addr2) values ('test', '1
 
 -- 음식점 분류 테이블
 create table t_store_ctgr (
-   sc_id char(2) primary key,   -- 분류 코드
+   sc_id char(2) primary key,   	-- 분류 코드
    sc_name varchar(20) not null   	-- 분류 이름
 );
 
@@ -89,6 +89,11 @@ insert into t_store_info(si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_we
 values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
 
 select * from t_store_info;
+select a.*, b.sc_id from t_store_info a, t_store_ctgr b where si_isview = 'y' and a.sc_id = 'AA'  and a.sc_id = b.sc_id group BY a.si_id order by  a.si_date desc  LIMIT 0, 5;
+
+
+select * from t_store_info a, t_store_ctgr b where si_isview = 'y' and a.sc_id = 'AA'  and a.sc_id = b.sc_id group by a.si_id order by  a.si_date desc  limit 0, 5;
+
 
 
 -- 맛집게시판 테이블

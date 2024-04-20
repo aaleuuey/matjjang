@@ -25,26 +25,38 @@ public class StoreCtrl {
 	@GetMapping("/storeList")
 	public String storeList(Model model, HttpServletRequest request) throws Exception {
 		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5;
-		// ÆäÀÌÁö¹øÈ£,  ÆäÀÌÁö Å©±â,  ºí·ÏÅ©±â,  ·¹ÄÚµå(°Ô½Ã±Û),  ÆäÀÌÁö°³¼ö µîÀ» ÀúÀåÇÒ º¯¼ö
+		// í˜ì´ì§€ë²ˆí˜¸,  í˜ì´ì§€ í¬ê¸°,  ë¸”ë¡í¬ê¸°,  ë ˆì½”ë“œ(ê²Œì‹œê¸€),  í˜ì´ì§€ê°œìˆ˜ ë“±ì„ ì €ì¥í•  ë³€ìˆ˜
 		
 		if (request.getParameter("cpage") != null)
 			cpage = Integer.parseInt(request.getParameter("cpage"));
 
-		// String where = " where si_isview = 'y' and ", schargs = "";
+		String keyword = request.getParameter("keyword");
+		String where = "where si_isview = 'y'", schargs = "";
+		String lnk = "storeList?cpage=1" + schargs;
 		String sc = request.getParameter("sc");
 		String orderBy = " order by ";
 		String ob = request.getParameter("ob");
-		String obargs = "&ob=" + ob;
 		
-		if (ob == null || ob.equals(""))	ob = "a";	// ±âº»°ª ÃÖ½Å ¼ø
+
+		if (keyword != null && !keyword.equals("")) {
+			where += " and si_name like '%" + keyword + "%'";
+		}
+		
+		if (sc != null && !sc.equals(""))	{
+			schargs += "&sc=" + sc;
+			where += " and a.sc_id = '" + sc + "' "; 
+		}
+		
+		if (ob == null || ob.equals(""))	ob = "a";	// ê¸°ë³¸ê°’ ìµœì‹  ìˆœ
+		String obargs = "&ob=" + ob;
 		
 		switch (ob) {
 		case "a" :	
-			orderBy += " a.si_date desc ";		break;	// ÃÖ½Å ¼ø
+			orderBy += " a.si_date desc ";		break;	// ìµœì‹  ìˆœ
 		case "b" :
-			orderBy += " a.si_read desc ";		break;	// ÀÎ±â ¼ø
+			orderBy += " a.si_read desc ";		break;	// ì¸ê¸° ìˆœ
 		case "c" :
-			orderBy += " a.si_name asc ";		break; 	// ÀÌ¸§ ¼ø
+			orderBy += " a.si_name asc ";		break; 	// ì´ë¦„ ìˆœ
 		}
 		
 		rcnt = storeSvc.getStoreListCount();
@@ -57,17 +69,18 @@ public class StoreCtrl {
 		pi.setPcnt(pcnt);			pi.setPsize(psize);
 		pi.setRcnt(rcnt);			pi.setSpage(spage);
 		pi.setObargs(obargs);		pi.setOrderby(orderBy);
+		pi.setWhere(where);			pi.setOb(ob);	
+		pi.setKeyword(keyword);
 		if (sc != null && !sc.equals("")) {
 			pi.setSc(sc);
 		}
 		
 		List<StoreInfo> storeList = storeSvc.getStoreList(pi);
 		
-		
-		
-		rcnt = storeSvc.getStoreListCount();
-		
 		model.addAttribute("storeList", storeList);
+		model.addAttribute("pi", pi);
+		model.addAttribute("lnk", lnk);
+		model.addAttribute("sc", sc);
 		return "store/storeList";
 		
 	}

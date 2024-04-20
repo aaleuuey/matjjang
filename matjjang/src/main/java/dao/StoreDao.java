@@ -17,11 +17,16 @@ public class StoreDao {
 	}
 
 	public List<StoreInfo> getStoreList(PageInfo pi) {
-		String sql = "select * from t_store_info a, t_store_ctgr b where si_isview = 'y' and a.sc_id = '" + pi.getSc() + "' and a.sc_id = b.sc_id group by a.si_id" + pi.getOrderby() + " limit " + ((pi.getCpage() - 1) * pi.getPsize()) + ", " + pi.getPsize();
+		String sql = "select a.*, b.sc_id from t_store_info a, t_store_ctgr b " + 
+	             pi.getWhere() + 
+	             " and a.sc_id = b.sc_id group BY a.si_id" + 
+	             pi.getOrderby() + 
+	             " LIMIT " + ((pi.getCpage() - 1) * pi.getPsize()) + ", " + pi.getPsize();
 		
 		System.out.println(sql);
 		List<StoreInfo> storeList = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
 			StoreInfo si = new StoreInfo();
+			si.setSc_id(rs.getString("sc_id"));
 			si.setSi_name(rs.getString("si_name"));
 			si.setSi_img1(rs.getString("si_img1"));
 			si.setSi_date(rs.getString("si_date"));
