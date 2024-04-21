@@ -24,6 +24,8 @@ public class StoreCtrl {
 	
 	@GetMapping("/storeList")
 	public String storeList(Model model, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
 		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5;
 		// 페이지번호,  페이지 크기,  블록크기,  레코드(게시글),  페이지개수 등을 저장할 변수
 		
@@ -32,17 +34,16 @@ public class StoreCtrl {
 
 		String keyword = request.getParameter("keyword");
 		String where = "where si_isview = 'y'", schargs = "";
-		String lnk = "storeList?cpage=1" + schargs;
 		String sc = request.getParameter("sc");
 		String orderBy = " order by ";
 		String ob = request.getParameter("ob");
 		
 
-		if (keyword != null && !keyword.equals("")) {
+		if (keyword != null && !keyword.equals("")) {	// 키워드가 null이 아니고 공백이 아니었을 때
 			where += " and si_name like '%" + keyword + "%'";
 		}
 		
-		if (sc != null && !sc.equals(""))	{
+		if (sc != null && !sc.equals(""))	{	// 분류 코드가 null이 아니고 공백이 아니었을 때
 			schargs += "&sc=" + sc;
 			where += " and a.sc_id = '" + sc + "' "; 
 		}
@@ -59,7 +60,7 @@ public class StoreCtrl {
 			orderBy += " a.si_name asc ";		break; 	// 이름 순
 		}
 		
-		rcnt = storeSvc.getStoreListCount();
+		rcnt = storeSvc.getStoreListCount(where);
 		
 		pcnt = rcnt / psize;	if(rcnt % psize > 0)	pcnt++;
 		spage = (cpage - 1) / bsize * bsize + 1;
@@ -79,7 +80,7 @@ public class StoreCtrl {
 		
 		model.addAttribute("storeList", storeList);
 		model.addAttribute("pi", pi);
-		model.addAttribute("lnk", lnk);
+		model.addAttribute("rcnt", rcnt);
 		model.addAttribute("sc", sc);
 		return "store/storeList";
 		
@@ -87,6 +88,13 @@ public class StoreCtrl {
 	
 	@GetMapping("/storeView")
 	public String storeView(Model model, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		String siid = request.getParameter("siid");
+		
+		List<StoreInfo> storeView = storeSvc.getStoreView(siid);
+		
+		model.addAttribute("storeView", storeView);
 		
 		return "store/storeView";
 		

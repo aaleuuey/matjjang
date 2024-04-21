@@ -33,10 +33,11 @@
 			</div>
 		</div>
 		<div class="textBox">
+		<c:forEach items="${storeView}" var="store">
 			<div class="ttop">
-				<h3>새벽집 청담동점</h3>
+				<h3>${store.si_name}</h3>
 				<img width="22" height="22" style="vertical-align:baseline;" src="resources/img/star.png">
-				<span>4.5</span>
+				<span>${store.si_star}</span>
 			</div>
 			<div class="tbom">
 				<div class="info_text">
@@ -47,9 +48,9 @@
 							</th>
 							<td>
 								<div class="inline-div">
-									<div class="inline-div">매일</div>
+									<div class="inline-div">${store.si_week}</div>
 									<div class="inline-div">
-										<label>00:00 ~ 00:00</label>
+										<label>${store.si_open} ~ ${store.si_close}</label>
 									</div>
 								</div>
 								<div class="inline-div">
@@ -61,7 +62,7 @@
 							<th>
 								<h3>주차</h3>
 							</th>
-							<td>주차,발렛</td>
+							<td>${store.si_parking}</td>
 						</tr>
 						<tr>
 							<th>
@@ -69,8 +70,8 @@
 							</th>
 							<td>
 								<div class="inline-div">
-									<div class="inline-div">서울특별시 강남구 도산대로78길 25 1층</div>
-									<p><span>지번</span>서울특별시 강남구 청담동 11-12 1층</p>
+									<div class="inline-div">${store.si_addr1}</div>
+									<p><span>지번</span>${store.si_addr2}</p>
 								</div>
 							</td>
 						</tr>
@@ -79,7 +80,7 @@
 								<h3>전화번호</h3>
 							</th>
 							<td itemprop="telephone">
-								<div>0503-5798-4120</div>
+								<div>${store.si_number}</div>
 							</td>
 						</tr>
 					</table>
@@ -123,15 +124,11 @@
 	<div class="store_info3">
 		<div class="store_info3_title">매장소개</div>
 		<div class="text">
-			청담동 조용한 골목가에 위치한 스테이크 하우스입니다. 
-			제주도에서 매장을 운영하다 맛으로 유명세를 얻은 뒤 서울로 자리를 옮겼습니다. 
-			실내는 고기 굽는 과정을 지켜볼 수 있는 바테이블과 프라이빗한 식사가 가능한 룸으로 이루어져 있는 구조입니다. 
-			맞춤형 그릴에서 저온으로 고기를 굽는데, 구웠다 식히는 과정만 수십 분 넘게 반복하는 것이 특징으로 최고의 맛을 위해 숯까지 직접 제작하는 정성이 맛에서 오롯이 드러납니다. 
-			이렇게 구워낸 스테이크는 일반적인 조리법에 비해 마치 수비드한 것과 같이 부드러운 식감과 육즙이 살아있습니다.
+			${store.si_explan}
 		</div>
 	</div>
 	<div id="map" class="map" style="width:100%;height:400px;"></div>
-	
+	</c:forEach>
 	<div class="store_review">
 		<div class="review_title">
 			<h3>식신 리뷰</h3><span>(172)</span>

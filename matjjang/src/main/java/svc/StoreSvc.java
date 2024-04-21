@@ -2,6 +2,7 @@ package svc;
 
 import java.util.List;
 
+import ctrl.*;
 import dao.*;
 import vo.*;
 
@@ -18,8 +19,13 @@ public class StoreSvc {
 		return storeList;
 	}
 
-	public int getStoreListCount() {
-		int result = storeDao.getStoreListCount();
+	public int getStoreListCount(String where) {
+		int result = storeDao.getStoreListCount(where);
 		return result;
+	}
+
+	public List<StoreInfo> getStoreView(String siid) {
+		List<StoreInfo> storeView = storeDao.getStoreView(siid);
+		return storeView;
 	}
 }

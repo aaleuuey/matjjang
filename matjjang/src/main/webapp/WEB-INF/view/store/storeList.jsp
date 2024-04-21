@@ -24,7 +24,7 @@ window.onload = function () {
 };
 </script>
 <section id="content" style="width:1000px; margin:0 auto;">
-	<div class="butBox">
+	<div id="app" class="butBox">
 		<a href="/matjjang/storeList" class="comBtn btn-outline-warning rounded-pill px-3 all" type="button">전체</a>
 		<a href="/matjjang/storeList?sc=AA" id="AA" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/korean.png">한식</a>
 		<a href="/matjjang/storeList?sc=BB" id="BB" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/western.png">양식</a>
@@ -33,7 +33,7 @@ window.onload = function () {
 		<a href="/matjjang/storeList?sc=EE" id="EE" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img" src="resources/img/cafe.png">디저트</a>
 	</div>
 	<div class="d-flex" style="justify-content:flex-end; margin-bottom:25px;">
-		<select name="ob" onchange="location.href='${lnk}&ob=' + this.value;"  style="margin-right:10px; border:var(--bs-border-width) solid var(--bs-border-color); border-radius:var(--bs-border-radius);">
+		<select name="ob" onchange="location.href='storeList?cpage=1&ob=' + this.value;"  style="margin-right:10px; border:var(--bs-border-width) solid var(--bs-border-color); border-radius:var(--bs-border-radius);">
 			<c:choose>
 			    <c:when test="${pi.ob eq 'a'}">
 			        <option value="a" selected="selected">최신 순</option>
@@ -66,13 +66,14 @@ window.onload = function () {
 	  	</form>
 	</div>
 	
+	<c:if test="${pi.getRcnt() > 0}">
 	<div class="comtx">
-		<h2>추천 맛집(55)</h2>
+		<h2>추천 맛집(${rcnt})</h2>
 	</div>
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 	<c:forEach items="${storeList}" var="store">
 		<div class="col">
-			<a href="/matjjang/storeView" class="card shadow-sm">
+			<a href="/matjjang/storeView?siid=${store.si_id}" class="card shadow-sm">
 				<img class="bd-placeholder-img" width="100%" height="225" src="/ad_matjjang/resources/img/store/${store.si_img1}">
 				<div class="card-body">
 					<span class="text-body-secondary"><img width="12" height="12" style="margin-right:4px; vertical-align:baseline;" src="resources/img/star.png">${store.si_star}</span>
@@ -90,6 +91,67 @@ window.onload = function () {
 		</div>
 	</c:forEach>
 	</div>
-
+	
+	<div class="bd-example-snippet bd-code-snippet" style="position:relative; display:flex; justify-content:center; margin-top:30px;">
+		<div class="bd-example m-0 border-0">
+			<!-- 페이징 시작 -->
+			<nav aria-label="Standard pagination example">
+				<ul class="pagination">
+					<c:if test="${pi.getCpage() == 1}">
+					<a class="page-link text-dark" href="javascript:void(0);" aria-label="Previous">
+							<span aria-hidden="true">‹</span>
+						</a>
+						<a class="page-link text-dark" href="javascript:void(0);" aria-label="Previous">
+					    	<span aria-hidden="true">«</span>			   
+					  	</a>
+					</c:if>
+					<li class="page-item">
+						<c:if test="${pi.getCpage() > 1}">
+					  	<a class="page-link text-dark" href="storeList?cpage=1${pi.getSchargs()}" aria-label="Previous">
+					    	<span aria-hidden="true">«</span>			   
+					  	</a>
+					   </c:if>
+					</li>
+					<li class="page-item">
+						<c:if test="${pi.getCpage() > 1}">
+					  	<a class="page-link text-dark" href="storeList?cpage=${pi.getCpage() - 1}${pi.getSchargs()}" aria-label="Previous">
+							<span aria-hidden="true">‹</span>
+						</a>
+						</c:if>
+					</li>
+				  	
+					<c:forEach var="i" begin="${pi.getSpage()}" end="${pi.getSpage() + pi.getBsize() - 1 < pi.getPcnt() ? pi.getSpage() + pi.getBsize() - 1 : pi.getPcnt() }" >
+						<c:if test="${i == pi.getCpage()}">
+						<li class="page-item active">
+				  			<a class="page-link text-dark" href="javascript:void(0);">${i}</a>
+				  		</li>
+						</c:if>
+						<c:if test="${i != pi.getCpage()}">
+							<li class="page-item">
+				  				<a class="page-link text-dark" href="storeList?cpage=${i}${pi.getSchargs()}">${i}</a>
+				  			</li>
+						</c:if>
+					</c:forEach>
+					
+				  	<li class="page-item">
+				  		<c:if test="${pi.getCpage() < pi.getPcnt()}">
+					    <a class="page-link text-dark" href="storeList?cpage=${pi.getCpage() + 1}${pi.getSchargs()}" aria-label="Next">
+					      <span aria-hidden="true">›</span>
+					    </a>
+					    </c:if>
+				  	</li>
+				  	<li class="page-item">
+				  		<c:if test="${pi.getCpage() < pi.getPcnt()}">
+					    <a class="page-link text-dark" href="storeList?cpage=${pi.getPcnt()}${pi.getSchargs()}" aria-label="Next">
+					      <span aria-hidden="true">»</span>
+					    </a>
+					    </c:if>
+				  	</li>
+				</ul>
+			</nav>
+			<!-- 페이징 끝 -->
+		</div>
+	</div>
+	</c:if>
 </section>
 <%@ include file="../inc/foot.jsp" %>
