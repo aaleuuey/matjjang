@@ -1,26 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/head.jsp" %>
 <%@ include file="../inc/header.jsp" %>
+<style>
+	.imgbox {display:flex; justify-content:center;}
+</style>
 
 <section id="content" style="width:1000px; margin:0 auto;">
 	<div class="comBox" style="display:flex; margin-top:60px;">
 		<div id="slideWrap" class="carousel" data-ride="carousel" style="width:45%;">
 		  	<div id="myCarousel" class="carousel slide mb-6 pointer-event">
 				<div class="carousel-indicators">
-				  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-				  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-				  <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+				<c:forEach items="${storeView}" var="store">
+					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+					<c:if test="${not empty store.si_img2}">
+				  	<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+				  	</c:if>
+				  	<c:if test="${not empty store.si_img3}">
+				  	<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+				  	</c:if>
 				</div>
 				<div class="carousel-inner">
-				    <div class="carousel-item active">
-						<div class="imgbox"><img src="resources/img/matj-banner.jpg"></div>
-				    </div>
-				    <div class="carousel-item">
-				     	<div class="imgbox"><img src="resources/img/matj-banner02.jpg"></div>
-				    </div>
-				    <div class="carousel-item">
-						<div class="imgbox"><img src="resources/img/matj-banner03.jpg"></div>
-				    </div>
+					<c:if test="${not empty store.si_img1}">
+					    <div class="carousel-item active">
+					        <div class="imgbox"><img src="/ad_matjjang/resources/img/store/${store.si_img1}"></div>
+					    </div>
+					</c:if>
+					<c:if test="${not empty store.si_img2}">
+					    <div class="carousel-item">
+					        <div class="imgbox"><img src="/ad_matjjang/resources/img/store/${store.si_img2}"></div>
+					    </div>
+					</c:if>
+					<c:if test="${not empty store.si_img3}">
+					    <div class="carousel-item">
+					        <div class="imgbox"><img src="/ad_matjjang/resources/img/store/${store.si_img3}"></div>
+					    </div>
+					</c:if>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -33,7 +47,6 @@
 			</div>
 		</div>
 		<div class="textBox">
-		<c:forEach items="${storeView}" var="store">
 			<div class="ttop">
 				<h3>${store.si_name}</h3>
 				<img width="22" height="22" style="vertical-align:baseline;" src="resources/img/star.png">
@@ -218,7 +231,7 @@
 
 <script>
 var HOME_PATH = window.HOME_PATH || '.';
-var position = new naver.maps.LatLng(37.3595704, 127.105399);
+var position = new naver.maps.LatLng(${si_lat}, ${si_lng});
 
 var mapOptions = {
     center: position,

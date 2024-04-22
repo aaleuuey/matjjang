@@ -27,7 +27,11 @@ public class StoreDao {
 			si.setSi_name(rs.getString("si_name"));
 			si.setSi_img1(rs.getString("si_img1"));
 			si.setSi_date(rs.getString("si_date"));
-			si.setSi_week(rs.getString("si_week"));
+			String siweek = "";
+			if (rs.getString("si_week").equals("월,화,수,목,금,토,일"))		siweek = "매일";
+			else if (rs.getString("si_week").equals("월,화,수,목,금"))		siweek = "평일";
+			else 														siweek = rs.getString("si_week");
+			si.setSi_week(siweek);
 			si.setSi_open(rs.getString("si_open"));
 			si.setSi_close(rs.getString("si_close"));
 			si.setSi_parking(rs.getString("si_parking"));
@@ -72,6 +76,8 @@ public class StoreDao {
 			si.setSi_parking(rs.getString("si_parking"));
 			si.setSi_addr1(rs.getString("si_addr1"));
 			si.setSi_addr2(rs.getString("si_addr2"));
+			si.setSi_lat(rs.getString("si_lat"));
+			si.setSi_lng(rs.getString("si_lng"));
 			si.setSi_number(rs.getString("si_number"));
 			si.setSi_explan(rs.getString("si_explan"));
 			si.setSi_read(rs.getInt("si_read"));

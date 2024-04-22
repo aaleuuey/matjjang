@@ -72,6 +72,8 @@ create table t_store_info (
 	si_parking varchar(10) not null,	-- 주차 여부
 	si_addr1 varchar(50) not null,		-- 주소
 	si_addr2 varchar(50) not null,		-- 지번주소
+    si_lat decimal(18,14) not null,		-- 경도
+    si_lng decimal(18,14) not null,		-- 위도
     si_number varchar(13) not null,		-- 전화번호
 	si_explan varchar(500),				-- 매장소개
 	si_read int default 0,				-- 조회수
@@ -85,15 +87,11 @@ create table t_store_info (
    constraint fk_store_info_ai_idx foreign key (ai_idx) references t_admin_info(ai_idx)
 );
 
-insert into t_store_info(si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_number, si_explan, si_read, si_review, si_isview, ai_idx, si_last, si_admin) 
-values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
+insert into t_store_info(si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_star, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_lat, si_lng, si_number, si_explan, si_read, si_review, si_isview, ai_idx, si_last, si_admin) 
+values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', 1.5, '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', 37.3595704, 127.105399, '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
 
+drop table t_store_info;
 select * from t_store_info;
-select a.*, b.sc_id from t_store_info a, t_store_ctgr b where si_isview = 'y' and a.sc_id = 'AA'  and a.sc_id = b.sc_id group BY a.si_id order by  a.si_date desc  LIMIT 0, 5;
-
-
-select * from t_store_info a, t_store_ctgr b where si_isview = 'y' and a.sc_id = 'AA'  and a.sc_id = b.sc_id group by a.si_id order by  a.si_date desc  limit 0, 5;
-
 
 
 -- 맛집게시판 테이블

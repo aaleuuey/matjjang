@@ -50,6 +50,30 @@ function sample4_execDaumPostcode() {
                 guideTextBox.innerHTML = '';
                 guideTextBox.style.display = 'none';
             }
+            
+            // 새로운 콜백 함수 호출
+            getAddressCoordinates(data.jibunAddress);
         }
     }).open();
+}
+
+//주소 검색 결과를 처리하는 새로운 콜백 함수입니다.
+function getAddressCoordinates(address) {
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+    // Geocoder를 사용하여 주소를 검색하고, 검색 결과를 callback 함수에 전달합니다.
+    geocoder.addressSearch(address, function(result, status) {
+        // 검색이 성공적으로 완료되었을 경우를 확인합니다.
+        if (status === kakao.maps.services.Status.OK) {
+            // 검색된 첫 번째 결과의 좌표를 변수에 저장합니다.
+            var longitude = result[0].x; // 경도
+            var latitude = result[0].y; // 위도
+            // 콘솔에 경도와 위도를 출력합니다.
+            console.log("경도: " + longitude + ", 위도: " + latitude);
+            // 경도 값을 input 요소에 설정합니다.
+            $("input[name=si_lng]").val(longitude);
+            // 위도 값을 input 요소에 설정합니다.
+            $("input[name=si_lat]").val(latitude);
+        }
+    });
 }

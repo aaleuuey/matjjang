@@ -78,7 +78,7 @@ window.onload = function () {
 				<div class="card-body">
 					<span class="text-body-secondary"><img width="12" height="12" style="margin-right:4px; vertical-align:baseline;" src="resources/img/star.png">${store.si_star}</span>
 				  	<h4>${store.si_name}</h4>
-				  	<div class="inline-div">매일</div>
+				  	<div class="inline-div">${store.si_week}</div>
 					<div class="inline-div">
 						<label>${store.si_open} ~ ${store.si_close}</label>
 					</div>

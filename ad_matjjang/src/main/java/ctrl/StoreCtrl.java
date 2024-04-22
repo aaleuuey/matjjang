@@ -87,6 +87,8 @@ public class StoreCtrl {
 		si.setSi_parking(option);
 		si.setSi_addr1(request.getParameter("si_addr1"));
 		si.setSi_addr2(request.getParameter("si_addr2"));
+		si.setSi_lat(request.getParameter("si_lat"));
+		si.setSi_lng(request.getParameter("si_lng"));
 		si.setSi_number(request.getParameter("si_number"));
 		si.setSi_explan(request.getParameter("si_explan"));
 		si.setSi_isview(request.getParameter("si_isview"));

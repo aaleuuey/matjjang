@@ -16,6 +16,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/addr_api.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b271c8ecb3b4336116fa6f499e12c006&libraries=services"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <title>Insert title here</title>
 </head>

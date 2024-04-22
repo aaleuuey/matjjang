@@ -191,6 +191,8 @@ window.onload = function () {
 					<input type="text" id="sample4_jibunAddress" name="si_addr2" placeholder="지번주소" style="display:none;">
 					<input type="text" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
 					<input type="text" class="form-control mb-2" id="sample4_roadAddress" name="si_addr1" style="width:253px; padding:10px; margin-right:10px; border:1px solid #dee2e6; border-radius:0.375rem;" placeholder="주소를 입력해주세요." required>
+					<input type="hidden" name="si_lat">
+					<input type="hidden" name="si_lng">
 					<span class="text-muted">
 						<input id="addrFind" type="button" value="찾기" onclick="sample4_execDaumPostcode()" style="height:45px; border-radius:4px; border:1.5px solid #ced4da;" /><br /><span id="guide" style="color:#999;display:none; position:absolute; top:-500px; left:-500px;"></span>
 					</span>
@@ -216,4 +218,8 @@ window.onload = function () {
 	</div>
 	</form>
 </div>
+<script>
+
+</script>
+
 <%@ include file="../inc/foot.jsp" %>

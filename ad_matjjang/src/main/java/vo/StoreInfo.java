@@ -1,7 +1,7 @@
 package vo;
 
 public class StoreInfo {
-	private String si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_star, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_number, si_explan, si_isview, si_date, si_last;
+	private String si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_star, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_lat, si_lng, si_number, si_explan, si_isview, si_date, si_last;
 	private int si_read, si_review, ai_idx, si_admin;
 	
 	public String getSi_id() {
@@ -81,6 +81,18 @@ public class StoreInfo {
 	}
 	public void setSi_addr2(String si_addr2) {
 		this.si_addr2 = si_addr2;
+	}
+	public String getSi_lat() {
+		return si_lat;
+	}
+	public void setSi_lat(String si_lat) {
+		this.si_lat = si_lat;
+	}
+	public String getSi_lng() {
+		return si_lng;
+	}
+	public void setSi_lng(String si_lng) {
+		this.si_lng = si_lng;
 	}
 	public String getSi_number() {
 		return si_number;

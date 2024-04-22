@@ -94,7 +94,16 @@ public class StoreCtrl {
 		
 		List<StoreInfo> storeView = storeSvc.getStoreView(siid);
 		
+		// StoreInfo 객체의 List인 storeView에서 첫 번째 StoreInfo 객체를  가져옴
+		StoreInfo si = storeView.get(0);
+		
+		// StoreInfo 객체에서 위도와 경도 값을 가져와서 문자열 변수에 저장
+		String si_lat = si.getSi_lat();
+		String si_lng = si.getSi_lng();
+		
 		model.addAttribute("storeView", storeView);
+		model.addAttribute("si_lat", si_lat);
+		model.addAttribute("si_lng", si_lng);
 		
 		return "store/storeView";
 		
