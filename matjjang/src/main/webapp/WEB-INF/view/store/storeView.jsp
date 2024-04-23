@@ -3,7 +3,64 @@
 <%@ include file="../inc/header.jsp" %>
 <style>
 	.imgbox {display:flex; justify-content:center;}
+	/* .review_write {display:none;} */
+	
 </style>
+<script>
+window.onload = function () { 	
+	
+	// 리뷰 작성 클릭 시
+	new Vue ({
+	    el: '#app',
+	    data :{
+	        show: false
+	    },
+	    methods:{
+	        toggleShow(){
+	            this.show = !this.show;
+	        }
+	    }
+	});
+	
+	// 지도 
+	var HOME_PATH = window.HOME_PATH || '.';
+	var position = new naver.maps.LatLng(${si_lat}, ${si_lng});
+
+	var mapOptions = {
+	    center: position,
+	    zoom: 15,
+	    zoomControl: true,
+	    zoomControlOptions: {
+	        style: naver.maps.ZoomControlStyle.SMALL,
+	        position: naver.maps.Position.TOP_RIGHT
+	    }
+	};
+
+	var map = new naver.maps.Map('map', mapOptions);
+
+	var markerOptions = {
+	    position: position,
+	    map: map,
+	    icon: {
+	        url: HOME_PATH +'/img/example/pin_default.png',
+	        size: new naver.maps.Size(22, 35),
+	        origin: new naver.maps.Point(0, 0),
+	        anchor: new naver.maps.Point(11, 35)
+	    },
+	    shape: {
+	        coords: [11, 0, 9, 0, 6, 1, 4, 2, 2, 4,
+	                0, 8, 0, 12, 1, 14, 2, 16, 5, 19,
+	                5, 20, 6, 23, 8, 26, 9, 30, 9, 34,
+	                13, 34, 13, 30, 14, 26, 16, 23, 17, 20,
+	                17, 19, 20, 16, 21, 14, 22, 12, 22, 12,
+	                22, 8, 20, 4, 18, 2, 16, 1, 13, 0],
+	        type: 'poly'
+	    }
+	};
+
+	var marker = new naver.maps.Marker(markerOptions);
+}
+</script>
 
 <section id="content" style="width:1000px; margin:0 auto;">
 	<div class="comBox" style="display:flex; margin-top:60px;">
@@ -142,50 +199,52 @@
 	</div>
 	<div id="map" class="map" style="width:100%;height:400px;"></div>
 	</c:forEach>
-	<div class="store_review">
-		<div class="review_title">
-			<h3>식신 리뷰</h3><span>(172)</span>
-			<input type="checkbox" id="writeToggle" value="on">
-			<label for="writeToggle">리뷰 작성</label>
-		</div>
-		<div class="review_write" style="display: block;">
-			<div class="review_write_title">리뷰를 작성해주세요.</div>
-			<div class="review_write" style="display: block; padding:0 0 50px;">
-				<div class="scoreBox star_box">
-					<div class="star_score">
-						<div class="rating-star-7">
-						<div style="width:100%">
-							<img src="resources/img/star.png" alt="별점을 선택해 평가해보세요.">
-							<select>
-								<option>1</option>
-								<option>1.5</option>
-								<option>2</option>
-								<option>2.5</option>
-								<option>3</option>
-								<option>3.5</option>
-								<option>4</option>
-								<option>4.5</option>
-								<option>5</option>
-							</select>
-						</div>
+	<div class="store_review" style="margin-bottom:20px;">
+	 	<div id="app">
+			<div class="review_title">
+				<h3>식신 리뷰</h3><span>(172)</span>
+				<input type="checkbox" id="writeToggle" value="on">
+				<label for="writeToggle" @click="toggleShow">리뷰 작성</label>
+			</div>
+			<div class="review_write" v-if="show">
+				<div class="review_write_title">리뷰를 작성해주세요.</div>
+				<div class="review_write" style="display: block; padding:0 0 50px;">
+					<div class="scoreBox star_box">
+						<div class="star_score">
+							<div class="rating-star-7">
+							<div style="width:100%">
+								<img src="resources/img/star.png" alt="별점을 선택해 평가해보세요.">
+								<select>
+									<option>1</option>
+									<option>1.5</option>
+									<option>2</option>
+									<option>2.5</option>
+									<option>3</option>
+									<option>3.5</option>
+									<option>4</option>
+									<option>4.5</option>
+									<option>5</option>
+								</select>
+							</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="txtbox">
-				<div>
-					<textarea name="storyContents" class="focusIn" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
+				<div class="txtbox">
+					<div>
+						<textarea name="storyContents" class="focusIn" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
+					</div>
 				</div>
-			</div>
-			<div class="file_list">
-				<div class="photo_review">
-					<ul>
-						<li class="file_wrap">
-							<input type="file" name="imgFile" class="file_add" multiple="">
-						</li>
-					</ul>
+				<div class="file_list">
+					<div class="photo_review">
+						<ul>
+							<li class="file_wrap">
+								<input type="file" name="imgFile" class="file_add" multiple="">
+							</li>
+						</ul>
+					</div>
+					<a class="btn">등록</a>
 				</div>
-				<a class="btn">등록</a>
 			</div>
 		</div>
 		<div class="place_review_list">
@@ -230,42 +289,11 @@
 </section>
 
 <script>
-var HOME_PATH = window.HOME_PATH || '.';
-var position = new naver.maps.LatLng(${si_lat}, ${si_lng});
 
-var mapOptions = {
-    center: position,
-    zoom: 15,
-    zoomControl: true,
-    zoomControlOptions: {
-        style: naver.maps.ZoomControlStyle.SMALL,
-        position: naver.maps.Position.TOP_RIGHT
-    }
-};
+</script>
 
-var map = new naver.maps.Map('map', mapOptions);
+<script>
 
-var markerOptions = {
-    position: position,
-    map: map,
-    icon: {
-        url: HOME_PATH +'/img/example/pin_default.png',
-        size: new naver.maps.Size(22, 35),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(11, 35)
-    },
-    shape: {
-        coords: [11, 0, 9, 0, 6, 1, 4, 2, 2, 4,
-                0, 8, 0, 12, 1, 14, 2, 16, 5, 19,
-                5, 20, 6, 23, 8, 26, 9, 30, 9, 34,
-                13, 34, 13, 30, 14, 26, 16, 23, 17, 20,
-                17, 19, 20, 16, 21, 14, 22, 12, 22, 12,
-                22, 8, 20, 4, 18, 2, 16, 1, 13, 0],
-        type: 'poly'
-    }
-};
-
-var marker = new naver.maps.Marker(markerOptions);
 </script>
 
 <%@ include file="../inc/foot.jsp" %>

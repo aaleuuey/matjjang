@@ -61,7 +61,7 @@ window.onload = function () {
 			
 		</select>
 		<form name="frm">
-		  	<input class="form-control me-2" type="search" name="keyword" placeholder="Search" aria-label="Search" style="width:300px; float:left;">
+		  	<input class="form-control me-2" type="search" name="keyword" value="${pi.keyword}" placeholder="Search" aria-label="Search" style="width:300px; float:left;">
 		  	<button class="btn btn-outline-dark" type="submit">Search</button>
 	  	</form>
 	</div>

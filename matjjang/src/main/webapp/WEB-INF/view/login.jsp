@@ -4,6 +4,11 @@
 	.login {width:500px; margin:80px auto 0;}
 	.login h3 {text-align:center; font-weight:700; font-size:23px;}
 	.simg {width:20px; margin-right:6px;}
+	.mem_box {display:flex; justify-content:center; padding: 11px 0; margin-top: 19px; margin-bottom: 19px;}
+	.mem_box ul {margin:0; padding:0;}
+	.mem_box ul li {display: inline-block; padding: 0 12px 0 16px; position: relative;}
+	.mem_box ul li:nth-child(2):before {content: ''; position: absolute; left: 0; top: 4px; width: 1px; height: 15px; background: #000;}
+	.mem_box ul li a {font-size: 15px; letter-spacing: -.50px; color:#222;}
 </style>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between px-3 py-2 border-bottom">
 	<div class="col-md-3 mb-2 mb-md-0">
@@ -14,16 +19,16 @@
 	</div>
 </header>
 <div class="login">
-	<form>
+	<form name="frmLogin" action="login" method="post">
 		<h1 class="h3 mb-3 fw-normal">로그인</h1>
 		<div class="form-floating mb-2">
-			<input type="id" class="form-control" id="floatingInput" placeholder="아이디를 입력하세요" required>
+			<input type="text" class="form-control" id="floatingInput" name="uid" value="" placeholder="아이디를 입력하세요" required>
 			<label for="floatingInput">ID</label>
 			<div class="valid-feedback">아이디를 입력해주세요</div>
 		</div>
 		
 		<div class="form-floating">
-			<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력하세요" required>
+			<input type="password" class="form-control" id="floatingPassword" name="pwd" value="" placeholder="비밀번호를 입력하세요" required>
 			<label for="floatingPassword">Password</label>
 			<div class="invalid-feedback">비밀번호를 입력해주세요</div>
 		</div>
@@ -31,6 +36,17 @@
 		<div class="form-check text-start my-3">
 			<input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
 			<label class="form-check-label" for="flexCheckDefault">Remember me</label>
+		</div>
+		
+		<div class="mem_box">
+			<ul>
+				<li>
+					<a href="/login/findPassword">아이디 찾기</a>
+				</li>
+				<li>
+					<a href="/join/intro">비밀번호 찾기</a>
+				</li>
+			</ul>
 		</div>
 		
 		<button class="btn btn-warning w-100 py-2 mb-2" type="submit">로그인</button>

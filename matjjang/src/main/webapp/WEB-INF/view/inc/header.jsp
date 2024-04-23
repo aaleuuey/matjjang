@@ -16,7 +16,15 @@
 	</ul>
 
 	<div class="col-md-3 text-end">
-		<a href="/matjjang/login" class="btn btn-outline-warning me-2">로그인</a>
-		<a href="/matjjang/joinForm" class="btn btn-warning">회원가입</a>
+	    <c:choose>
+	        <c:when test="${loginInfo eq null}">
+	        	<a href="/matjjang/login" class="btn btn-outline-warning me-2">로그인</a>
+	            <a href="/matjjang/joinForm" class="btn btn-warning">회원가입</a>
+	        </c:when>
+	        <c:otherwise>
+				<a href="mypage" class="minfor">회원정보</a>
+	            <a href="logout" class="logout">로그아웃</a>
+	        </c:otherwise>
+	    </c:choose>
 	</div>
 </header>

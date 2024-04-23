@@ -39,7 +39,7 @@
 .txtbox textarea {width: 100%; height: 10rem; resize: none; background: #fff; border: none; outline: none; padding-top: 16px; margin-top: 1px; font-size: 1.250em;}
 .store_review .review_write .file_list {position: relative; margin-top: 20px;}
 .store_review .review_write .file_list ul {text-align: left; padding-right: 50px; padding-left:0;}
-.store_review .review_write .file_list ul li {position: relative; display: inline-block; vertical-align: middle; width: 80px; height: 80px; background-image: url(resources/img/bg_photo_file03.gif); background-position: center; background-repeat: no-repeat; background-size: contain; margin-right: 5px;}
+.store_review .review_write .file_list ul li {position: relative; display: inline-block; vertical-align: middle; width: 80px; height: 80px; background-image: url(/matjjang/resources/img/bg_photo_file03.gif); background-position: center; background-repeat: no-repeat; background-size: contain; margin-right: 5px;}
 .store_review .review_write .file_list ul li input[type=file] {width: 80px; height: 80px; opacity: 0;}
 .store_review .review_write .file_list .btn {position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: 600; color: #ffc107; cursor: pointer;}
 .store_review .place_review_list {position: relative; display: table-cell; width: 100%; padding: 10px 10px 40px 10px; box-sizing: border-box; vertical-align: top; border-top: 1px solid lightgray; overflow-x: auto;}
