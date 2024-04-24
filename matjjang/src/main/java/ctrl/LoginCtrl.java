@@ -43,7 +43,7 @@ public class LoginCtrl {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('로그인을 해주세요.')");
+			out.println("alert('로그인 정보가 올바르지 않습니다.')");
 			out.println("history.back();");
 			out.println("</script>");
 			out.close();

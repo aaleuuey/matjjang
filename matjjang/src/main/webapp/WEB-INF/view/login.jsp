@@ -3,7 +3,7 @@
 <style>
 	.login {width:500px; margin:80px auto 0;}
 	.login h3 {text-align:center; font-weight:700; font-size:23px;}
-	.simg {width:20px; margin-right:6px;}
+	.simg {width:20px; margin-right:6px; vertical-align:text-bottom;}
 	.mem_box {display:flex; justify-content:center; padding: 11px 0; margin-top: 19px; margin-bottom: 19px;}
 	.mem_box ul {margin:0; padding:0;}
 	.mem_box ul li {display: inline-block; padding: 0 12px 0 16px; position: relative;}
@@ -33,11 +33,6 @@
 			<div class="invalid-feedback">비밀번호를 입력해주세요</div>
 		</div>
 		
-		<div class="form-check text-start my-3">
-			<input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-			<label class="form-check-label" for="flexCheckDefault">Remember me</label>
-		</div>
-		
 		<div class="mem_box">
 			<ul>
 				<li>
@@ -51,7 +46,7 @@
 		
 		<button class="btn btn-warning w-100 py-2 mb-2" type="submit">로그인</button>
 		<a href="/matjjang/joinForm" class="btn btn-dark w-100 py-2 mb-4">회원가입</a>
-		<a href="javascript:void(0);" class="btn btn-dark w-100 py-2" style="background:#fae100; border:1px solid #fae100;"><img src="/matjjang/resources/img/kakao_login.png" class="simg">카카오톡으로 시작하기</a>
+		<a href="javascript:void(0);" class="btn btn-dark w-100 py-2" style="background:#fae100; border:1px solid #fae100; color:#000; font-size:15px;"><img src="/matjjang/resources/img/kakao_login.png" class="simg">카카오톡 로그인</a>
 	</form>
 </div>
 

@@ -10,7 +10,7 @@
 
 	<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 		<!-- <li><a href="#" class="nav-link px-4 tx-main">맛집 등록</a></li> -->
-		<li><a href="/matjjang/storeList" class="nav-link px-4 tx-main">맛집 추천</a></li>
+		<li><a href="/matjjang/storeList?All" class="nav-link px-4 tx-main">맛집 추천</a></li>
 		<li><a href="/matjjang/reviewList" class="nav-link px-4 tx-main">맛집 후기 게시판</a></li>
 		<li><a href="#" class="nav-link px-4 tx-main">문의하기</a></li>
 	</ul>
@@ -22,8 +22,8 @@
 	            <a href="/matjjang/joinForm" class="btn btn-warning">회원가입</a>
 	        </c:when>
 	        <c:otherwise>
-				<a href="mypage" class="minfor">회원정보</a>
-	            <a href="logout" class="logout">로그아웃</a>
+				<a href="mypage" class="minfor btn btn-outline-warning me-2">회원정보</a>
+	            <a href="logout" class="logout btn btn-warning">로그아웃</a>
 	        </c:otherwise>
 	    </c:choose>
 	</div>

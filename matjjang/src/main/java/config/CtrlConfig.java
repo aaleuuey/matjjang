@@ -35,6 +35,11 @@ public class CtrlConfig {
 		loginCtrl.setLoginSvc(loginSvc);
 		return loginCtrl;
 	}
+	
+	@Bean
+	public LogoutCtrl logoutCtrl() {
+		return new LogoutCtrl();
+	}
 
 	@Bean
 	public IndexCtrl indexCtrl() {

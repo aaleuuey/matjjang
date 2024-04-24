@@ -3,7 +3,6 @@
 <%@ include file="../inc/header.jsp" %>
 <style>
 	.butBox {margin:30px 0;}
-	.butBox .all {background:#ffc107; color:#fff;}
 	.comBtn {padding:5px 0; color:#ffc107; border:1px solid #ffc107; background:transparent; margin-right:5px;}
 	.comBtn img {width:20px; height:20px; margin-right:3px; vertical-align:sub;}
 	.comBtn.active {background:#ffc107; color:#fff;}
@@ -15,17 +14,31 @@
 	.inline-div p {font-size: 14px; font-weight: 400; color: #666; line-height: 1;}
 	.inline-div p span {display: inline-block; width: 40px; line-height: 20px; border-radius: 5px; font-size: 14px; color: #999; border: 1px solid #ddd; text-align: center; margin-right: 5px;}
 	#${sc} {background:#ffc107; color:#fff;}
+	.Allactive {background:#ffc107; color:#fff;}
 </style>
 <script>
 window.onload = function () { 
 	new Vue({
-		
+		el: '#app', // HTML 문서 내의 어떤 요소에 마운트할지 지정
+		data() {
+		  return {
+		    isAllActive: false
+		  };
+		},
+		created() {
+		  // 페이지 로드시 쿼리 문자열 확인
+		  const queryString = window.location.search;
+		  if (queryString.includes('All')) {	// All 문자열이 포함 되어있는지 여부 확인
+		    this.isAllActive = true;
+		  }
+		}
 	});
 };
 </script>
+
 <section id="content" style="width:1000px; margin:0 auto;">
 	<div id="app" class="butBox">
-		<a href="/matjjang/storeList" class="comBtn btn-outline-warning rounded-pill px-3 all" type="button">전체</a>
+		<a href="/matjjang/storeList?All" class="comBtn btn-outline-warning rounded-pill px-3 all" type="button" :class="{ Allactive: isAllActive }">전체</a>
 		<a href="/matjjang/storeList?sc=AA" id="AA" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/korean.png">한식</a>
 		<a href="/matjjang/storeList?sc=BB" id="BB" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/western.png">양식</a>
 		<a href="/matjjang/storeList?sc=CC" id="CC" class="comBtn btn-outline-warning rounded-pill px-3" type="button"><img class="bd-placeholder-img rounded-circle" src="resources/img/chinese.png">중식</a>
