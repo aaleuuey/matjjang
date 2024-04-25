@@ -39,7 +39,7 @@ public class StoreDao {
 			si.setSi_addr2(rs.getString("si_addr2"));
 			si.setSi_read(rs.getInt("si_read"));
 			si.setSi_isview(rs.getString("si_isview"));
-			si.setSi_star(rs.getString("si_star"));
+			si.setSi_star(rs.getFloat("si_star"));
 		
 			return si;
 		});
@@ -65,7 +65,7 @@ public class StoreDao {
 			si.setSi_img1(rs.getString("si_img1"));
 			si.setSi_img2(rs.getString("si_img2"));
 			si.setSi_img3(rs.getString("si_img3"));
-			si.setSi_star(rs.getString("si_star"));
+			si.setSi_star(rs.getFloat("si_star"));
 			String siweek = "";
 			if (rs.getString("si_week").equals("월,화,수,목,금,토,일"))		siweek = "매일";
 			else if (rs.getString("si_week").equals("월,화,수,목,금"))		siweek = "평일";
@@ -85,6 +85,26 @@ public class StoreDao {
 			return si;
 		});
 		return storeList;
+	}
+
+	public List<StoreReplyList> getStoreReplyList(String siid) {
+		String sql = "select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b "
+						+ "on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = '" + siid + "' ";
+	
+		List<StoreReplyList> storeReplyList = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
+			StoreReplyList srl = new StoreReplyList();
+			srl.setSi_id(rs.getString("si_id"));
+			srl.setMi_name(rs.getString("mi_name"));
+			srl.setSr_star(rs.getFloat("sr_star")); 
+			srl.setSr_content(rs.getString("sr_content"));
+			srl.setSr_good(rs.getInt("sr_good")); 
+			srl.setSr_img1(rs.getString("sr_img1"));
+			srl.setSr_img2(rs.getString("sr_img2"));
+			srl.setSr_img3(rs.getString("sr_img3"));
+			
+			return srl;
+		});
+		return storeReplyList;
 	}
 
 }

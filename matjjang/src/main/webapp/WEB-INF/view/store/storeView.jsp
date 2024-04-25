@@ -8,7 +8,6 @@
 </style>
 <script>
 window.onload = function () { 	
-	
 	// 리뷰 작성 클릭 시
 	new Vue ({
 	    el: '#app',
@@ -24,7 +23,7 @@ window.onload = function () {
 	
 	// 지도 
 	var HOME_PATH = window.HOME_PATH || '.';
-	var position = new naver.maps.LatLng(${si_lat}, ${si_lng});
+	var position = new naver.maps.LatLng(${si_lat} , ${si_lng});
 
 	var mapOptions = {
 	    center: position,
@@ -247,18 +246,14 @@ window.onload = function () {
 				</div>
 			</div>
 		</div>
+		<c:forEach items="${storeReplyList}" var="storeReply">
 		<div class="place_review_list">
-			<div class="name">이한나
+			<div class="name">${storeReply.mi_name}
 				<img src="resources/img/star.png" alt="별점" width="15" style="vertical-align:baseline;">
-				<span class="score">5</span>
-			</div>
-			<div class="action">
-				<a href="javascript:void(0);" class="btn_report review_action">신고</a>
+				<span class="score">${storeReply.sr_star}</span>
 			</div>
 			<div class="review_text">
-				우선 육회비빔밥을 시키면 선지국을 함께 주기 때문에 밸런스가 매우 적절하다. 
-				비빔밥의 육회도 신선하고, 선지는 안먹는 사람도 국물 정도는 함께 먹으면 맛있다. 
-				어쩐지 청담 근처에 가면 계속 떠오르는 스테디 맛집!
+				${storeReply.sr_content}
 			</div>
 			<div class="img_list">
 				<a href="#layer_review_photo">
@@ -271,29 +266,14 @@ window.onload = function () {
 							<path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
 						</svg>
 					</span>
-					<span class="count">좋아요11</span>
-				</button>
-				<button class="reply-cnt">
-					<span class="icon black">
-						<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.3em" width="1.3em" xmlns="http://www.w3.org/2000/svg">
-							<path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path>
-						</svg>
-					</span>
-					<span class="count" data-reactid="122">댓글1</span>
+					<span class="count">좋아요${storeReply.sr_good}</span>
 				</button>
 			</div>
 		</div>
+		</c:forEach>
 		<a href="#" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a>
 	</div>
 
 </section>
-
-<script>
-
-</script>
-
-<script>
-
-</script>
 
 <%@ include file="../inc/foot.jsp" %>

@@ -90,9 +90,31 @@ create table t_store_info (
 insert into t_store_info(si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_star, si_week, si_open, si_close, si_parking, si_addr1, si_addr2, si_lat, si_lng, si_number, si_explan, si_read, si_review, si_isview, ai_idx, si_last, si_admin) 
 values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', 1.5, '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', 37.3595704, 127.105399, '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
 
-drop table t_store_info;
 select * from t_store_info;
 
+-- 음식점 댓글 테이블
+create table t_store_reply (
+	sr_idx int primary key auto_increment,	-- 댓글번호
+	si_id char(5) not null,					-- 맛집ID
+	mi_id varchar(20) not null,				-- 회원아이디
+	sr_ismem char(1) default 'y',			-- 회원여부
+    sr_star float not null,					-- 음식점 별점				
+	sr_content varchar(200) not null,		-- 내용
+    sr_good int default 0,					-- 좋아요 수
+    sr_img1 varchar(50) not null,			-- 음식 이미지1
+	sr_img2 varchar(50) default '',			-- 음식 이미지2
+	sr_img3 varchar(50) default '',			-- 음식 이미지3
+	sr_isview char(1) default 'y',			-- 게시여부
+	sr_date datetime default now(),			-- 작성일
+	constraint fk_t_store_reply_si_id foreign key(si_id) references t_store_info(si_id),
+    constraint fk_t_store_reply_mi_id foreign key(mi_id) references t_member_info(mi_id)
+);
+
+select * from t_store_reply;
+
+insert into t_store_reply values('1', 'AA776', 'test', 'y', '5', '댓글', 1, 'img.png', '', '', 'y', now());
+
+select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA776'; 
 
 -- 맛집게시판 테이블
 create table t_free_list (

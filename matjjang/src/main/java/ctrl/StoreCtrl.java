@@ -93,6 +93,7 @@ public class StoreCtrl {
 		String siid = request.getParameter("siid");
 		
 		List<StoreInfo> storeView = storeSvc.getStoreView(siid);
+		List<StoreReplyList> storeReplyList = storeSvc.getStoreReplyList(siid);
 		
 		// StoreInfo 객체의 List인 storeView에서 첫 번째 StoreInfo 객체를  가져옴
 		StoreInfo si = storeView.get(0);
@@ -102,6 +103,7 @@ public class StoreCtrl {
 		String si_lng = si.getSi_lng();
 		
 		model.addAttribute("storeView", storeView);
+		model.addAttribute("storeReplyList", storeReplyList);
 		model.addAttribute("si_lat", si_lat);
 		model.addAttribute("si_lng", si_lng);
 		

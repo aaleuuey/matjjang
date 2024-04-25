@@ -28,4 +28,9 @@ public class StoreSvc {
 		List<StoreInfo> storeView = storeDao.getStoreView(siid);
 		return storeView;
 	}
+
+	public List<StoreReplyList> getStoreReplyList(String siid) {
+		List<StoreReplyList> storeReplyList = storeDao.getStoreReplyList(siid);
+		return storeReplyList;
+	}
 }
