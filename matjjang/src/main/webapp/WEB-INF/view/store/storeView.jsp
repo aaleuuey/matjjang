@@ -9,14 +9,37 @@
 <script>
 window.onload = function () { 	
 	// 리뷰 작성 클릭 시
-	new Vue ({
-	    el: '#app',
-	    data :{
-	        show: false
+	new Vue({
+    	el: '#app',
+	    data: {
+	        show: false,
+	        rcontent: '',
+	        siid: '${siid}' // 서버에서 받은 siid 값 할당
 	    },
-	    methods:{
-	        toggleShow(){
+	    methods: {
+	        toggleShow() {
 	            this.show = !this.show;
+	        },
+	        rInsert() {
+	            if (this.rcontent !== "" && this.rcontent !== null) {
+	                $.ajax({
+	                    type: "POST",
+	                    url: "/matjjang/storeReplyIn",
+	                    data: {
+	                        "siid": this.siid, // this.siid를 사용하여 데이터 전달
+	                        "rcon": this.rcontent
+	                    },
+	                    success: (chk) => { // 화살표 함수로 변경하여 this 바인딩 유지
+	                        if (chk !== 2 && chk !== 1) {
+	                            alert("댓글 등록을 실패했습니다 \n다시 시도해 주세요.");
+	                        } else {
+	                            location.href = "storeView?siid=" + this.siid;
+	                        }
+	                    }
+	                });
+	            } else {
+	                alert("내용을 입력해주세요");
+	            }
 	        }
 	    }
 	});
@@ -231,7 +254,7 @@ window.onload = function () {
 				</div>
 				<div class="txtbox">
 					<div>
-						<textarea name="storyContents" class="focusIn" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
+						<textarea name="storyContents" class="focusIn" v-model="rcontent" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
 					</div>
 				</div>
 				<div class="file_list">
@@ -242,7 +265,7 @@ window.onload = function () {
 							</li>
 						</ul>
 					</div>
-					<a class="btn">등록</a>
+					<input type="submit" id="btn" class="btn" @click="rInsert()" value="등록" />
 				</div>
 			</div>
 		</div>
@@ -270,8 +293,9 @@ window.onload = function () {
 				</button>
 			</div>
 		</div>
-		</c:forEach>
 		<a href="#" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a>
+		</c:forEach>
+		
 	</div>
 
 </section>

@@ -1,13 +1,17 @@
 package ctrl;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import svc.*;
 import vo.*;
@@ -100,14 +104,24 @@ public class StoreCtrl {
 		
 		// StoreInfo 객체에서 위도와 경도 값을 가져와서 문자열 변수에 저장
 		String si_lat = si.getSi_lat();
-		String si_lng = si.getSi_lng();
+		String si_lng = si.getSi_lng();	
 		
 		model.addAttribute("storeView", storeView);
+		model.addAttribute("siid", siid);
 		model.addAttribute("storeReplyList", storeReplyList);
 		model.addAttribute("si_lat", si_lat);
 		model.addAttribute("si_lng", si_lng);
 		
 		return "store/storeView";
 		
+	}
+	
+	@PostMapping("/storeReplyIn")
+	public String storeReplyeInProc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		System.out.println(request.getParameter("siid"));
+		System.out.println(request.getParameter("rcon"));
+		
+		return "redirect:/";
 	}
 }

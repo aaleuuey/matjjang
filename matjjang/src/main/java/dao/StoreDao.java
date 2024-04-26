@@ -93,6 +93,7 @@ public class StoreDao {
 	
 		List<StoreReplyList> storeReplyList = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
 			StoreReplyList srl = new StoreReplyList();
+			srl.setSr_idx(rs.getInt("sr_idx"));
 			srl.setSi_id(rs.getString("si_id"));
 			srl.setMi_name(rs.getString("mi_name"));
 			srl.setSr_star(rs.getFloat("sr_star")); 
