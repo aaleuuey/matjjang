@@ -47,13 +47,13 @@ window.onload = function () {
 	                    data: formData, // 전송할 데이터
 	                    contentType: false, // 데이터 타입을 설정하지 않음
 	                    processData: false, // 데이터를 처리하지 않음
-	                    success: (chk) => { // 요청이 성공했을 때의 콜백 함수
-	                        if (chk !== 2 && chk !== 1) {
-	                            alert("댓글 등록을 실패했습니다. 다시 시도해 주세요.");
-	                        } else {
-	                        	alert("등록 되었습니다.");
-                                location.href = "storeView?siid=" + siid;
-	                        }
+	                    success: (result) => { // 요청이 성공했을 때의 콜백 함수
+	                    	if (result == 0) {
+	            				alert("댓글 등록에 실패했습니다.\n다시 시도해 보세요.");
+	            			} else {
+	            				alert("댓글이 등록되었습니다.");
+	            				location.reload();
+	            			}
 	                    }
 	                });
 	            } else {

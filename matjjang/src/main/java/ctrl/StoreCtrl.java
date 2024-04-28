@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import svc.*;
@@ -122,6 +123,7 @@ public class StoreCtrl {
 	}
 	
 	@PostMapping("/storeReplyIn")
+	@ResponseBody
 	public String storeReplyeInProc(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "imageFiles", required = false) MultipartFile[] imageFiles, @RequestParam("imageNames[]") String[] imageNames) throws Exception {
 																											// 이미지를 전송하지 않았을 경우를 위해 피라미터 필수가 아닌 선택적으로 설정
 		request.setCharacterEncoding("utf-8");
@@ -137,6 +139,16 @@ public class StoreCtrl {
 		
 		HttpSession session = request.getSession();
 		MemberInfo mi = (MemberInfo)session.getAttribute("loginInfo");
+		
+		if (mi == null) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('로그인 해주세요.');");
+			out.println("location.href='login';");
+			out.println("</script>");
+			out.close();
+		}
 		
 		srl.setMi_id(mi.getMi_id());
 		srl.setSi_id(request.getParameter("siid"));
@@ -157,8 +169,6 @@ public class StoreCtrl {
 			}
 	    }
 		
-		int result = storeSvc.StoreReplyInsert(srl);
-		
 		// 이미지 서버에 저장
 	    for (MultipartFile file : imageFiles) {
 	        if (!file.isEmpty()) {
@@ -172,9 +182,9 @@ public class StoreCtrl {
 		
 		if (!uploadFiles.equals(""))	uploadFiles = uploadFiles.substring(2);
 		
+		int result = storeSvc.StoreReplyInsert(srl);
 		
-		
-		return "redirect:/storeView?siid=" + siid + "&sridx=" + result;
+		return result + "";
 		
 		
 	}

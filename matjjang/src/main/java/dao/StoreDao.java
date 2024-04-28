@@ -109,9 +109,15 @@ public class StoreDao {
 	}
 
 	public int getStoreReplyInsert(StoreReplyList srl) {
-		String sql = "insert into t_store_reply (si_id, mi_id, sr_star, sr_content, sr_good, sr_img1, sr_img2, sr_img3) values (?, ?, ?, ?, ?, ?, ?, ?)";
-		int result = jdbc.update(sql, 
-				srl.getSi_id(), srl.getMi_id(), srl.getSr_star(), srl.getSr_content(), srl.getSr_good(), 
+		String sql = "select ifnull(max(sr_idx) + 1, 1) from t_store_reply";
+		int sridx = jdbc.queryForObject(sql, Integer.class);
+		
+		sql = "update t_store_info set si_review = si_review + 1 where si_id = '" + srl.getSi_id() + "'";
+		int result = jdbc.update(sql);
+		
+		sql = "insert into t_store_reply (sr_idx, si_id, mi_id, sr_star, sr_content, sr_good, sr_img1, sr_img2, sr_img3) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		result = jdbc.update(sql, 
+				sridx, srl.getSi_id(), srl.getMi_id(), srl.getSr_star(), srl.getSr_content(), srl.getSr_good(), 
 				srl.getSr_img1(), srl.getSr_img2(), srl.getSr_img3()
 		);
 		
