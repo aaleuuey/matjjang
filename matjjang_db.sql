@@ -101,7 +101,7 @@ create table t_store_reply (
     sr_star float not null,					-- 음식점 별점				
 	sr_content varchar(200) not null,		-- 내용
     sr_good int default 0,					-- 좋아요 수
-    sr_img1 varchar(50) not null,			-- 음식 이미지1
+    sr_img1 varchar(50) default '',			-- 음식 이미지1
 	sr_img2 varchar(50) default '',			-- 음식 이미지2
 	sr_img3 varchar(50) default '',			-- 음식 이미지3
 	sr_isview char(1) default 'y',			-- 게시여부
@@ -110,11 +110,8 @@ create table t_store_reply (
     constraint fk_t_store_reply_mi_id foreign key(mi_id) references t_member_info(mi_id)
 );
 
-select * from t_store_reply;
-
 insert into t_store_reply values('1', 'AA776', 'test', 'y', '5', '댓글', 1, 'img.png', '', '', 'y', now());
 
-select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA776'; 
 
 -- 맛집게시판 테이블
 create table t_free_list (

@@ -3,43 +3,81 @@
 <%@ include file="../inc/header.jsp" %>
 <style>
 	.imgbox {display:flex; justify-content:center;}
-	/* .review_write {display:none;} */
-	
 </style>
 <script>
 window.onload = function () { 	
 	// 리뷰 작성 클릭 시
 	new Vue({
-    	el: '#app',
+	    el: '#app',
 	    data: {
 	        show: false,
+	        siid: '${siid}', // 서버에서 받은 siid 값 할당
 	        rcontent: '',
-	        siid: '${siid}' // 서버에서 받은 siid 값 할당
+	        rstar: null,
+	        images: [],
 	    },
 	    methods: {
 	        toggleShow() {
 	            this.show = !this.show;
 	        },
 	        rInsert() {
-	            if (this.rcontent !== "" && this.rcontent !== null) {
+	            if (this.rcontent.trim() !== "") { // 댓글 내용이 비어있지 않은지 확인
+	                const formData = new FormData(); // FormData 객체 생성
+	                formData.append('siid', this.siid);	// siid 값을 FormData에 추가
+	                formData.append('rcon', this.rcontent);
+	                formData.append('rstar', this.rstar);
+	                
+	             	// 이미지를 보내는 경우에만 FormData에 추가
+                    if (this.images.length > 0) {
+                        for (let i = 0; i < this.images.length; i++) {
+                            formData.append('imageNames[]', this.images[i].name);
+                        }
+                        for (let i = 0; i < this.images.length; i++) {
+                            formData.append('imageFiles', this.images[i].file);
+                        }
+                    } else {
+                        // 이미지를 보내지 않은 경우에도 imageNames[] 파라미터를 빈 배열로 추가
+                        formData.append('imageNames[]', []);
+                    }
+
+	                
 	                $.ajax({
 	                    type: "POST",
 	                    url: "/matjjang/storeReplyIn",
-	                    data: {
-	                        "siid": this.siid, // this.siid를 사용하여 데이터 전달
-	                        "rcon": this.rcontent
-	                    },
-	                    success: (chk) => { // 화살표 함수로 변경하여 this 바인딩 유지
+	                    data: formData, // 전송할 데이터
+	                    contentType: false, // 데이터 타입을 설정하지 않음
+	                    processData: false, // 데이터를 처리하지 않음
+	                    success: (chk) => { // 요청이 성공했을 때의 콜백 함수
 	                        if (chk !== 2 && chk !== 1) {
-	                            alert("댓글 등록을 실패했습니다 \n다시 시도해 주세요.");
+	                            alert("댓글 등록을 실패했습니다. 다시 시도해 주세요.");
 	                        } else {
-	                            location.href = "storeView?siid=" + this.siid;
+	                        	alert("등록 되었습니다.");
+                                location.href = "storeView?siid=" + siid;
 	                        }
 	                    }
 	                });
 	            } else {
-	                alert("내용을 입력해주세요");
+	                alert("내용을 입력해주세요.");
 	            }
+	        },
+	        
+	    	// 댓글에 이미지 추가하는 메서드
+	        onFileChange(event) {
+	            const files = event.target.files; // 파일 객체들을 가져옴
+	            for (let i = 0; i < files.length; i++) {
+	                const file = files[i]; // 각 파일 객체	
+	                const imageUrl = URL.createObjectURL(file); // 파일을 URL로 변환
+	                
+	                // 이미지 객체를 images 배열에 추가
+	                this.images.push({ url: imageUrl ,name: file.name, file: file });
+	    
+	            }
+	        },
+	        
+	     	// 댓글에 첨부된 이미지 삭제하는 메서드
+	        deleteImage(index) {
+	            URL.revokeObjectURL(this.images[index].url); // URL 해제
+	            this.images.splice(index, 1); // 배열에서 이미지 삭제
 	        }
 	    }
 	});
@@ -234,38 +272,46 @@ window.onload = function () {
 					<div class="scoreBox star_box">
 						<div class="star_score">
 							<div class="rating-star-7">
-							<div style="width:100%">
-								<img src="resources/img/star.png" alt="별점을 선택해 평가해보세요.">
-								<select>
-									<option>1</option>
-									<option>1.5</option>
-									<option>2</option>
-									<option>2.5</option>
-									<option>3</option>
-									<option>3.5</option>
-									<option>4</option>
-									<option>4.5</option>
-									<option>5</option>
-								</select>
-							</div>
+								<div style="width:100%">
+									<img src="resources/img/star.png" alt="별점을 선택해 평가해보세요.">
+									<select v-model="rstar">
+										<option value="1">1</option>
+									    <option value="1.5">1.5</option>
+									    <option value="2">2</option>
+									    <option value="2.5">2.5</option>
+									    <option value="3">3</option>
+									    <option value="3.5">3.5</option>
+									    <option value="4">4</option>
+									    <option value="4.5">4.5</option>
+									    <option value="5">5</option>
+									</select>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="txtbox">
 					<div>
-						<textarea name="storyContents" class="focusIn" v-model="rcontent" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
+						<textarea name="storeContents" class="focusIn" v-model="rcontent" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
 					</div>
 				</div>
 				<div class="file_list">
 					<div class="photo_review">
 						<ul>
 							<li class="file_wrap">
-								<input type="file" name="imgFile" class="file_add" multiple="">
+								<input type="file" name="imgFile" class="file_add" @change="onFileChange" accept="image/*" multiple>
+							</li>
+							<!-- v-for 디렉티브를 사용하여 images 배열의 각 이미지에 대해 반복하며 이미지를 표시 -->
+							<li v-for="(image, index) in images" :key="index">
+								<!-- :src 속성에는 현재 반복 중인 이미지의 URL이 바인딩  -->
+								<img :src="image.url" alt="Image" width="100">
+								<a href="javascript:void(0);" class="btn_del" @click="deleteImage(index)">
+									<img src="resources/img/btn_file_del01.png" alt="삭제">
+								</a>
 							</li>
 						</ul>
 					</div>
-					<input type="submit" id="btn" class="btn" @click="rInsert()" value="등록" />
+					<input type="submit" id="btn" class="btn" @click="rInsert();" value="등록" />
 				</div>
 			</div>
 		</div>
@@ -279,8 +325,22 @@ window.onload = function () {
 				${storeReply.sr_content}
 			</div>
 			<div class="img_list">
+				<c:if test="${not empty storeReply.sr_img1}">
 				<a href="#layer_review_photo">
-				<img src="https://img.siksinhot.com/story/1514655456825339.JPG?w=307&amp;h=300&amp;c=Y" alt="새벽집 청담동점 매장 방문 후 남겨주신 고객 리뷰 사진입니다."></a>
+					<img src="resources/img/storeReply/${storeReply.sr_img1}" alt="새벽집 청담동점 매장 방문 후 남겨주신 고객 리뷰 사진입니다.">
+				</a>
+				</c:if>
+				<c:if test="${not empty storeReply.sr_img2}">
+				<a href="#layer_review_photo">
+					<img src="resources/img/storeReply/${storeReply.sr_img2}" alt="새벽집 청담동점 매장 방문 후 남겨주신 고객 리뷰 사진입니다.">
+				</a>
+				</c:if>
+				<c:if test="${not empty storeReply.sr_img3}">
+				<a href="#layer_review_photo">
+					<img src="resources/img/storeReply/${storeReply.sr_img3}" alt="새벽집 청담동점 매장 방문 후 남겨주신 고객 리뷰 사진입니다.">
+				</a>
+				</c:if>
+				
 			</div>
 			<div class="review_status">
 				<button class="like-cnt">

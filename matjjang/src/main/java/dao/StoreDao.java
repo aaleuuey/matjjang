@@ -96,7 +96,7 @@ public class StoreDao {
 			srl.setSr_idx(rs.getInt("sr_idx"));
 			srl.setSi_id(rs.getString("si_id"));
 			srl.setMi_name(rs.getString("mi_name"));
-			srl.setSr_star(rs.getFloat("sr_star")); 
+			srl.setSr_star(rs.getString("sr_star")); 
 			srl.setSr_content(rs.getString("sr_content"));
 			srl.setSr_good(rs.getInt("sr_good")); 
 			srl.setSr_img1(rs.getString("sr_img1"));
@@ -106,6 +106,16 @@ public class StoreDao {
 			return srl;
 		});
 		return storeReplyList;
+	}
+
+	public int getStoreReplyInsert(StoreReplyList srl) {
+		String sql = "insert into t_store_reply (si_id, mi_id, sr_star, sr_content, sr_good, sr_img1, sr_img2, sr_img3) values (?, ?, ?, ?, ?, ?, ?, ?)";
+		int result = jdbc.update(sql, 
+				srl.getSi_id(), srl.getMi_id(), srl.getSr_star(), srl.getSr_content(), srl.getSr_good(), 
+				srl.getSr_img1(), srl.getSr_img2(), srl.getSr_img3()
+		);
+		
+		return result;
 	}
 
 }

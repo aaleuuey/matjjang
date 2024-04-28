@@ -33,4 +33,9 @@ public class StoreSvc {
 		List<StoreReplyList> storeReplyList = storeDao.getStoreReplyList(siid);
 		return storeReplyList;
 	}
+
+	public int StoreReplyInsert(StoreReplyList srl) {
+		int result = storeDao.getStoreReplyInsert(srl);
+		return result;
+	}
 }

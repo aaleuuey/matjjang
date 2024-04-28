@@ -1,17 +1,22 @@
 package ctrl;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import svc.*;
 import vo.*;
@@ -117,11 +122,61 @@ public class StoreCtrl {
 	}
 	
 	@PostMapping("/storeReplyIn")
-	public String storeReplyeInProc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String storeReplyeInProc(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "imageFiles", required = false) MultipartFile[] imageFiles, @RequestParam("imageNames[]") String[] imageNames) throws Exception {
+																											// 이미지를 전송하지 않았을 경우를 위해 피라미터 필수가 아닌 선택적으로 설정
 		request.setCharacterEncoding("utf-8");
-		System.out.println(request.getParameter("siid"));
-		System.out.println(request.getParameter("rcon"));
 		
-		return "redirect:/";
+		String uploadPath = "C:/Users/naeha/eclipse-workspace/matjjang/matjjang/src/main/webapp/resources/img/storeReply";
+		
+		String uploadFiles = "";
+		String siid = request.getParameter("siid");
+		System.out.println(request.getParameter("rcon"));
+		System.out.println(request.getParameter("rstar"));
+		
+		StoreReplyList srl = new StoreReplyList();
+		
+		HttpSession session = request.getSession();
+		MemberInfo mi = (MemberInfo)session.getAttribute("loginInfo");
+		
+		srl.setMi_id(mi.getMi_id());
+		srl.setSi_id(request.getParameter("siid"));
+		srl.setSr_content(request.getParameter("rcon"));
+		srl.setSr_star(request.getParameter("rstar"));
+	
+		for (int i = 0; i < imageNames.length; i++) {
+			if (i == 0) {
+				String sr_img1 = imageNames[i];
+				srl.setSr_img1(sr_img1);
+
+			} else if (i == 1) {
+				String sr_img2 = imageNames[i];
+				srl.setSr_img2(sr_img2);
+			} else if (i == 2) {
+				String sr_img3 = imageNames[i];
+				srl.setSr_img3(sr_img3);
+			}
+	    }
+		
+		int result = storeSvc.StoreReplyInsert(srl);
+		
+		// 이미지 서버에 저장
+	    for (MultipartFile file : imageFiles) {
+	        if (!file.isEmpty()) {
+	            String fileName = file.getOriginalFilename();
+	            String filePath = uploadPath + File.separator + fileName;
+	            File dest = new File(filePath);
+	            file.transferTo(dest);
+	            uploadFiles += ", " + fileName;
+	        }
+	    }
+		
+		if (!uploadFiles.equals(""))	uploadFiles = uploadFiles.substring(2);
+		
+		
+		
+		return "redirect:/storeView?siid=" + siid + "&sridx=" + result;
+		
+		
 	}
+
 }

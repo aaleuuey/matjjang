@@ -2,8 +2,7 @@ package vo;
 
 public class StoreReplyList {
 	private int sr_idx, sr_good;
-	private float sr_star;
-	private String si_id, mi_id, mi_name, sr_ismem, sr_content, sr_img1, sr_img2, sr_img3, sr_isview, sr_date;
+	private String si_id, mi_id, mi_name, sr_ismem, sr_content, sr_star, sr_img1, sr_img2, sr_img3, sr_isview, sr_date;
 	
 	public int getSr_idx() {
 		return sr_idx;
@@ -17,12 +16,12 @@ public class StoreReplyList {
 	public void setSr_good(int sr_good) {
 		this.sr_good = sr_good;
 	}
-	public float getSr_star() {
+	public String getSr_star() {
 		return sr_star;
 	}
-	public void setSr_star(float st_star) {
-		this.sr_star = st_star;
-	}	
+	public void setSr_star(String sr_star) {
+		this.sr_star = sr_star;
+	}
 	public String getSi_id() {
 		return si_id;
 	}
