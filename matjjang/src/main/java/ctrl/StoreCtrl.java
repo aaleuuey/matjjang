@@ -2,6 +2,7 @@ package ctrl;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,10 +101,29 @@ public class StoreCtrl {
 	public String storeView(Model model, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		
+		int srcnt = 0;
+		
 		String siid = request.getParameter("siid");
 		
 		List<StoreInfo> storeView = storeSvc.getStoreView(siid);
 		List<StoreReplyList> storeReplyList = storeSvc.getStoreReplyList(siid);
+		
+		srcnt = storeSvc.getStoreReplyCount(siid);
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		/*StoreReplyGnb srg = new StoreReplyGnb(); 
+		
+		List<Integer> srIdxList = new ArrayList<>();
+	    for (StoreReplyList storeReply : storeReplyList) {
+	        srIdxList.add(storeReply.getSr_idx());
+	    }
+	    
+	    srg.setSrIdxList(srIdxList);
+	    srg.setMi_id(loginInfo.getMi_id());*/
+		
+	    // List<StoreReplyGnb> storereplyGnb = storeSvc.getStoreReplyGnb(srIdxList, loginInfo.getMi_id());
 		
 		// StoreInfo 객체의 List인 storeView에서 첫 번째 StoreInfo 객체를  가져옴
 		StoreInfo si = storeView.get(0);
@@ -114,6 +134,7 @@ public class StoreCtrl {
 		
 		model.addAttribute("storeView", storeView);
 		model.addAttribute("siid", siid);
+		model.addAttribute("srcnt", srcnt);
 		model.addAttribute("storeReplyList", storeReplyList);
 		model.addAttribute("si_lat", si_lat);
 		model.addAttribute("si_lng", si_lng);
@@ -128,19 +149,15 @@ public class StoreCtrl {
 																											// 이미지를 전송하지 않았을 경우를 위해 피라미터 필수가 아닌 선택적으로 설정
 		request.setCharacterEncoding("utf-8");
 		
+		
 		String uploadPath = "C:/Users/naeha/eclipse-workspace/matjjang/matjjang/src/main/webapp/resources/img/storeReply";
 		
 		String uploadFiles = "";
-		String siid = request.getParameter("siid");
-		System.out.println(request.getParameter("rcon"));
-		System.out.println(request.getParameter("rstar"));
-		
-		StoreReplyList srl = new StoreReplyList();
 		
 		HttpSession session = request.getSession();
-		MemberInfo mi = (MemberInfo)session.getAttribute("loginInfo");
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
 		
-		if (mi == null) {
+		if (loginInfo == null) {
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
@@ -150,7 +167,10 @@ public class StoreCtrl {
 			out.close();
 		}
 		
-		srl.setMi_id(mi.getMi_id());
+		
+		StoreReplyList srl = new StoreReplyList();
+
+		srl.setMi_id(loginInfo.getMi_id());
 		srl.setSi_id(request.getParameter("siid"));
 		srl.setSr_content(request.getParameter("rcon"));
 		srl.setSr_star(request.getParameter("rstar"));
@@ -187,6 +207,22 @@ public class StoreCtrl {
 		return result + "";
 		
 		
+	}
+	
+	@PostMapping("/replyProcGnb")
+	@ResponseBody
+	public String replyProcGnb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		int sridx = Integer.parseInt(request.getParameter("sridx"));
+		String siid = request.getParameter("siid");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		int result = storeSvc.replyGnb(sridx, siid, loginInfo.getMi_id());
+		
+		return result + "";
 	}
 
 }

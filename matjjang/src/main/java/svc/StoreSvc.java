@@ -33,9 +33,27 @@ public class StoreSvc {
 		List<StoreReplyList> storeReplyList = storeDao.getStoreReplyList(siid);
 		return storeReplyList;
 	}
+	
+	public int getStoreReplyCount(String siid) {
+		int result = storeDao.getStoreReplyCount(siid);
+		return result;
+	}
 
 	public int StoreReplyInsert(StoreReplyList srl) {
 		int result = storeDao.getStoreReplyInsert(srl);
 		return result;
 	}
+
+	public int replyGnb(int sridx, String siid, String mi_id) {
+		int result = storeDao.replyGnb(sridx, siid, mi_id);
+		return result;
+	}
+
+	/*public List<StoreReplyGnb> getStoreReplyGnb(StoreReplyGnb srg) {
+		List<StoreReplyGnb> storeReplyGnb = storeDao.getStoreReplyGnb(srg);
+		return storeReplyGnb;
+	}*/
+
+
+
 }

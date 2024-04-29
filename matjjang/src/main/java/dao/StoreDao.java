@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -89,10 +90,13 @@ public class StoreDao {
 
 	public List<StoreReplyList> getStoreReplyList(String siid) {
 		String sql = "select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b "
-						+ "on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = '" + siid + "' ";
+						+ "on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = '" + siid + "' " + "order by a.sr_idx desc";
+		
+		System.out.println(sql);
 	
 		List<StoreReplyList> storeReplyList = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
 			StoreReplyList srl = new StoreReplyList();
+			srl.setMi_id(rs.getString("mi_id"));
 			srl.setSr_idx(rs.getInt("sr_idx"));
 			srl.setSi_id(rs.getString("si_id"));
 			srl.setMi_name(rs.getString("mi_name"));
@@ -107,7 +111,14 @@ public class StoreDao {
 		});
 		return storeReplyList;
 	}
+	
+	public int getStoreReplyCount(String siid) {
+		String sql = "select count(*) from t_store_reply where sr_isview = 'y' and si_id = '" + siid + "'";
 
+		int srcnt = jdbc.queryForObject(sql, Integer.class);
+		return srcnt;
+	}
+	
 	public int getStoreReplyInsert(StoreReplyList srl) {
 		String sql = "select ifnull(max(sr_idx) + 1, 1) from t_store_reply";
 		int sridx = jdbc.queryForObject(sql, Integer.class);
@@ -124,4 +135,39 @@ public class StoreDao {
 		return result;
 	}
 
+	public int replyGnb(int sridx, String siid, String mi_id) {
+	    int result = 0;
+	    
+	    // 중복 여부를 확인하는 select 쿼리
+	    String selectSql = "select count(*) from t_store_reply_gnb where sr_idx = ? and mi_id = ?";
+	    
+	    // t_store_reply_gnb 테이블에 해당 조합이 이미 존재하는지 확인
+	    int count = jdbc.queryForObject(selectSql, Integer.class, sridx, mi_id);
+	    
+	    if (count > 0) {
+	        // 이미 존재할 경우 해당 댓글을 삭제
+	        String deleteSql = "delete from t_store_reply_gnb where sr_idx = ? and mi_id = ?";
+	        jdbc.update(deleteSql, sridx, mi_id);
+	        result = -1; // 이미 존재하는 경우 -1을 반환하거나 다른 처리를 수행할 수 있습니다.
+	    } else {
+	        // 존재하지 않을 경우 새로운 댓글을 삽입
+	        String insertSql = "insert into t_store_reply_gnb (mi_id, sr_idx, srg_gnb) values (?, ?, 1)";
+	        result = jdbc.update(insertSql, mi_id, sridx);
+	    }
+	    
+	    return result;
+	}
 }
+	/*public List<StoreReplyList> storeReplyGnb(StoreReplyGnb srg) {
+		String sql = "SELECT * FROM StoreReplyList WHERE sr_idx IN (";
+	    for (int i = 0; i < srg.getSrIdxList().size(); i++) {
+	        sql += "?";
+	        if (i < srg.getSrIdxList().size() - 1) {
+	            sql += ", ";
+	        }
+	    }
+	    sql += ")";
+	}
+	return*/
+
+

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/head.jsp" %>
 <%@ include file="../inc/header.jsp" %>
+<c:set var="loginInfo" value="${loginInfo}" />
 <style>
 	.imgbox {display:flex; justify-content:center;}
 </style>
@@ -14,7 +15,7 @@ window.onload = function () {
 	        siid: '${siid}', // 서버에서 받은 siid 값 할당
 	        rcontent: '',
 	        rstar: null,
-	        images: [],
+	        images: []
 	    },
 	    methods: {
 	        toggleShow() {
@@ -39,7 +40,6 @@ window.onload = function () {
                         // 이미지를 보내지 않은 경우에도 imageNames[] 파라미터를 빈 배열로 추가
                         formData.append('imageNames[]', []);
                     }
-
 	                
 	                $.ajax({
 	                    type: "POST",
@@ -78,7 +78,29 @@ window.onload = function () {
 	        deleteImage(index) {
 	            URL.revokeObjectURL(this.images[index].url); // URL 해제
 	            this.images.splice(index, 1); // 배열에서 이미지 삭제
-	        }
+	        },
+	        
+	        focuslogin() {
+                alert('로그인을 해주세요.');
+                location.href = "login";
+            },
+	        
+	        setGnb(sridx, siid, miid) {
+            	console.log("124");
+            	if (!this.loginInfo) {
+                    alert("로그인 후 이용하실 수 있습니다.");
+                } else {
+					$.ajax({
+					    type: "POST",
+					    url: "/matjjang/replyProcGnb",
+					    data: { "sridx" : sridx, "siid" : siid, "miid" : miid},
+					    success: function(result) {
+							location.reload();
+						}
+					});
+                }
+	        },
+            
 	    }
 	});
 	
@@ -127,7 +149,7 @@ window.onload = function () {
 		<div id="slideWrap" class="carousel" data-ride="carousel" style="width:45%;">
 		  	<div id="myCarousel" class="carousel slide mb-6 pointer-event">
 				<div class="carousel-indicators">
-				<c:forEach items="${storeView}" var="store">
+			<c:forEach items="${storeView}" var="store">
 					<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
 					<c:if test="${not empty store.si_img2}">
 				  	<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
@@ -262,7 +284,8 @@ window.onload = function () {
 	<div class="store_review" style="margin-bottom:20px;">
 	 	<div id="app">
 			<div class="review_title">
-				<h3>식신 리뷰</h3><span>(172)</span>
+				<h3>식신 리뷰</h3><span>(${srcnt})</span>
+
 				<input type="checkbox" id="writeToggle" value="on">
 				<label for="writeToggle" @click="toggleShow">리뷰 작성</label>
 			</div>
@@ -291,9 +314,18 @@ window.onload = function () {
 					</div>
 				</div>
 				<div class="txtbox">
-					<div>
-						<textarea name="storeContents" class="focusIn" v-model="rcontent" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
-					</div>
+					<c:choose>
+					    <c:when test="${not empty loginInfo}">
+					        <div>
+					            <textarea name="storeContents" class="focusIn" v-model="rcontent" placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
+					        </div>
+					    </c:when>
+					    <c:otherwise>
+					        <div>
+					            <textarea name="storeContents" class="focusIn" v-model="rcontent" @click="focuslogin"  placeholder="매장에 대한 리뷰를 작성해보세요.(필수)"></textarea>
+					        </div>
+					    </c:otherwise>
+					</c:choose>
 				</div>
 				<div class="file_list">
 					<div class="photo_review">
@@ -342,15 +374,33 @@ window.onload = function () {
 				</c:if>
 				
 			</div>
+			
 			<div class="review_status">
-				<button class="like-cnt">
-					<span class="icon black">
-						<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.3em" width="1.3em" xmlns="http://www.w3.org/2000/svg" data-reactid="113">
-							<path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
-						</svg>
-					</span>
-					<span class="count">좋아요${storeReply.sr_good}</span>
-				</button>
+				<div id="app">
+				<c:choose>
+					<c:when test="${not empty loginInfo}">
+					    <button class="like-cnt" onclick="setGnb(${storeReply.sr_idx}, '${storeReply.si_id}')">
+							<span class="icon black">
+								<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.3em" width="1.3em" xmlns="http://www.w3.org/2000/svg" data-reactid="113">
+									<path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
+								</svg>
+							</span>
+							<span class="count">좋아요${storeReply.sr_good}</span>
+						</button>
+					</c:when>
+					<c:otherwise>
+					    <button class="like-cnt" onclick="focuslogin();">
+							<span class="icon black">
+								<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.3em" width="1.3em" xmlns="http://www.w3.org/2000/svg" data-reactid="113">
+									<path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
+								</svg>
+							</span>
+							<span class="count">좋아요${storeReply.sr_good}</span>
+						</button>
+					</c:otherwise>
+				</c:choose>
+				
+				</div>
 			</div>
 		</div>
 		<a href="#" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a>
@@ -359,5 +409,23 @@ window.onload = function () {
 	</div>
 
 </section>
+
+<script>
+function setGnb(sridx, siid) {
+	$.ajax({
+	    type: "POST",
+	    url: "/matjjang/replyProcGnb",
+	    data: { "sridx" : sridx, "siid" : siid},
+	    success: function(result) {
+			location.reload();
+		}
+	});
+}
+
+function focuslogin() {
+	alert('로그인을 해주세요.');
+    location.href = "login";
+}
+</script>
 
 <%@ include file="../inc/foot.jsp" %>

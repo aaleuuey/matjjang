@@ -26,6 +26,7 @@ create table t_member_info (
 	mi_lastlogin datetime				-- 최종 로그인
 );
 insert into t_member_info values ('test', '1234', '이한나', '010-9182-6545', '2001-03-02', '여', 'lhn@naver.com', 'a', now(), null);
+insert into t_member_info values ('test1', '1234', '홍길동', '010-1234-6578', '1998-10-20', '남', 'hgd@naver.com', 'a', now(), null);
 
 -- 회원 주소록 테이블
 create table t_member_addr (
@@ -110,8 +111,34 @@ create table t_store_reply (
     constraint fk_t_store_reply_mi_id foreign key(mi_id) references t_member_info(mi_id)
 );
 
+select * from t_store_reply;  	
+select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA776' order by a.sr_idx desc;
+use matjjang;
+select * from t_store_reply where sr_idx = 4 and mi_id = 'test';
+
 insert into t_store_reply values('1', 'AA776', 'test', 'y', '5', '댓글', 1, 'img.png', '', '', 'y', now());
 
+-- 음식점 댓글 좋아요 테이블
+create table t_store_reply_gnb (
+	srg_idx int auto_increment unique,
+    mi_id varchar(20),
+    sr_idx int,
+	srg_gnb int default 1,
+    srg_date datetime default now(), 
+    constraint pk_store_reply_gnb primary key (mi_id, sr_idx),
+    constraint fk_store_reply_gnb_mi_id foreign key (mi_id) references t_member_info(mi_id), 
+    constraint fk_store_reply_gnb_sr_idx foreign key (sr_idx) references t_store_reply(sr_idx)
+);
+
+select * from t_store_reply_gnb;	
+
+select * from t_store_reply_gnb where sr_idx IN (4) and mi_id= 'test1';
+
+select concat(srg_gnb, srg_idx) from t_store_reply_gnb where mi_id = 'test1' and sr_idx = 4;
+
+
+insert into t_store_reply_gnb(mi_id, sr_idx, srg_gnb) values('test1', '4', '1');
+delete from t_store_reply_gnb where sr_idx = 4 and mi_id = 'test1';
 
 -- 맛집게시판 테이블
 create table t_free_list (
