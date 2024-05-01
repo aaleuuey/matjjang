@@ -110,34 +110,36 @@ public class StoreCtrl {
 		
 		srcnt = storeSvc.getStoreReplyCount(siid);
 		
+		
 		HttpSession session = request.getSession();
 		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		String mi_id = loginInfo.getMi_id();
 		
-		/*StoreReplyGnb srg = new StoreReplyGnb(); 
 		
+		// 각 댓글에 대한 좋아요 여부 확인
 		List<Integer> srIdxList = new ArrayList<>();
-	    for (StoreReplyList storeReply : storeReplyList) {
-	        srIdxList.add(storeReply.getSr_idx());
-	    }
-	    
-	    srg.setSrIdxList(srIdxList);
-	    srg.setMi_id(loginInfo.getMi_id());*/
+		for (StoreReplyList storeReply : storeReplyList) {
+		    srIdxList.add(storeReply.getSr_idx());
+		}
 		
-	    // List<StoreReplyGnb> storereplyGnb = storeSvc.getStoreReplyGnb(srIdxList, loginInfo.getMi_id());
+	    List<Integer> replyGnb = storeSvc.getStoreReplyGnb(srIdxList, mi_id);
 		
 		// StoreInfo 객체의 List인 storeView에서 첫 번째 StoreInfo 객체를  가져옴
 		StoreInfo si = storeView.get(0);
 		
 		// StoreInfo 객체에서 위도와 경도 값을 가져와서 문자열 변수에 저장
 		String si_lat = si.getSi_lat();
-		String si_lng = si.getSi_lng();	
+		String si_lng = si.getSi_lng();
+		int si_review = si.getSi_review();
 		
 		model.addAttribute("storeView", storeView);
 		model.addAttribute("siid", siid);
 		model.addAttribute("srcnt", srcnt);
+		model.addAttribute("replyGnb", replyGnb);
 		model.addAttribute("storeReplyList", storeReplyList);
 		model.addAttribute("si_lat", si_lat);
 		model.addAttribute("si_lng", si_lng);
+		model.addAttribute("si_review", si_review);
 		
 		return "store/storeView";
 		
@@ -224,5 +226,30 @@ public class StoreCtrl {
 		
 		return result + "";
 	}
+	
+	@PostMapping("/storeReplyDel")
+	@ResponseBody
+	public String storeReplyDel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		int sridx = Integer.parseInt(request.getParameter("sridx"));
+		String siid = request.getParameter("siid");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		int result = storeSvc.storeReplyDelete(sridx, siid, loginInfo.getMi_id());
+		return result + "";
+	}
+	
+	@PostMapping("/moreReviews")
+	@ResponseBody
+	public List<StoreReplyList> getMoreReviews (@RequestParam int currentReviews, @RequestParam int addReviews, @RequestParam String siid) {
+		
+	    List<StoreReplyList> moreReviews = storeSvc.getMoreReviews(currentReviews, addReviews, siid);
+	    
+	    return moreReviews;
+	}
+	
+	
 
 }

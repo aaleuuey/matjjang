@@ -49,10 +49,20 @@ public class StoreSvc {
 		return result;
 	}
 
-	/*public List<StoreReplyGnb> getStoreReplyGnb(StoreReplyGnb srg) {
-		List<StoreReplyGnb> storeReplyGnb = storeDao.getStoreReplyGnb(srg);
-		return storeReplyGnb;
-	}*/
+	public List<Integer> getStoreReplyGnb(List<Integer> srIdxList, String mi_id) {
+		List<Integer> replyGnb = storeDao.getStoreReplyGnb(srIdxList, mi_id);
+		return replyGnb;
+	}
+
+	public List<StoreReplyList> getMoreReviews(int currentReviews, int addReviews, String siid) {
+		List<StoreReplyList> moreReviews = storeDao.getMoreReviews(currentReviews, addReviews, siid);
+		return moreReviews;
+	}
+
+	public int storeReplyDelete(int sridx, String siid, String mi_id) {
+		int result = storeDao.storeReplyDelete(sridx, siid, mi_id);
+		return result;
+	}
 
 
 

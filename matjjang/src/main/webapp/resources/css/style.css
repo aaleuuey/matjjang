@@ -24,7 +24,7 @@
 .store_info3 .store_info3_title {font-size: 20px; font-weight: bold; color: #000; text-align: left; margin-bottom: 20px;}
 .store_info3 .text {font-size: 16px; color: #000; line-height: 1.6;}
 .map {margin:30px 0;}
-.store_review {position: relative; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; margin-top: 20px; padding: 0 20px 40px;}
+.store_review {position: relative; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; margin-top: 20px; padding: 0 20px 25px;}
 .store_review .review_title {position: relative; font-size: 18px; color: #000; text-align: left; padding: 15px 0; border-bottom: 1px solid #ddd;}
 .store_review .review_title h3 {display:contents; font-size:18px;}
 .store_review .review_title input {display:none;}
@@ -45,7 +45,7 @@
 .store_review .review_write .file_list ul li .btn_del {position:absolute; top:0; right:0;}
 .store_review .review_write .file_list ul li .btn_del img {display: block;}
 .store_review .review_write .file_list .btn {position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: 600; color: #ffc107; cursor: pointer;}
-.store_review .place_review_list {position: relative; display: table-cell; width: 1000px; padding: 10px 10px 40px 10px; box-sizing: border-box; vertical-align: top; border-top: 1px solid lightgray; overflow-x: auto;}
+.store_review .place_review_list {position: relative; width: 100%; padding: 10px 10px 40px 10px; box-sizing: border-box; vertical-align: top; border-top: 1px solid lightgray; overflow-x: auto;}
 .store_review .place_review_list .name {font-size: 18px; color: #000; display: inline-block;}
 .store_review .place_review_list .name .score {font-size: 18px; font-weight: bold; color: #ffc107;}
 .store_review .place_review_list .action {display: inline-block; float: right;}

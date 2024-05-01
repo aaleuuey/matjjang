@@ -2,147 +2,10 @@
 <%@ include file="../inc/head.jsp" %>
 <%@ include file="../inc/header.jsp" %>
 <c:set var="loginInfo" value="${loginInfo}" />
+
 <style>
 	.imgbox {display:flex; justify-content:center;}
 </style>
-<script>
-window.onload = function () { 	
-	// 리뷰 작성 클릭 시
-	new Vue({
-	    el: '#app',
-	    data: {
-	        show: false,
-	        siid: '${siid}', // 서버에서 받은 siid 값 할당
-	        rcontent: '',
-	        rstar: null,
-	        images: []
-	    },
-	    methods: {
-	        toggleShow() {
-	            this.show = !this.show;
-	        },
-	        rInsert() {
-	            if (this.rcontent.trim() !== "") { // 댓글 내용이 비어있지 않은지 확인
-	                const formData = new FormData(); // FormData 객체 생성
-	                formData.append('siid', this.siid);	// siid 값을 FormData에 추가
-	                formData.append('rcon', this.rcontent);
-	                formData.append('rstar', this.rstar);
-	                
-	             	// 이미지를 보내는 경우에만 FormData에 추가
-                    if (this.images.length > 0) {
-                        for (let i = 0; i < this.images.length; i++) {
-                            formData.append('imageNames[]', this.images[i].name);
-                        }
-                        for (let i = 0; i < this.images.length; i++) {
-                            formData.append('imageFiles', this.images[i].file);
-                        }
-                    } else {
-                        // 이미지를 보내지 않은 경우에도 imageNames[] 파라미터를 빈 배열로 추가
-                        formData.append('imageNames[]', []);
-                    }
-	                
-	                $.ajax({
-	                    type: "POST",
-	                    url: "/matjjang/storeReplyIn",
-	                    data: formData, // 전송할 데이터
-	                    contentType: false, // 데이터 타입을 설정하지 않음
-	                    processData: false, // 데이터를 처리하지 않음
-	                    success: (result) => { // 요청이 성공했을 때의 콜백 함수
-	                    	if (result == 0) {
-	            				alert("댓글 등록에 실패했습니다.\n다시 시도해 보세요.");
-	            			} else {
-	            				alert("댓글이 등록되었습니다.");
-	            				location.reload();
-	            			}
-	                    }
-	                });
-	            } else {
-	                alert("내용을 입력해주세요.");
-	            }
-	        },
-	        
-	    	// 댓글에 이미지 추가하는 메서드
-	        onFileChange(event) {
-	            const files = event.target.files; // 파일 객체들을 가져옴
-	            for (let i = 0; i < files.length; i++) {
-	                const file = files[i]; // 각 파일 객체	
-	                const imageUrl = URL.createObjectURL(file); // 파일을 URL로 변환
-	                
-	                // 이미지 객체를 images 배열에 추가
-	                this.images.push({ url: imageUrl ,name: file.name, file: file });
-	    
-	            }
-	        },
-	        
-	     	// 댓글에 첨부된 이미지 삭제하는 메서드
-	        deleteImage(index) {
-	            URL.revokeObjectURL(this.images[index].url); // URL 해제
-	            this.images.splice(index, 1); // 배열에서 이미지 삭제
-	        },
-	        
-	        focuslogin() {
-                alert('로그인을 해주세요.');
-                location.href = "login";
-            },
-	        
-	        setGnb(sridx, siid, miid) {
-            	console.log("124");
-            	if (!this.loginInfo) {
-                    alert("로그인 후 이용하실 수 있습니다.");
-                } else {
-					$.ajax({
-					    type: "POST",
-					    url: "/matjjang/replyProcGnb",
-					    data: { "sridx" : sridx, "siid" : siid, "miid" : miid},
-					    success: function(result) {
-							location.reload();
-						}
-					});
-                }
-	        },
-            
-	    }
-	});
-	
-	// 지도 
-	var HOME_PATH = window.HOME_PATH || '.';
-	var position = new naver.maps.LatLng(${si_lat} , ${si_lng});
-
-	var mapOptions = {
-	    center: position,
-	    zoom: 15,
-	    zoomControl: true,
-	    zoomControlOptions: {
-	        style: naver.maps.ZoomControlStyle.SMALL,
-	        position: naver.maps.Position.TOP_RIGHT
-	    }
-	};
-
-	var map = new naver.maps.Map('map', mapOptions);
-
-	var markerOptions = {
-	    position: position,
-	    map: map,
-	    icon: {
-	        url: HOME_PATH +'/img/example/pin_default.png',
-	        size: new naver.maps.Size(22, 35),
-	        origin: new naver.maps.Point(0, 0),
-	        anchor: new naver.maps.Point(11, 35)
-	    },
-	    shape: {
-	        coords: [11, 0, 9, 0, 6, 1, 4, 2, 2, 4,
-	                0, 8, 0, 12, 1, 14, 2, 16, 5, 19,
-	                5, 20, 6, 23, 8, 26, 9, 30, 9, 34,
-	                13, 34, 13, 30, 14, 26, 16, 23, 17, 20,
-	                17, 19, 20, 16, 21, 14, 22, 12, 22, 12,
-	                22, 8, 20, 4, 18, 2, 16, 1, 13, 0],
-	        type: 'poly'
-	    }
-	};
-
-	var marker = new naver.maps.Marker(markerOptions);
-}
-</script>
 
 <section id="content" style="width:1000px; margin:0 auto;">
 	<div class="comBox" style="display:flex; margin-top:60px;">
@@ -353,6 +216,11 @@ window.onload = function () {
 				<img src="resources/img/star.png" alt="별점" width="15" style="vertical-align:baseline;">
 				<span class="score">${storeReply.sr_star}</span>
 			</div>
+			<c:if test="${loginInfo.getMi_id() == storeReply.mi_id}">
+			<div class="action">
+				<a href="javascript:srDel(${storeReply.sr_idx}, '${storeReply.si_id}');" class="btn_report review_action">삭제</a>
+			</div>
+			</c:if>
 			<div class="review_text">
 				${storeReply.sr_content}
 			</div>
@@ -379,21 +247,17 @@ window.onload = function () {
 				<div id="app">
 				<c:choose>
 					<c:when test="${not empty loginInfo}">
-					    <button class="like-cnt" onclick="setGnb(${storeReply.sr_idx}, '${storeReply.si_id}')">
-							<span class="icon black">
-								<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.3em" width="1.3em" xmlns="http://www.w3.org/2000/svg" data-reactid="113">
-									<path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
-								</svg>
+						<button class="like-cnt" onclick="setGnb(${storeReply.sr_idx}, '${storeReply.si_id}')" style="width:85px; display:flex;">
+							<span class="icon black" style="width:32px;">
+								<img id="like-${storeReply.sr_idx}" class="" src="resources/img/bg_icon_good.png"  style="width:21px;"/>
 							</span>
-							<span class="count">좋아요${storeReply.sr_good}</span>
+							<span id="count-${storeReply.sr_idx}" class="count">좋아요${storeReply.sr_good}</span>
 						</button>
 					</c:when>
 					<c:otherwise>
 					    <button class="like-cnt" onclick="focuslogin();">
 							<span class="icon black">
-								<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1.3em" width="1.3em" xmlns="http://www.w3.org/2000/svg" data-reactid="113">
-									<path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
-								</svg>
+								<img src="resources/img/bg_icon_good.png" />
 							</span>
 							<span class="count">좋아요${storeReply.sr_good}</span>
 						</button>
@@ -403,29 +267,333 @@ window.onload = function () {
 				</div>
 			</div>
 		</div>
-		<a href="#" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a>
 		</c:forEach>
-		
+		<a href="javascript:setReview();" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a>
 	</div>
 
 </section>
 
 <script>
+//배열 정의
+var arr = ${replyGnb};
+
+// 각 요소에 대해 반복
+for (var i = 0; i < arr.length; i++) {
+	// 클래스 이름 설정
+    var className = "like-" + arr[i];
+    // 각 버튼 요소에 접근하여 이미지 클래스를 설정
+    var button = document.querySelectorAll(".like-cnt")[i];
+    
+    var img = button.querySelector("img"); 
+    // 클래스 설정
+    img.classList.add(className);
+    
+}
+
+
+//각 요소에 대해 반복
+for (var i = 0; i < arr.length; i++) { 
+	// 이미지 태그의 클래스 가져오기
+    var imgClass = document.querySelectorAll(".like-cnt img")[i].classList;
+
+    // 이미지 경로 설정
+    var imgSrc = arr[i] === 1 ? "resources/img/bg_icon_good_red.png" : "resources/img/bg_icon_good.png";
+
+ 	// 이미지 태그의 src 속성에 이미지 경로 설정
+    imgClass.forEach(function(className) {
+        if (className.startsWith("like-")) {
+            document.querySelectorAll("." + className).forEach(function(img) {
+                img.src = imgSrc;
+            });
+        }
+    });
+}
+
+//페이지 로드 시 더보기 버튼을 초기화
+$(document).ready(function() {
+	
+
+    // 서버에서 가져온 총 리뷰 개수를 전역 변수로 설정
+    var totalReviews = ${si_review}; // 총 리뷰 개수
+
+    // 현재 페이지에 표시된 리뷰 수를 계산
+    var currentReviews = $('.place_review_list').length;
+
+    // 더보기 버튼을 보여주거나 숨김
+    function toggleMoreButton() {
+        // 더 불러올 리뷰가 있는지 여부를 확인
+        var hasMoreReviews = totalReviews > currentReviews;
+
+        var moreButton = $('.more_list');
+
+        // 더보기 버튼이 있는 경우
+        if (moreButton.length > 0) {
+            if (hasMoreReviews) {
+                moreButton.show();
+            } else {
+                moreButton.hide();
+            }
+        }
+    }
+
+    // 페이지 로드 시 초기화 함수 호출
+    toggleMoreButton();
+});
+
+
+// 리뷰 더보기 클릭 시
+function setReview() {
+	// 현재 페이지에 표시된 댓글 수 계산
+    var currentReviews = $('.place_review_list').length;
+	
+ 	// 서버로 요청할 추가 댓글의 수
+    var addReviews = 5;
+ 	
+ 	var siid = '${siid}';
+	
+    $.ajax({
+        type: "POST",
+        url: "/matjjang/moreReviews",
+        data: { "currentReviews": currentReviews, "addReviews": addReviews, "siid": siid},
+        success: function(moreReviews) {
+        	
+            moreReviews.forEach(function(review) {
+                var reviewHtml = '<div class="place_review_list">' +
+                                    '<div class="name">' + review.mi_name +
+                                    '<img src="resources/img/star.png" alt="별점" width="15" style="vertical-align:baseline;">' +
+                                    '<span class="score">' + review.sr_star + '</span>' +
+                                '</div>' +
+                                '<div class="action">' +
+                                	'<a href="javascript:srDel(' + review.sr_idx + ',\'' + review.si_id + '\');" class="btn_report review_action" data-reactid="106">삭제</a>' +
+                                '</div>' +
+                                '<div class="review_text">' + review.sr_content + '</div>' +
+                                '<div class="img_list">';
+                // 이미지 추가
+                if (review.sr_img1 != null) {
+                    reviewHtml += '<a href="#layer_review_photo">' +
+                                    '<img src="resources/img/storeReply/' + review.sr_img1 + '" alt="리뷰 이미지">' +
+                                  '</a>';
+                }
+
+                reviewHtml += '</div>' + 
+                                '<div class="review_status">' +
+                                    '<div id="app">';
+                
+                // 좋아요 버튼 추가
+                if (review.sr_good != null) {
+                    reviewHtml += '<button class="like-cnt" onclick="setGnb(' + review.sr_idx + ', \'' + review.si_id + '\')" style="width:85px; display:flex;">' +
+                                    '<span class="icon black" style="width:32px;">' +
+                                        '<img id="like-' + review.sr_idx + '" class="" src="resources/img/bg_icon_good.png" style="width:21px;"/>' +
+                                    '</span>' +
+                                    '<span id="count-' + review.sr_idx + '" class="count">좋아요' + review.sr_good + '</span>' +
+                                  '</button>';
+                } else {
+                    // 로그인 안된 상태에서는 좋아요 버튼 대신 다른 버튼 추가
+                    reviewHtml += '<button class="like-cnt" onclick="focuslogin();">' +
+                                    '<span class="icon black">' +
+                                        '<img src="resources/img/bg_icon_good.png" />' +
+                                    '</span>' +
+                                    '<span class="count">좋아요' + review.sr_good + '</span>' +
+                                  '</button>';
+                }
+
+                reviewHtml +=       '</div>' +
+                                '</div>' +
+                            '</div>';
+
+                $('.store_review').append(reviewHtml);
+            });
+            
+         	// 더 이상 댓글이 없으면 더보기 버튼 숨기기
+            if (moreReviews.length < addReviews) {
+            	$('.more_list').hide();
+            }
+         	
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+};
+
+// 좋아요 클릭 시 
 function setGnb(sridx, siid) {
-	$.ajax({
-	    type: "POST",
-	    url: "/matjjang/replyProcGnb",
-	    data: { "sridx" : sridx, "siid" : siid},
-	    success: function(result) {
-			location.reload();
-		}
-	});
+    $.ajax({
+        type: "POST",
+        url: "/matjjang/replyProcGnb",
+        data: { "sridx" : sridx, "siid" : siid},
+        success: function(result) {
+            if (result > 0) {
+            	var newLikeCount = parseInt($("#count-" + sridx).text().replace("좋아요", "")) + 1;
+                $("#count-" + sridx).text("좋아요" + newLikeCount);
+                
+                $("#like-" + sridx).removeClass("like-1").addClass("like-0");
+                $("#like-" + sridx).prop("src", "resources/img/bg_icon_good_red.png");
+                
+            } else {
+            	var newLikeCount = parseInt($("#count-" + sridx).text().replace("좋아요", "")) - 1;
+                $("#count-" + sridx).text("좋아요" + newLikeCount);
+                
+                $("#like-" + sridx).removeClass("like-0").addClass("like-1");
+                $("#like-" + sridx).prop("src", "resources/img/bg_icon_good.png");
+            }
+        }
+    });
 }
 
 function focuslogin() {
 	alert('로그인을 해주세요.');
     location.href = "login";
 }
+
+// 댓글 삭제 
+function srDel(sridx, siid) {
+	if(confirm("정말 삭제하시겠습니까?")){
+		$.ajax({
+			type : "POST", url: "/matjjang/storeReplyDel", data : {"sridx" : sridx, "siid" : siid}, 
+			success: function(result) {
+				location.reload();
+			}
+		});
+	}
+}
+// 리뷰 작성 클릭 시
+new Vue({
+    el: '#app',
+    data: {
+        show: false,
+        siid: '${siid}', // 서버에서 받은 siid 값 할당
+        rcontent: '',
+        rstar: null,
+        images: []
+    },
+    methods: {
+        toggleShow() {
+            this.show = !this.show;
+        },
+        rInsert() {
+            if (this.rcontent.trim() !== "") { // 댓글 내용이 비어있지 않은지 확인
+                const formData = new FormData(); // FormData 객체 생성
+                formData.append('siid', this.siid);	// siid 값을 FormData에 추가
+                formData.append('rcon', this.rcontent);
+                formData.append('rstar', this.rstar);
+                
+             	// 이미지를 보내는 경우에만 FormData에 추가
+                if (this.images.length > 0) {
+                    for (let i = 0; i < this.images.length; i++) {
+                        formData.append('imageNames[]', this.images[i].name);
+                    }
+                    for (let i = 0; i < this.images.length; i++) {
+                        formData.append('imageFiles', this.images[i].file);
+                    }
+                } else {
+                    // 이미지를 보내지 않은 경우에도 imageNames[] 파라미터를 빈 배열로 추가
+                    formData.append('imageNames[]', []);
+                }
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/matjjang/storeReplyIn",
+                    data: formData, // 전송할 데이터
+                    contentType: false, // 데이터 타입을 설정하지 않음
+                    processData: false, // 데이터를 처리하지 않음
+                    success: (result) => { // 요청이 성공했을 때의 콜백 함수
+                    	if (result == 0) {
+            				alert("댓글 등록에 실패했습니다.\n다시 시도해 보세요.");
+            			} else {
+            				alert("댓글이 등록되었습니다.");
+            				location.reload();
+            			}
+                    }
+                });
+            } else {
+                alert("내용을 입력해주세요.");
+            }
+        },
+        
+    	// 댓글에 이미지 추가하는 메서드
+        onFileChange(event) {
+            const files = event.target.files; // 파일 객체들을 가져옴
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i]; // 각 파일 객체	
+                const imageUrl = URL.createObjectURL(file); // 파일을 URL로 변환
+                
+                // 이미지 객체를 images 배열에 추가
+                this.images.push({ url: imageUrl ,name: file.name, file: file });
+    
+            }
+        },
+        
+     	// 댓글에 첨부된 이미지 삭제하는 메서드
+        deleteImage(index) {
+            URL.revokeObjectURL(this.images[index].url); // URL 해제
+            this.images.splice(index, 1); // 배열에서 이미지 삭제
+        },
+        
+        focuslogin() {
+            alert('로그인을 해주세요.');
+            location.href = "login";
+        },
+        
+        setGnb(sridx, siid, miid) {
+        	console.log("124");
+        	if (!this.loginInfo) {
+                alert("로그인 후 이용하실 수 있습니다.");
+            } else {
+				$.ajax({
+				    type: "POST",
+				    url: "/matjjang/replyProcGnb",
+				    data: { "sridx" : sridx, "siid" : siid, "miid" : miid},
+				    success: function(result) {
+						location.reload();
+					}
+				});
+            }
+        },
+        
+    }
+});
+
+// 지도 
+var HOME_PATH = window.HOME_PATH || '.';
+var position = new naver.maps.LatLng(${si_lat} , ${si_lng});
+
+var mapOptions = {
+    center: position,
+    zoom: 15,
+    zoomControl: true,
+    zoomControlOptions: {
+        style: naver.maps.ZoomControlStyle.SMALL,
+        position: naver.maps.Position.TOP_RIGHT
+    }
+};
+
+var map = new naver.maps.Map('map', mapOptions);
+
+var markerOptions = {
+    position: position,
+    map: map,
+    icon: {
+        url: HOME_PATH +'/img/example/pin_default.png',
+        size: new naver.maps.Size(22, 35),
+        origin: new naver.maps.Point(0, 0),
+        anchor: new naver.maps.Point(11, 35)
+    },
+    shape: {
+        coords: [11, 0, 9, 0, 6, 1, 4, 2, 2, 4,
+                0, 8, 0, 12, 1, 14, 2, 16, 5, 19,
+                5, 20, 6, 23, 8, 26, 9, 30, 9, 34,
+                13, 34, 13, 30, 14, 26, 16, 23, 17, 20,
+                17, 19, 20, 16, 21, 14, 22, 12, 22, 12,
+                22, 8, 20, 4, 18, 2, 16, 1, 13, 0],
+        type: 'poly'
+    }
+};
+
+var marker = new naver.maps.Marker(markerOptions);
+
+
+
 </script>
 
 <%@ include file="../inc/foot.jsp" %>

@@ -3,8 +3,8 @@ package vo;
 import java.util.List;
 
 public class StoreReplyGnb {
-	private String mi_id, srg_gnb;
-	private int srg_idx, sr_idx;
+	private String mi_id;
+	private int srg_idx, sr_idx, srg_gnb;
 	private List<Integer> srIdxList;	// List를 사용하여 여러 개의 sr_idx를 저장
 
     public List<Integer> getSrIdxList() {
@@ -21,10 +21,10 @@ public class StoreReplyGnb {
 	public void setMi_id(String mi_id) {
 		this.mi_id = mi_id;
 	}
-	public String getSrg_gnb() {
+	public int getSrg_gnb() {
 		return srg_gnb;
 	}
-	public void setSrg_gnb(String srg_gnb) {
+	public void setSrg_gnb(int srg_gnb) {
 		this.srg_gnb = srg_gnb;
 	}
 	public int getSrg_idx() {

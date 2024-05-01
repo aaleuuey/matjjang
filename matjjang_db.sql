@@ -93,6 +93,8 @@ values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', 1.5, '월~금', '
 
 select * from t_store_info;
 
+
+
 -- 음식점 댓글 테이블
 create table t_store_reply (
 	sr_idx int primary key auto_increment,	-- 댓글번호
@@ -111,34 +113,47 @@ create table t_store_reply (
     constraint fk_t_store_reply_mi_id foreign key(mi_id) references t_member_info(mi_id)
 );
 
-select * from t_store_reply;  	
+select * from t_store_reply; 
+
+delete from t_store_reply; 	
 select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA776' order by a.sr_idx desc;
 use matjjang;
 select * from t_store_reply where sr_idx = 4 and mi_id = 'test';
+
+update t_store_info set si_review = si_review - 1 where si_review > 0 and sr_idx = 19;
 
 insert into t_store_reply values('1', 'AA776', 'test', 'y', '5', '댓글', 1, 'img.png', '', '', 'y', now());
 
 -- 음식점 댓글 좋아요 테이블
 create table t_store_reply_gnb (
-	srg_idx int auto_increment unique,
-    mi_id varchar(20),
-    sr_idx int,
-	srg_gnb int default 1,
-    srg_date datetime default now(), 
+	srg_idx int auto_increment unique,	-- 좋아요 번호
+    mi_id varchar(20),					-- 회원 아이디
+    sr_idx int,							-- 댓글 번호
+	srg_gnb int default 1,				-- 좋아요 여부
+    srg_date datetime default now(), 	-- 날짜
     constraint pk_store_reply_gnb primary key (mi_id, sr_idx),
     constraint fk_store_reply_gnb_mi_id foreign key (mi_id) references t_member_info(mi_id), 
     constraint fk_store_reply_gnb_sr_idx foreign key (sr_idx) references t_store_reply(sr_idx)
 );
 
-select * from t_store_reply_gnb;	
+select * from t_store_reply_gnb;
 
-select * from t_store_reply_gnb where sr_idx IN (4) and mi_id= 'test1';
+drop table t_store_reply_gnb;	
+
+select * from t_store_reply_gnb where sr_idx IN (3, 6) and mi_id= 'test';
+
+update t_store_reply set sr_good = sr_good + 1 where sr_idx = 1;
 
 select concat(srg_gnb, srg_idx) from t_store_reply_gnb where mi_id = 'test1' and sr_idx = 4;
 
+select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA528' order by a.sr_idx desc limit 10;
+
+select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA528' order by a.sr_idx desc limit 10;
+
+select * from t_store_reply where sr_isview = 'y' and si_id = 'AA528' order by sr_idx desc limit 10, 5;
 
 insert into t_store_reply_gnb(mi_id, sr_idx, srg_gnb) values('test1', '4', '1');
-delete from t_store_reply_gnb where sr_idx = 4 and mi_id = 'test1';
+delete from t_store_reply_gnb where sr_idx = 6 and mi_id = 'test1';
 
 -- 맛집게시판 테이블
 create table t_free_list (
