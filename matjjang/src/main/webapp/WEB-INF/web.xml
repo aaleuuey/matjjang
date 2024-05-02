@@ -28,6 +28,7 @@
 				config.ReviewConfig
 				config.StoreConfig	
 				config.MemberConfig
+				config.KakaoConfig
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

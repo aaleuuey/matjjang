@@ -46,7 +46,7 @@
 		
 		<button class="btn btn-warning w-100 py-2 mb-2" type="submit">로그인</button>
 		<a href="/matjjang/joinForm" class="btn btn-dark w-100 py-2 mb-4">회원가입</a>
-		<a href="javascript:void(0);" class="btn btn-dark w-100 py-2" style="background:#fae100; border:1px solid #fae100; color:#000; font-size:15px;"><img src="/matjjang/resources/img/kakao_login.png" class="simg">카카오톡 로그인</a>
+		<a href="https://kauth.kakao.com/oauth/authorize?client_id=0c70a890210b5db7d3ba3c375e8ae99c&redirect_uri=http://localhost:8080/matjjang/kakaoLoginProc&response_type=code" class="btn btn-dark w-100 py-2" style="background:#fae100; border:1px solid #fae100; color:#000; font-size:15px;"><img src="/matjjang/resources/img/kakao_login.png" class="simg">카카오톡 로그인</a>
 	</form>
 </div>
 

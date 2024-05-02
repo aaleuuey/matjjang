@@ -29,6 +29,9 @@ public class CtrlConfig {
 	@Autowired
 	private MemberSvc memberSvc;
 	
+	@Autowired
+	private KakaoSvc kakaoSvc;
+	
 	@Bean
 	public LoginCtrl loginCtrl() {
 		LoginCtrl loginCtrl = new LoginCtrl();
@@ -67,5 +70,12 @@ public class CtrlConfig {
 		MemberCtrl memberCtrl = new MemberCtrl();
 		memberCtrl.setMemberSvc(memberSvc);
 		return memberCtrl;
+	}
+	
+	@Bean
+	public KakaoCtrl kakaoCtrl() {
+		KakaoCtrl kakaoCtrl = new KakaoCtrl();
+		kakaoCtrl.setKakaoSvc(kakaoSvc);
+		return kakaoCtrl;
 	}
 }

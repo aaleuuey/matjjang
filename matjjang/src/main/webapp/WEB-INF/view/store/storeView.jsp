@@ -249,15 +249,15 @@
 					<c:when test="${not empty loginInfo}">
 						<button class="like-cnt" onclick="setGnb(${storeReply.sr_idx}, '${storeReply.si_id}')" style="width:85px; display:flex;">
 							<span class="icon black" style="width:32px;">
-								<img id="like-${storeReply.sr_idx}" class="" src="resources/img/bg_icon_good.png"  style="width:21px;"/>
+								<img id="like-${storeReply.sr_idx}" class="" src="resources/img/bg_icon_good.png" style="width:21px;" />
 							</span>
 							<span id="count-${storeReply.sr_idx}" class="count">좋아요${storeReply.sr_good}</span>
 						</button>
 					</c:when>
 					<c:otherwise>
-					    <button class="like-cnt" onclick="focuslogin();">
-							<span class="icon black">
-								<img src="resources/img/bg_icon_good.png" />
+					    <button class="like-cnt" onclick="focuslogin();" style="width:85px; display:flex;">
+							<span class="icon black" style="width:32px;">
+								<img src="resources/img/bg_icon_good.png" style="width:21px;" />
 							</span>
 							<span class="count">좋아요${storeReply.sr_good}</span>
 						</button>
@@ -312,7 +312,6 @@ for (var i = 0; i < arr.length; i++) {
 //페이지 로드 시 더보기 버튼을 초기화
 $(document).ready(function() {
 	
-
     // 서버에서 가져온 총 리뷰 개수를 전역 변수로 설정
     var totalReviews = ${si_review}; // 총 리뷰 개수
 
@@ -357,52 +356,57 @@ function setReview() {
         data: { "currentReviews": currentReviews, "addReviews": addReviews, "siid": siid},
         success: function(moreReviews) {
         	
-            moreReviews.forEach(function(review) {
-                var reviewHtml = '<div class="place_review_list">' +
-                                    '<div class="name">' + review.mi_name +
-                                    '<img src="resources/img/star.png" alt="별점" width="15" style="vertical-align:baseline;">' +
-                                    '<span class="score">' + review.sr_star + '</span>' +
-                                '</div>' +
-                                '<div class="action">' +
-                                	'<a href="javascript:srDel(' + review.sr_idx + ',\'' + review.si_id + '\');" class="btn_report review_action" data-reactid="106">삭제</a>' +
-                                '</div>' +
-                                '<div class="review_text">' + review.sr_content + '</div>' +
-                                '<div class="img_list">';
-                // 이미지 추가
-                if (review.sr_img1 != null) {
-                    reviewHtml += '<a href="#layer_review_photo">' +
-                                    '<img src="resources/img/storeReply/' + review.sr_img1 + '" alt="리뷰 이미지">' +
-                                  '</a>';
-                }
+        	moreReviews.forEach(function(review) {
+        	    var reviewHtml = '<div class="place_review_list">' +
+        	                        '<div class="name">' + review.mi_name +
+        	                        '<img src="resources/img/star.png" alt="별점" width="15" style="margin: 0 5px; vertical-align:baseline;">' +
+        	                        '<span class="score">' + review.sr_star + '</span>' +
+        	                    '</div>' +
+        	                    '<div class="action">' +
+        	                        '<div class="btn_report review_action" data-reactid="106">';
+        	    // 로그인한 사용자와 리뷰를 작성한 사용자가 동일한 경우에만 삭제 버튼 추가
+        	    if ('${loginInfo.getMi_id()}' === review.mi_id) {
+        	        reviewHtml += '<a href="javascript:srDel(' + review.sr_idx + ',\'' + review.si_id + '\');" class="btn_report review_action" data-reactid="106">삭제</a>';
+        	    }
+        	    reviewHtml += '</div>' +
+        	                '</div>' +
+        	                '<div class="review_text">' + review.sr_content + '</div>' +
+        	                '<div class="img_list">';
+        	    // 이미지 추가
+        	    if (review.sr_img1 != null) {
+        	        reviewHtml += '<a href="#layer_review_photo">' +
+        	                        '<img src="resources/img/storeReply/' + review.sr_img1 + '" alt="리뷰 이미지">' +
+        	                      '</a>';
+        	    }
 
-                reviewHtml += '</div>' + 
-                                '<div class="review_status">' +
-                                    '<div id="app">';
-                
-                // 좋아요 버튼 추가
-                if (review.sr_good != null) {
-                    reviewHtml += '<button class="like-cnt" onclick="setGnb(' + review.sr_idx + ', \'' + review.si_id + '\')" style="width:85px; display:flex;">' +
-                                    '<span class="icon black" style="width:32px;">' +
-                                        '<img id="like-' + review.sr_idx + '" class="" src="resources/img/bg_icon_good.png" style="width:21px;"/>' +
-                                    '</span>' +
-                                    '<span id="count-' + review.sr_idx + '" class="count">좋아요' + review.sr_good + '</span>' +
-                                  '</button>';
-                } else {
-                    // 로그인 안된 상태에서는 좋아요 버튼 대신 다른 버튼 추가
-                    reviewHtml += '<button class="like-cnt" onclick="focuslogin();">' +
-                                    '<span class="icon black">' +
-                                        '<img src="resources/img/bg_icon_good.png" />' +
-                                    '</span>' +
-                                    '<span class="count">좋아요' + review.sr_good + '</span>' +
-                                  '</button>';
-                }
+        	    reviewHtml += '</div>' + 
+        	                    '<div class="review_status">' +
+        	                        '<div id="app">';
+        	    
+        	    // 좋아요 버튼 추가
+        	    if (review.sr_good != null) {
+        	        reviewHtml += '<button class="like-cnt" onclick="setGnb(' + review.sr_idx + ', \'' + review.si_id + '\')" style="width:85px; display:flex;">' +
+        	                        '<span class="icon black" style="width:32px;">' +
+        	                            '<img id="like-' + review.sr_idx + '" class="" src="resources/img/bg_icon_good.png" style="width:21px;"/>' +
+        	                        '</span>' +
+        	                        '<span id="count-' + review.sr_idx + '" class="count">좋아요' + review.sr_good + '</span>' +
+        	                      '</button>';
+        	    } else {
+        	        // 로그인 안된 상태에서는 좋아요 버튼 대신 다른 버튼 추가
+        	        reviewHtml += '<button class="like-cnt" onclick="focuslogin();">' +
+        	                        '<span class="icon black">' +
+        	                            '<img src="resources/img/bg_icon_good.png" />' +
+        	                        '</span>' +
+        	                        '<span class="count">좋아요' + review.sr_good + '</span>' +
+        	                      '</button>';
+        	    }
 
-                reviewHtml +=       '</div>' +
-                                '</div>' +
-                            '</div>';
+        	    reviewHtml +=       '</div>' +
+        	                    '</div>' +
+        	                '</div>';
 
-                $('.store_review').append(reviewHtml);
-            });
+        	    $('.store_review').append(reviewHtml);
+        	});
             
          	// 더 이상 댓글이 없으면 더보기 버튼 숨기기
             if (moreReviews.length < addReviews) {
@@ -457,6 +461,7 @@ function srDel(sridx, siid) {
 		});
 	}
 }
+
 // 리뷰 작성 클릭 시
 new Vue({
     el: '#app',
@@ -465,7 +470,8 @@ new Vue({
         siid: '${siid}', // 서버에서 받은 siid 값 할당
         rcontent: '',
         rstar: null,
-        images: []
+        images: [],
+    	loginInfo: '${loginInfo}'
     },
     methods: {
         toggleShow() {

@@ -25,7 +25,6 @@ import vo.*;
 
 @Controller
 public class StoreCtrl {
-	
 	@Autowired
 	StoreSvc storeSvc;
 
@@ -113,8 +112,6 @@ public class StoreCtrl {
 		
 		HttpSession session = request.getSession();
 		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
-		String mi_id = loginInfo.getMi_id();
-		
 		
 		// 각 댓글에 대한 좋아요 여부 확인
 		List<Integer> srIdxList = new ArrayList<>();
@@ -122,7 +119,13 @@ public class StoreCtrl {
 		    srIdxList.add(storeReply.getSr_idx());
 		}
 		
-	    List<Integer> replyGnb = storeSvc.getStoreReplyGnb(srIdxList, mi_id);
+		if (loginInfo != null) {
+		    List<Integer> replyGnb = storeSvc.getStoreReplyGnb(srIdxList, loginInfo.getMi_id());
+		    model.addAttribute("replyGnb", replyGnb);
+		} else {
+		    model.addAttribute("replyGnb", "[]");
+		}
+	    
 		
 		// StoreInfo 객체의 List인 storeView에서 첫 번째 StoreInfo 객체를  가져옴
 		StoreInfo si = storeView.get(0);
@@ -135,7 +138,7 @@ public class StoreCtrl {
 		model.addAttribute("storeView", storeView);
 		model.addAttribute("siid", siid);
 		model.addAttribute("srcnt", srcnt);
-		model.addAttribute("replyGnb", replyGnb);
+		
 		model.addAttribute("storeReplyList", storeReplyList);
 		model.addAttribute("si_lat", si_lat);
 		model.addAttribute("si_lng", si_lng);
