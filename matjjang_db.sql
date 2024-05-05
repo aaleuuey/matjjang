@@ -1,5 +1,8 @@
+-- drop database matjjang;
 create database matjjang;
 use matjjang;
+
+
 
 create table t_admin_info (
 	ai_idx int auto_increment unique,	-- 일련번호
@@ -15,7 +18,7 @@ select * from t_admin_info;
 
 create table t_member_info (
 	mi_id varchar(20) primary key,		-- 회원 아이디
-    mi_pw varchar(20) not null,			-- 회원 비밀번호
+    mi_pw varchar(20),					-- 회원 비밀번호
     mi_name varchar(20) not null,		-- 회원 이름
 	mi_phone varchar(13) not null,		-- 전화번호
     mi_birth char(10) not null,			-- 생년월일
@@ -25,8 +28,15 @@ create table t_member_info (
 	mi_date datetime default now(),		-- 가입일
 	mi_lastlogin datetime				-- 최종 로그인
 );
+
+drop table t_member_info;
+
+select * from t_member_info;
+
 insert into t_member_info values ('test', '1234', '이한나', '010-9182-6545', '2001-03-02', '여', 'lhn@naver.com', 'a', now(), null);
 insert into t_member_info values ('test1', '1234', '홍길동', '010-1234-6578', '1998-10-20', '남', 'hgd@naver.com', 'a', now(), null);
+
+insert into t_member_info values ('', '', '', '', '', '', '', 'a', now(), null);
 
 -- 회원 주소록 테이블
 create table t_member_addr (
@@ -93,7 +103,7 @@ values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', 1.5, '월~금', '
 
 select * from t_store_info;
 
-
+update t_store_info set si_review = 10 where si_id = 'AA528';
 
 -- 음식점 댓글 테이블
 create table t_store_reply (

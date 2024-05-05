@@ -39,7 +39,8 @@ private JdbcTemplate jdbc;
 				return mi;
 			}
 		}, uid, pwd); // SQL 쿼리의 ? 자리에 해당하는 값을 넣어줌
-		//int result = jdbc.update(sql);
+
+		sql = "update t_member_info set mi_lastlogin = now() where mi_id = '" + uid + "' and mi_status != 'c'";
 		
 		// 결과 리스트가 비어있으면 null을 반환하고, 그렇지 않으면 첫 번째 결과를 반환
 		return results.isEmpty() ? null : results.get(0);

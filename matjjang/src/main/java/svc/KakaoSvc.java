@@ -16,6 +16,7 @@ import com.google.gson.JsonElement;
 
 import ctrl.*;
 import dao.*;
+import vo.MemberInfo;
 
 public class KakaoSvc {
 	private KakaoDao kakaoDao;
@@ -114,6 +115,29 @@ public class KakaoSvc {
             }
             
             System.out.println("response body : " + result);
+            
+            JSONParser p = new JSONParser();
+			JSONObject jo = (JSONObject)p.parse(result);
+			JSONObject properties = (JSONObject)jo.get("properties");
+			JSONObject kakao_account = (JSONObject)jo.get("kakao_account");
+			
+			String id = jo.get("id").toString();
+			String nickname = properties.get("nickname").toString();
+			String gender = kakao_account.get("gender").toString();
+			String number = kakao_account.get("phone_number").toString();
+			String birthyear = kakao_account.get("birthyear").toString();
+			String birthday = kakao_account.get("birthday").toString();
+			String email = kakao_account.get("email").toString();
+
+			loginInfo.put("id", id);
+			loginInfo.put("nickname", nickname);
+			loginInfo.put("gender", gender);
+			loginInfo.put("number", number);
+			loginInfo.put("birthyear", birthyear);
+			loginInfo.put("birthday", birthday);
+			loginInfo.put("email", email);
+			
+			
 	        
 	    } catch (Exception e) {
 	        System.out.println("getUserInfo() 에러 발생");
@@ -122,4 +146,20 @@ public class KakaoSvc {
 
 	    return loginInfo;
 	}
+
+	public int isMem(String id) {
+		int chkId = kakaoDao.isMem(id);
+		return chkId;
+	}
+
+	public int kakaoInsert(MemberInfo mi) {
+		int result = kakaoDao.kakaoInsert(mi);
+		return result;
+	}
+
+	public MemberInfo getLoginInfo(String email) {
+		MemberInfo mi = kakaoDao.getLoginInfo(email);
+		return mi;
+	}
+
 }
