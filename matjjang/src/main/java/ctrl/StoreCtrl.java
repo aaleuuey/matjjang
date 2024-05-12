@@ -110,8 +110,18 @@ public class StoreCtrl {
 		srcnt = storeSvc.getStoreReplyCount(siid);
 		
 		
+		
 		HttpSession session = request.getSession();
 		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		int heart = 0;
+		int bookmark = 0;
+		
+		// 음식점 게시글에 대한 좋아요, 즐겨찾기 여부 확인
+		if (loginInfo != null) {
+			heart = storeSvc.getStoreHeartView(siid, loginInfo.getMi_id());
+			bookmark = storeSvc.getStoreBookmarkView(siid, loginInfo.getMi_id());
+		}
 		
 		// 각 댓글에 대한 좋아요 여부 확인
 		List<Integer> srIdxList = new ArrayList<>();
@@ -134,18 +144,51 @@ public class StoreCtrl {
 		String si_lat = si.getSi_lat();
 		String si_lng = si.getSi_lng();
 		int si_review = si.getSi_review();
+		String si_name = si.getSi_name();
 		
 		model.addAttribute("storeView", storeView);
 		model.addAttribute("siid", siid);
 		model.addAttribute("srcnt", srcnt);
-		
+		model.addAttribute("heart", heart);
+		model.addAttribute("bookmark", bookmark);
 		model.addAttribute("storeReplyList", storeReplyList);
 		model.addAttribute("si_lat", si_lat);
 		model.addAttribute("si_lng", si_lng);
 		model.addAttribute("si_review", si_review);
+		model.addAttribute("si_name", si_name);
 		
 		return "store/storeView";
 		
+	}
+	
+	@PostMapping("/storeProcHeart")
+	@ResponseBody
+	public String storeProcHeart(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		String siid = request.getParameter("siid");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		int result = storeSvc.storeHeart(siid, loginInfo.getMi_id());
+		
+		return result + "";
+	}
+	
+	@PostMapping("/storeProcBookmark")
+	@ResponseBody
+	public String storeProcBookmark(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		String siid = request.getParameter("siid");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		int result = storeSvc.storeBookmark(siid, loginInfo.getMi_id());
+		
+		return result + "";
 	}
 	
 	@PostMapping("/storeReplyIn")

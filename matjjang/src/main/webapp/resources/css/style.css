@@ -18,8 +18,9 @@
 .store_fonction input[type=checkbox] {display:none;}
 .store_fonction label {cursor:pointer;}
 .store_fonction a {color:#000;}
-.store_fonction label img, .store_fonction a img {display:inline-block; height:20px;}
-.store_fonction label img, .store_fonction span {vertical-align:middle;}
+.store_fonction button {background:transparent; border:0;}
+.store_fonction button img, .store_fonction a img {display:inline-block; height:20px;}
+.store_fonction button img, .store_fonction span {vertical-align:middle;}
 .store_info3 {position: relative; padding: 15px 20px; border: 1px solid #ddd; box-sizing: border-box; border-radius: 10px; margin-bottom: 12px; margin-top: 20px;}
 .store_info3 .store_info3_title {font-size: 20px; font-weight: bold; color: #000; text-align: left; margin-bottom: 20px;}
 .store_info3 .text {font-size: 16px; color: #000; line-height: 1.6;}

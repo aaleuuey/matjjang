@@ -102,37 +102,52 @@
 				</div>
 			</div>
 			<div class="store_fonction">
-				<input type="checkbox" id="toggle_good" value="on">
-				<label for="toggle_good">
-					<span>좋아요</span>
-					<img src="resources/img/bg_icon_good.png" alt="좋아요 버튼">
-				</label>
-				<input type="checkbox" id="toggle_bookmark" value="on">
-				<label for="toggle_bookmark"><span>즐겨찾기</span>
-					<img src="resources/img/bg_icon_bookmark2.png" alt="즐겨찾기 버튼">
-				</label>
-				<a href="#review_bow" data-target="location_review">
-					<span>리뷰쓰기</span>
-					<img src="resources/img/bg_icon_reviewWrite.png" alt="리뷰쓰기 버튼">
-				</a>
-				<a href="#layer_sns_share">
-					<span>공유하기</span>
-					<img src="resources/img/bg_icon_share2.png" alt="공유하기 버튼">
-				</a>
-				<div class="toast good_on">
-					<span>
-						<img src="resources/img/bg_icon_good_red.png" alt="좋아요 활성">
-						</span>
-				</div>
-				<div class="toast good_off">
-					<span>좋아요를 취소하셨습니다.</span>
-				</div>
-				<div class="toast bookmark_on">
-					<span><img src="resources/img/bg_icon_bookmark_orange.png" alt="즐겨찾기 활성">즐겨찾기에 추가하였습니다.</span>
-				</div>
-				<div class="toast bookmark_off">
-					<span>즐겨찾기를 취소하였습니다.</span>
-				</div>
+				<c:choose>
+					<c:when test="${not empty loginInfo}">
+						<button onclick="setHeart('${loginInfo.getMi_id()}', '${siid}')">
+							<span>좋아요</span>
+							<img id="heart" src="resources/img/bg_icon_good.png" alt="좋아요 버튼">
+						</button>
+						<button onclick="setBookmark('${loginInfo.getMi_id()}', '${siid}')"><span>즐겨찾기</span>
+							<img id="bookmark" src="resources/img/bg_icon_bookmark2.png" alt="즐겨찾기 버튼">
+						</button>
+						<a href="#review_bow" data-target="location_review">
+							<span>리뷰쓰기</span>
+							<img src="resources/img/bg_icon_reviewWrite.png" alt="리뷰쓰기 버튼">
+						</a>
+						<a href="javascript:kakaoShare();">
+							<span>공유하기</span>
+							<img src="resources/img/bg_icon_share2.png" alt="공유하기 버튼">
+						</a>
+						<div class="toast good_on">
+							<span>
+								<img src="resources/img/bg_icon_good_red.png" alt="좋아요 활성">
+							</span>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<button onclick="focuslogin();">
+							<span>좋아요</span>
+							<img id="heart" src="resources/img/bg_icon_good.png" alt="좋아요 버튼">
+						</button>
+						<button onclick="focuslogin();"><span>즐겨찾기</span>
+							<img id="bookmark" src="resources/img/bg_icon_bookmark2.png" alt="즐겨찾기 버튼">
+						</button>
+						<a href="#review_bow" data-target="location_review">
+							<span>리뷰쓰기</span>
+							<img src="resources/img/bg_icon_reviewWrite.png" alt="리뷰쓰기 버튼">
+						</a>
+						<a href="#layer_sns_share" onclick="focuslogin();">
+							<span>공유하기</span>
+							<img src="resources/img/bg_icon_share2.png" alt="공유하기 버튼">
+						</a>
+						<div class="toast good_on">
+							<span>
+								<img src="resources/img/bg_icon_good_red.png" alt="좋아요 활성">
+							</span>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
@@ -148,7 +163,6 @@
 	 	<div id="app">
 			<div class="review_title">
 				<h3>식신 리뷰</h3><span>(${srcnt})</span>
-
 				<input type="checkbox" id="writeToggle" value="on">
 				<label for="writeToggle" @click="toggleShow">리뷰 작성</label>
 			</div>
@@ -198,11 +212,11 @@
 							</li>
 							<!-- v-for 디렉티브를 사용하여 images 배열의 각 이미지에 대해 반복하며 이미지를 표시 -->
 							<li v-for="(image, index) in images" :key="index">
-								<!-- :src 속성에는 현재 반복 중인 이미지의 URL이 바인딩  -->
-								<img :src="image.url" alt="Image" width="100">
-								<a href="javascript:void(0);" class="btn_del" @click="deleteImage(index)">
-									<img src="resources/img/btn_file_del01.png" alt="삭제">
-								</a>
+							    <!-- :src 속성에는 현재 반복 중인 이미지의 URL이 바인딩  -->
+							    <img :src="image.url" alt="Image" width="100">
+							    <a href="javascript:void(0);" class="btn_del" @click="deleteImage(index)">
+							        <img src="resources/img/btn_file_del01.png" alt="삭제">
+							    </a>
 							</li>
 						</ul>
 					</div>
@@ -308,6 +322,26 @@ for (var i = 0; i < arr.length; i++) {
         }
     });
 }
+
+// 좋아요, 즐겨찾기 여부 확인
+$(document).ready(function() {
+	 var heartval = ${heart};
+	 var bookval = ${bookmark};
+	 
+     // heartval이 1이면 좋아요가 이미 되있는것이므로 bg_icon_good_red.png를 출력하는 코드
+     if(heartval > 0) {
+         $("#heart").prop("src", "resources/img/bg_icon_good_red.png");
+     } else {
+         $("#heart").prop("src", "resources/img/bg_icon_good.png");
+     }
+     
+    // bookval이 1이면 즐겨찾기가 이미 되있는것이므로 bg_icon_bookmark_orange.png를 출력하는 코드
+     if(bookval > 0) {
+         $("#bookmark").prop("src", "resources/img/bg_icon_bookmark_orange.png");
+     } else {
+         $("#bookmark").prop("src", "resources/img/bg_icon_bookmark2.png");
+     }
+});
 
 //페이지 로드 시 더보기 버튼을 초기화
 $(document).ready(function() {
@@ -420,7 +454,43 @@ function setReview() {
     });
 };
 
-// 좋아요 클릭 시 
+// 게시글 좋아요 클릭 시 
+function setHeart(miid, siid) {
+    $.ajax({
+        type: "POST",
+        url: "/matjjang/storeProcHeart",
+        data: { "miid" : miid, "siid" : siid},
+        success: function(result) {
+            if (result > 0) {
+            	alert("좋아요가 추가되었습니다.")
+            	$("#heart").prop("src", "resources/img/bg_icon_good_red.png");
+            } else {
+            	alert("좋아요가 취소되었습니다.")
+            	$("#heart").prop("src", "resources/img/bg_icon_good.png");
+            }
+        }
+    });
+}
+
+//게시글 즐겨찾기 클릭 시 
+function setBookmark(miid, siid) {
+    $.ajax({
+        type: "POST",
+        url: "/matjjang/storeProcBookmark",
+        data: { "miid" : miid, "siid" : siid},
+        success: function(result) {
+            if (result > 0) {
+            	alert("즐겨찾기가 추가되었습니다.")
+            	$("#bookmark").prop("src", "resources/img/bg_icon_bookmark_orange.png");
+            } else {
+            	alert("즐겨찾기가 취소되었습니다.")
+            	$("#bookmark").prop("src", "resources/img/bg_icon_bookmark2.png");
+            }
+        }
+    });
+}
+
+// 댓글 좋아요 클릭 시 
 function setGnb(sridx, siid) {
     $.ajax({
         type: "POST",
@@ -444,6 +514,35 @@ function setGnb(sridx, siid) {
         }
     });
 }
+
+function kakaoShare() {
+	Kakao.init('d29c50c3478d635e7e360b4855d423b7')
+	Kakao.Link.sendDefault({
+	objectType: 'feed',
+	content: {
+		title: 'matjjang',
+    	description: '${si_name}',
+    	imageUrl: 'http://localhost:8080/matjjang/resources/img/matj-logo.png',
+    	link: {
+      	mobileWebUrl: 'https://developers.kakao.com',
+      	webUrl: 'http://localhost:8080/matjjang/storeView?siid=${siid}',
+    	},
+	},
+  	buttons: [
+		{
+			title: '자세히 보기',
+			link: {
+	        	mobileWebUrl: 'https://developers.kakao.com',
+	        	webUrl: 'http://localhost:8080/matjjang/storeView?siid=${siid}',
+	      	},
+	    },
+  	],
+  	
+	// 카카오톡 미설치 시 카카오톡 설치 경로이동
+	installTalk: true,
+	
+	});
+};
 
 function focuslogin() {
 	alert('로그인을 해주세요.');
@@ -518,17 +617,21 @@ new Vue({
         },
         
     	// 댓글에 이미지 추가하는 메서드
-        onFileChange(event) {
-            const files = event.target.files; // 파일 객체들을 가져옴
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i]; // 각 파일 객체	
-                const imageUrl = URL.createObjectURL(file); // 파일을 URL로 변환
-                
-                // 이미지 객체를 images 배열에 추가
-                this.images.push({ url: imageUrl ,name: file.name, file: file });
-    
-            }
-        },
+		onFileChange(event) {
+		    const files = event.target.files; // 파일 객체들을 가져옴
+		    for (let i = 0; i < files.length; i++) {
+		        const file = files[i]; // 각 파일 객체    
+		        const imageUrl = URL.createObjectURL(file); // 파일을 URL로 변환
+		        
+		        // 이미지 객체를 images 배열에 추가
+		        this.images.push({ url: imageUrl, name: file.name, file: file });
+		        
+			    
+				 // Vue 컴포넌트 내에서 이미지 URL 확인
+				    console.log("Image URL:", imageUrl);
+		    }
+
+		},
         
      	// 댓글에 첨부된 이미지 삭제하는 메서드
         deleteImage(index) {
@@ -539,23 +642,7 @@ new Vue({
         focuslogin() {
             alert('로그인을 해주세요.');
             location.href = "login";
-        },
-        
-        setGnb(sridx, siid, miid) {
-        	console.log("124");
-        	if (!this.loginInfo) {
-                alert("로그인 후 이용하실 수 있습니다.");
-            } else {
-				$.ajax({
-				    type: "POST",
-				    url: "/matjjang/replyProcGnb",
-				    data: { "sridx" : sridx, "siid" : siid, "miid" : miid},
-				    success: function(result) {
-						location.reload();
-					}
-				});
-            }
-        },
+        }
         
     }
 });

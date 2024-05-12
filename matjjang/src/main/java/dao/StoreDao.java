@@ -138,6 +138,27 @@ public class StoreDao {
 		
 		return result;
 	}
+	
+	public List<Integer> getStoreReplyGnb(List<Integer> srIdxList, String mi_id) {
+		List<Integer> likedStatusList = new ArrayList<>();
+	    
+	    for (Integer srIdx : srIdxList) {
+	        String sql = "select count(*) from t_store_reply_gnb where sr_idx = ? and mi_id = ?";
+	        Object[] params = { srIdx, mi_id };
+	        
+	        try {
+	            int replyGnb = jdbc.queryForObject(sql, params, Integer.class);
+	            likedStatusList.add(replyGnb); // 댓글에 대한 좋아요 여부를 replyGnb에 담음
+	        } catch (EmptyResultDataAccessException e) {
+	            likedStatusList.add(0); // 댓글이 없거나 사용자가 해당 댓글에 좋아요를 누르지 않은 경우
+	        }
+	        
+
+	    }
+	    
+        System.out.println(likedStatusList);
+	    return likedStatusList;	
+	}
 
 	public int replyGnb(int sridx, String siid, String mi_id) {
 	    int result = 0;
@@ -159,7 +180,7 @@ public class StoreDao {
 	    	
 	        sql = "delete from t_store_reply_gnb where sr_idx = ? and mi_id = ?";
 	        jdbc.update(sql, sridx, mi_id);
-	        result = 0; // 이미 존재하는 경우 -1을 반환하거나 다른 처리를 수행할 수 있습니다.
+	        result = 0; // 이미 존재하는 경우 0을 반환
 	    } else {
 	    	sql = "update t_store_info set si_review = si_review + 1 where si_id = '" + siid + "' ";
 	    	result = jdbc.update(sql);
@@ -175,27 +196,6 @@ public class StoreDao {
 	    return result;
 	}
 
-
-	public List<Integer> getStoreReplyGnb(List<Integer> srIdxList, String mi_id) {
-		List<Integer> likedStatusList = new ArrayList<>();
-	    
-	    for (Integer srIdx : srIdxList) {
-	        String sql = "select count(*) from t_store_reply_gnb where sr_idx = ? and mi_id = ?";
-	        Object[] params = { srIdx, mi_id };
-	        
-	        try {
-	            int replyGnb = jdbc.queryForObject(sql, params, Integer.class);
-	            likedStatusList.add(replyGnb); // 댓글에 대한 좋아요 여부를 replyGnb에 담음
-	        } catch (EmptyResultDataAccessException e) {
-	            likedStatusList.add(0); // 댓글이 없거나 사용자가 해당 댓글에 좋아요를 누르지 않은 경우
-	        }
-	        
-
-	    }
-	    
-        System.out.println(likedStatusList);
-	    return likedStatusList;	
-	}
 
 	public List<StoreReplyList> getMoreReviews(int currentReviews, int addReviews, String siid) {
 		
@@ -223,7 +223,6 @@ public class StoreDao {
 	public int storeReplyDelete(int sridx,String siid, String mi_id) {
 		String sql = "update t_store_info set si_review = si_review - 1 where si_review > 0 and si_id = '" + siid + "' ";
 		int result = jdbc.update(sql);
-		System.out.println(sql);
 		
 		sql = "update t_store_reply set sr_isview = 'n' where mi_id = '" + mi_id + "' and sr_idx = " + sridx;
 		result = jdbc.update(sql);
@@ -231,6 +230,76 @@ public class StoreDao {
 		return result;
 	}
 
+	public int storeHeartView(String siid, String mi_id) {
+		String sql = "select * from t_store_heart where si_id = '" + siid + "' and mi_id = '" + mi_id + "' ";
+		int heart = 0;
+		
+		List<Map<String, Object>> rows = jdbc.queryForList(sql);
+	    int count = rows.size();
+	    
+	    if (count > 0) {
+	        heart = count;
+	    }
+	    
+	    return heart;
+	}
 
+	public int storeHeart(String siid, String mi_id) {
+		int result = 0;
+	    
+	    // 중복 여부를 확인하는 select 쿼리
+	    String sql = "select * from t_store_heart where si_id = '" + siid + "' and mi_id = '" + mi_id + "' ";
+
+	    
+	    List<Map<String, Object>> rows = jdbc.queryForList(sql);
+	    int count = rows.size();
+	    
+	    if (count > 0) {
+	    	sql = "delete from t_store_heart where si_id = ? and mi_id = ?";
+	        jdbc.update(sql, siid, mi_id);
+	        
+	        result = 0;
+	    } else {
+	        sql = "insert into t_store_heart (si_id, mi_id, sh_heart) values (?, ?, 1)";
+	        result = jdbc.update(sql, siid, mi_id);
+	    }
+	    
+	    return result;
+	}
+
+	public int storeBookmarkView(String siid, String mi_id) {
+		String sql = "select * from t_store_bookmark where si_id = '" + siid + "' and mi_id = '" + mi_id + "' ";
+		int bookmark = 0;
+		
+		List<Map<String, Object>> rows = jdbc.queryForList(sql);
+	    int count = rows.size();
+	    
+	    if (count > 0) {
+	    	bookmark = count;
+	    }
+	    
+	    return bookmark;
+	}
+
+	public int storeBookmark(String siid, String mi_id) {
+		int result = 0;
+	    		
+	    String sql = "select * from t_store_bookmark where si_id = '" + siid + "' and mi_id = '" + mi_id + "' ";
+
+	    List<Map<String, Object>> rows = jdbc.queryForList(sql);
+	    int count = rows.size();
+	    
+	    if (count > 0) {
+	    	sql = "delete from t_store_bookmark where si_id = ? and mi_id = ?";
+	        jdbc.update(sql, siid, mi_id);
+	        
+	        result = 0;
+	    } else {
+	        sql = "insert into t_store_bookmark (si_id, mi_id, sb_bookmark) values (?, ?, 1)";
+	        result = jdbc.update(sql, siid, mi_id);
+	    }
+	    
+	    return result;
+	}
 
 }

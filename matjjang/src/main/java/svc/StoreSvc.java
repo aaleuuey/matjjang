@@ -64,6 +64,23 @@ public class StoreSvc {
 		return result;
 	}
 
+	public int getStoreHeartView(String siid, String mi_id) {
+		int heart = storeDao.storeHeartView(siid, mi_id);
+		return heart;
+	}
 
+	public int storeHeart(String siid, String mi_id) {
+		int result = storeDao.storeHeart(siid, mi_id);
+		return result;
+	}
 
+	public int getStoreBookmarkView(String siid, String mi_id) {
+		int bookmark = storeDao.storeBookmarkView(siid, mi_id);
+		return bookmark;
+	}
+
+	public int storeBookmark(String siid, String mi_id) {
+		int result = storeDao.storeBookmark(siid, mi_id);
+		return result;
+	}
 }

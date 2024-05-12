@@ -12,6 +12,7 @@
 		<!-- <li><a href="#" class="nav-link px-4 tx-main">맛집 등록</a></li> -->
 		<li><a href="/matjjang/storeList?All" class="nav-link px-4 tx-main">맛집 추천</a></li>
 		<li><a href="/matjjang/reviewList" class="nav-link px-4 tx-main">맛집 후기 게시판</a></li>
+		<!-- <li><a href="#" class="nav-link px-4 tx-main">나만의 맛집</a></li> -->
 		<li><a href="#" class="nav-link px-4 tx-main">문의하기</a></li>
 	</ul>
 

@@ -1,4 +1,4 @@
--- drop database matjjang;
+drop database matjjang;
 create database matjjang;
 use matjjang;
 
@@ -70,7 +70,7 @@ insert into t_store_ctgr (sc_id, sc_name) values ('EE', '디저트');
 
 -- 음식점 테이블
 create table t_store_info (
-	si_id char(5) primary key,			-- 맛집ID
+	si_id char(5) primary key,			-- 음식점ID
 	sc_id char(2) not null,				-- 분류 코드
 	si_name varchar(50) not null,		-- 음식점명
 	si_img1 varchar(50) not null,		-- 음식 이미지1
@@ -103,7 +103,32 @@ values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', 1.5, '월~금', '
 
 select * from t_store_info;
 
-update t_store_info set si_review = 10 where si_id = 'AA528';
+update t_store_info set si_review = 10 where si_id = 'BB301';
+
+-- 음식점 좋아요 테이블
+create table t_store_heart (
+	sh_idx int primary key auto_increment,		-- 일련번호
+	si_id char(5) not null,						-- 음식점ID 
+	mi_id varchar(20) not null,					-- 회원 아이디
+	sh_heart int default 0,						-- 좋아요 여부
+	constraint fk_store_heart_si_id foreign key (si_id) references t_store_info(si_id),
+    constraint fk_store_heart_mi_id foreign key (mi_id) references t_member_info(mi_id)
+);
+
+select * from t_store_heart;
+
+insert into t_store_heart (si_id, mi_id, sh_heart) values ('BB301', 'test', 'y');
+
+-- 음식점 즐겨찾기 테이블
+create table t_store_bookmark (
+	sb_idx int primary key auto_increment,		-- 일련번호
+	si_id char(5) not null,						-- 음식점ID 
+	mi_id varchar(20) not null,					-- 회원 아이디
+	sb_bookmark int default 0,					-- 즐겨찾기 여부
+	constraint fk_store_bookmark_si_id foreign key (si_id) references t_store_info(si_id),
+    constraint fk_store_bookmark_mi_id foreign key (mi_id) references t_member_info(mi_id)
+);
+
 
 -- 음식점 댓글 테이블
 create table t_store_reply (
