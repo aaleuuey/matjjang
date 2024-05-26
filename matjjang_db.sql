@@ -3,7 +3,7 @@ create database matjjang;
 use matjjang;
 
 
-
+-- 관리자 테이블
 create table t_admin_info (
 	ai_idx int auto_increment unique,	-- 일련번호
     ai_id varchar(20) primary key,		-- 아이디
@@ -16,6 +16,7 @@ insert into t_admin_info (ai_id,ai_pw,ai_name) values ('admin','1234','admin');
 
 select * from t_admin_info;
 
+-- 회원 테이블
 create table t_member_info (
 	mi_id varchar(20) primary key,		-- 회원 아이디
     mi_pw varchar(20),					-- 회원 비밀번호
@@ -38,19 +39,6 @@ insert into t_member_info values ('test1', '1234', '홍길동', '010-1234-6578',
 
 insert into t_member_info values ('', '', '', '', '', '', '', 'a', now(), null);
 
--- 회원 주소록 테이블
-create table t_member_addr (
-	ma_idx int primary key auto_increment,	-- 일련번호
-	mi_id varchar(20) not null,				-- 회원아이디
-	ma_zip char(5) not null,				-- 우편번호
-	ma_addr1 varchar(50) not null,			-- 주소1
-	ma_addr2 varchar(50) not null,			-- 주소2
-	ma_date datetime default now(),			-- 등록일
-    constraint fk_t_member_addr_mi_id foreign key(mi_id) references t_member_info(mi_id)
-);
-
-select * from t_member_addr;
-insert into t_member_addr (mi_id, ma_zip, ma_addr1, ma_addr2) values ('test', '12345', '부산시 연제구 연산동', '987-654');
 
 -- 음식점 분류 테이블
 create table t_store_ctgr (
@@ -85,6 +73,7 @@ create table t_store_info (
 	si_addr2 varchar(50) not null,		-- 지번주소
     si_lat decimal(18,14) not null,		-- 경도
     si_lng decimal(18,14) not null,		-- 위도
+    si_heart int default 0,				-- 좋아요 수
     si_number varchar(13) not null,		-- 전화번호
 	si_explan varchar(500),				-- 매장소개
 	si_read int default 0,				-- 조회수
@@ -129,6 +118,8 @@ create table t_store_bookmark (
     constraint fk_store_bookmark_mi_id foreign key (mi_id) references t_member_info(mi_id)
 );
 
+select * from t_store_bookmark;
+
 
 -- 음식점 댓글 테이블
 create table t_store_reply (
@@ -162,7 +153,7 @@ insert into t_store_reply values('1', 'AA776', 'test', 'y', '5', '댓글', 1, 'i
 -- 음식점 댓글 좋아요 테이블
 create table t_store_reply_gnb (
 	srg_idx int auto_increment unique,	-- 좋아요 번호
-    mi_id varchar(20),					-- 회원 아이디
+    mi_id varchar(20) not null,			-- 회원 아이디
     sr_idx int,							-- 댓글 번호
 	srg_gnb int default 1,				-- 좋아요 여부
     srg_date datetime default now(), 	-- 날짜

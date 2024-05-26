@@ -82,5 +82,10 @@ public class MemberCtrl {
 		
 		return "redirect:/login";
 	}
+	
+	@GetMapping("/mypage")
+	public String mypage() {
+		return "member/mypage";
+	}
 
 }
