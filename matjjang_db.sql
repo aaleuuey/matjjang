@@ -174,7 +174,9 @@ select concat(srg_gnb, srg_idx) from t_store_reply_gnb where mi_id = 'test1' and
 
 select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA528' order by a.sr_idx desc limit 10;
 
-select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA528' order by a.sr_idx desc limit 10;
+select count(*) a, count(*) b, count(*) c from t_store_bookmark a, t_store_reply b, t_store_heart c where a.mi_id = b.mi_id and b.mi_id = c.mi_id and a.mi_id = 'test'; 
+select a.mi_id, a.pi_id, a.oc_date, a.oc_option, a.oc_cnt, a.oc_price, a.first_cnt, a.oc_idx, b.pi_img1, b.pi_name, b.pi_price, b.pi_dc, b.pi_stock from t_order_cart a, t_product_info b where a.pi_id = b.pi_id and a.mi_id = 'test1';
+select * from t_store_reply;
 
 select * from t_store_reply where sr_isview = 'y' and si_id = 'AA528' order by sr_idx desc limit 10, 5;
 

@@ -190,6 +190,8 @@ public class StoreDao {
 	    	result = jdbc.update(sql);
 	    	
 	        sql = "insert into t_store_reply_gnb (mi_id, sr_idx, srg_gnb) values (?, ?, 1)";
+	        
+	        System.out.println(sql);
 	        result = jdbc.update(sql, mi_id, sridx);
 	    }
 	    

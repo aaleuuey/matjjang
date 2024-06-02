@@ -1,5 +1,6 @@
 @charset "EUC-KR";
 
+ul li {list-style:none; margin:0;}
 .marketing .col-lg-4 {margin-bottom: 1.5rem; text-align: center;}
 .carousel {margin-bottom: 4rem;}
 .ttop {display:flex; margin-left:20px; margin-bottom:20px;}
@@ -61,3 +62,60 @@
 .store_review .place_review_list .review_status button span svg {vertical-align: top; margin-top:3px; overflow: hidden;}
 .store_review .place_review_list .review_status button.reply-cnt {margin-left:10px;}
 .store_review .more_list {position: absolute; left: 0; bottom: 0; width: 100%; border-radius: 0 0 10px 10px; background-color: #ff7400; font-size: 16px; font-weight: 300; color: #fff; text-align: center; line-height: 40px; z-index: 1;}
+
+.mypage .mp_profile_info {margin: 0 auto; width: 922px; position: relative; padding: 16px 0; letter-spacing: -.50px; overflow: hidden;}
+.mypage .mp_profile_info .info dl dt {color: #000; font-weight: 700; font-size: 1.6em; padding-bottom: 2px;}
+.mypage .mp_profile_info .info dl dd {color: #999; font-size: 1.12em; line-height: 22px;} 
+.mypage .mp_profile_info .btn_profile_modify {position: absolute; right: 0; top: 19px; color: #999; padding-top: 34px; font-size:0.78em; background: url(/matjjang/resources/img/bg_profile_modify.png) no-repeat center 0; background-size:41%;}
+.mypage .mp_conts {overflow: hidden; width: 922px; margin: 30px auto 0;}
+.mypage .mp_conts .mp_tab {border-top: 2px solid #000; border-bottom: 1px solid #000;}
+.mypage .mp_conts .mp_tab ul {overflow:hidden; margin-bottom:0;}
+.mypage .mp_conts .mp_tab ul li {float: left; width: 32%;}
+.mypage .mp_conts .mp_tab ul li a {display: block; padding: 20px 0; text-align: center; font-size: 0.99em; color: #999; line-height: 20px;}
+.mypage .mp_conts .mp_tab ul li.active a {font-weight: 700; color: #000;}
+.mypage .mp_conts .mp_tab ul a span {display:block;}
+.mypage .mp_conts .mp_tab ul a.active span {font-weight: 400;} 
+.mypage .mp_favorit_list {padding-top: 25px; position: relative;}
+.mypage .tab_content {display:none;}
+.mypage .tab_content.active {display:block;}
+.mypage .mp_favorit_list .folder_add_box {display:flex; justify-content:space-between;}
+.mypage .mp_favorit_list .folder_add_box .txt_save_info {color: #9a9a9a; font-size: 0.8em; margin-bottom: -2px;}
+.mypage .mp_favorit_list .folder_add_box .txt_save_info strong {color: #ffc107; font-weight: 700;}
+.mypage .mp_favorit_list .folder_add_box .btn_folder_add {position: absolute; right: 0; top: 20px; border: 1px solid #cdcdcd; height: 28px; padding: 0 9px; line-height: 28px; color: #929292; letter-spacing: -.50px;}
+.mypage .mp_favorit_list .folder_add_box .btn_folder_add span {display: block; padding-right: 18px; font-size:.75em; background: url(/matjjang/resources/img/bg_btn_line02.png) no-repeat right center; }
+.mypage .mp_favorit_list .folder_box {margin: 38px 0; background: #fff; border: 1px solid #e2e2e2;} 
+.mypage .mp_favorit_list .folder_box .floder_store {margin-top: -15px; position: relative; margin-left: -1px; padding: 32px 11px 12px; background: url(/matjjang/resources/img/bg_folder.gif) no-repeat 0 0;}
+.mypage .mp_favorit_list .folder_box .floder_store h3 {display:flex; justify-content:space-between; font-size: 1.5em; letter-spacing: -.50px; font-weight: 700; line-height: 24px; padding-bottom: 14px;}
+.mypage .mp_favorit_list .folder_box .floder_store h3 strong {color: #ffc107; font-weight: 700; font-size: .700em; vertical-align:top; padding-left: 4px;}
+.mypage .mp_favorit_list .folder_box .floder_store ul {overflow:hidden;}
+.mypage .mp_favorit_list .folder_box .floder_store ul li {float: left; width: 153px; height: 123px; overflow: hidden; position: relative; margin-left: 12px; background: url(/matjjang/resources/img/bg_no_data04.jpg) no-repeat center center;}
+.mypage .mp_favorit_list .folder_box .floder_store ul li:first-child {margin-left:0;}
+.mypage .mp_favorit_list .folder_box .floder_store ul li img {position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover;}
+.mypage .listTy1 ul {overflow: hidden; display: table; width: 100%; table-layout: fixed; color:#444; font-size:0.93em;}
+.mypage .mp_like_place .listTy1 > ul > li {width: 204px; height: auto; min-height: 322px; float:left; margin-right: 16px; padding-bottom: 0; margin-bottom: 39px;}
+.mypage .listTy1 ul li a {display:block; margin-top:26px;}
+.mypage .mp_like_place .listTy1 ul li .img {display:block; position: relative; overflow: hidden; height: 164px;}
+.mypage .listTy1 ul li .img > img {position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover;}
+.mypage .mp_like_place .listTy1 ul li .cnt {position:relative; padding-right:7px;}
+.mypage .mp_like_place .listTy1 ul li .score {display: block; color: #ff7400; font-weight: 700; font-style: normal; line-height: 22px; letter-spacing: -1px; font-size: 1.8em; padding-top: 14px;}
+.mypage .mp_like_place .listTy1 ul li .box_tit {position:relative;}
+.mypage .mp_like_place .listTy1 ul li .store {display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; font-size: 1.2em; line-height: 24px; padding: 12px 0 6px; font-weight: 700; letter-spacing: -1px; margin-right: 54px; color:#000;}
+.mypage .mp_like_place .listTy1 ul li .box_tit .ico_right {position:absolute; right: 0; top: 8px;}
+.mypage #layer_mp_folder_add, .mypage #layer_mp_folder_modify {top: 50%; margin-top: -220px; z-index: 12;}
+.mypage .layer_wrap {position: fixed; left: 0; top: 0; width: 100%;}
+.mypage .bgModal {display:none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; min-height: 100vh; z-index: 10; background: rgba(0,0,0,0.5);}
+.mypage .layer_mp_folder_add {display:none; position: relative; margin: 0 auto; width: 540px; padding-bottom: 49px; background: #fff; z-index: 54;}
+.mypage .layer_header {border-bottom: 1px solid #d7d7d7; height: 70px; padding: 0 26px;}
+.mypage .layer_header h3 {line-height: 70px; font-size: 1.3em; letter-spacing: -1px; font-weight: 700;}
+.mypage .layer_mp_folder_add .mp_folder_add {padding: 0 70px;}
+.mypage .layer_mp_folder_add .txt_ment {text-align: center; font-size: 1.1em; letter-spacing: -.25px; font-weight: 700; padding-top: 44px; padding-bottom: 37px;} 
+.mypage .txtbox {border: 1px solid #d7d7d7; position: relative; overflow: hidden; background: #fff; padding: 0 0 0 15px;}
+.mypage .txtbox label.label {position: absolute; left: 0; top: 0; width: 100%; padding: 14px 0 0 16px; color: #999; font-size: 1.250em; cursor: text;}
+.mypage .layer_mp_folder_add .txtbox textarea {height: 107px; width: 100%; resize: none; background: #fff; border: none; outline: none; padding-top: 16px; margin-top: 1px; font-size: 0.97em;}
+.mypage .layer_mp_folder_add .btn_box {text-align: center; padding-top: 50px;}
+.mypage .layer_mp_folder_add .btn_box ul {overflow:hidden; padding:0;}
+.mypage .layer_mp_folder_add .btn_box ul li {display:inline-block;}
+.mypage .layer_mp_folder_add .btn_box .btnTy10, .mypage .layer_mp_folder_add .btn_box .btnTy11, .mypage .layer_mp_folder_add .btn_box .btnTy12 {margin-right: 5px; display: inline-block; width: 78px; height: 38px; background: #fff; border: 1px solid #e1e1e1; line-height: 38px; text-align: center; color: #000; letter-spacing: -.50px; font-size: 0.88em; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;} 
+.mypage .layer_mp_folder_add .btn_box .btnTy11 {border: 1px solid #ff7400; background: #ff7400; color:#fff;}
+.mypage .layer_mp_folder_add .btn_box .btnTy12 {border: 1px solid #999; background: #999; color: #fff;} 
+.mypage .layer_wrap .btn_layer_close {position: absolute; right: 0; top: -46px; z-index: 6; width: 26px; height: 26px; background: url(/matjjang/resources/img/btn_layer_close.png) no-repeat 0 center;}  

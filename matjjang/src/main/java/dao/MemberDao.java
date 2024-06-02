@@ -30,4 +30,28 @@ public class MemberDao {
 		
 		return result;
 	}
+
+	public int getBookMarkCount(String miid) {
+		String sql = "select count(*) from t_store_bookmark where mi_id = '" + miid + "' ";
+		
+		int result = jdbc.queryForObject(sql, Integer.class);
+		
+		return result;
+	}
+
+	public int getReviewCount(String miid) {
+		String sql = "select count(*) from t_store_reply where mi_id = '" + miid + "' ";
+		
+		int result = jdbc.queryForObject(sql, Integer.class);
+		
+		return result;
+	}
+
+	public int getHeartCount(String miid) {
+		String sql = "select count(*) from t_store_heart where mi_id = '" + miid + "' ";
+		
+		int result = jdbc.queryForObject(sql, Integer.class);
+		
+		return result;
+	}
 }

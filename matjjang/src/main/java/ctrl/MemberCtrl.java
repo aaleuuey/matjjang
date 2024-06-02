@@ -4,8 +4,10 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -84,7 +86,21 @@ public class MemberCtrl {
 	}
 	
 	@GetMapping("/mypage")
-	public String mypage() {
+	public String mypage(Model model, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		String miid = loginInfo.getMi_id();
+		
+		int bkcnt = memberSvc.getBookMarkCount(miid);
+		int rvcnt = memberSvc.getReviewCount(miid);
+		int htcnt = memberSvc.getHeartCount(miid);
+		
+		model.addAttribute("bkcnt", bkcnt);
+		model.addAttribute("rvcnt", rvcnt);
+		model.addAttribute("htcnt", htcnt);
+		
 		return "member/mypage";
 	}
 

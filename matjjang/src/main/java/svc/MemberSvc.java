@@ -19,4 +19,19 @@ public class MemberSvc {
 		int result = memberDao.memberInsert(mi);
 		return result;
 	}
+
+	public int getBookMarkCount(String miid) {
+		int result = memberDao.getBookMarkCount(miid);
+		return result;
+	}
+
+	public int getReviewCount(String miid) {
+		int result = memberDao.getReviewCount(miid);
+		return result;
+	}
+
+	public int getHeartCount(String miid) {
+		int result = memberDao.getHeartCount(miid);
+		return result;
+	}
 }
