@@ -1,10 +1,16 @@
 package dao;
 
+import java.sql.ResultSet;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import vo.BookmarkImageInfo;
+import vo.BookmarkInfo;
 import vo.MemberInfo;
+import vo.StoreInfo;
 
 public class MemberDao {
 	private JdbcTemplate jdbc;
@@ -25,8 +31,10 @@ public class MemberDao {
 	public int memberInsert(MemberInfo mi) {
 		String sql = "insert into t_member_info values ('" + mi.getMi_id() + "', '" + mi.getMi_pw() + "', '" + mi.getMi_name() + "', '" + mi.getMi_phone() + 
 				"', '" + mi.getMi_birth() + "', '" + mi.getMi_gender() + "', '" + mi.getMi_email() + "', 'a', now(), null)";
-		
 		int result = jdbc.update(sql);
+		
+		sql = "insert into t_bookmark_folder(si_id, mi_id, bf_title) values (null, '" + mi.getMi_id() + "', '¸ÀÁý Æú´õ')"; 
+		result = jdbc.update(sql);
 		
 		return result;
 	}
@@ -53,5 +61,34 @@ public class MemberDao {
 		int result = jdbc.queryForObject(sql, Integer.class);
 		
 		return result;
+	}
+
+	public List<BookmarkInfo> getBookmarkView(String miid) {
+		String sql = "select * from t_bookmark_folder where mi_id = '" + miid + "' ";
+		System.out.println(sql);
+		
+		List<BookmarkInfo> bookmarkView = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
+			BookmarkInfo bk = new BookmarkInfo();
+			bk.setSi_id(rs.getString("si_id"));
+			bk.setBf_title(rs.getString("bf_title"));
+			bk.setBf_cnt(rs.getString("bf_cnt"));
+			
+			return bk;
+		});
+		return bookmarkView;
+	}
+
+	public List<BookmarkImageInfo> getBookmarkImages(String miid) {
+		String sql = "select a.*, b.mi_id, b.si_id from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = '" + miid + "' ";
+		System.out.println(sql);
+		
+		List<BookmarkImageInfo> bookmarkImages = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
+			BookmarkImageInfo bki = new BookmarkImageInfo();
+			bki.setSi_id(rs.getString("si_id"));
+			bki.setBfi_img(rs.getString("bfi_img"));
+			
+			return bki;
+		});
+		return bookmarkImages;
 	}
 }

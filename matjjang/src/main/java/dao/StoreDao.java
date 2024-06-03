@@ -62,7 +62,7 @@ public class StoreDao {
 		
 		System.out.println(sql);
 		
-		List<StoreInfo> storeList = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
+		List<StoreInfo> storeView = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
 			StoreInfo si = new StoreInfo();
 			si.setSi_id(rs.getString("si_id"));
 			si.setSi_name(rs.getString("si_name"));
@@ -89,7 +89,7 @@ public class StoreDao {
 			
 			return si;
 		});
-		return storeList;
+		return storeView;
 	}
 
 	public List<StoreReplyList> getStoreReplyList(String siid) {

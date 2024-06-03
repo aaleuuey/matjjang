@@ -1,6 +1,10 @@
 package svc;
 
+import java.util.List;
+
 import dao.MemberDao;
+import vo.BookmarkImageInfo;
+import vo.BookmarkInfo;
 import vo.MemberInfo;
 
 public class MemberSvc {
@@ -33,5 +37,15 @@ public class MemberSvc {
 	public int getHeartCount(String miid) {
 		int result = memberDao.getHeartCount(miid);
 		return result;
+	}
+
+	public List<BookmarkInfo> getBookmarkView(String miid) {
+		List<BookmarkInfo> bookmarkView = memberDao.getBookmarkView(miid);
+		return bookmarkView;
+	}
+
+	public List<BookmarkImageInfo> getBookmarkImages(String miid) {
+		List<BookmarkImageInfo> bookmarkImages = memberDao.getBookmarkImages(miid);
+		return bookmarkImages;
 	}
 }

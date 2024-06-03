@@ -33,20 +33,23 @@
 				</div>
 				<div>
 					<div class="folder_box">
+						<c:forEach items="${bookmarkView}" var="bookmark">
 						<div class="floder_store">
 							<h3>
-								<span data-reactid="144">ㄹㅇ<strong data-reactid="145">(0)</strong></span>
+								<span data-reactid="144">${bookmark.bf_title}<strong>(${bookmark.bf_cnt})</strong></span>
 								<a href="javascript:modifyFolder();" class="btn_foloder_setup"><img src="/matjjang/resources/img/btn_folder_setup.png" alt="설정"></a>
 							</h3>
+							<c:forEach items="${bookmarkImages}" var="bkImgs">
 							<ul>
 								<li>
-									<a href="https://www.siksinhot.com/P/323">
-										<img src="https://img.siksinhot.com/place/1530597402238010.jpg">
+									<a href="/matjjang/storeView?siid=${bkImgs.si_id}">
+										<img src="/ad_matjjang/resources/img/store/${bkImgs.bfi_img}">
 									</a>
 								</li>
 							</ul>
-							
+							</c:forEach>
 						</div>
+						</c:forEach>
 					</div>				
 				</div>
 			</div>

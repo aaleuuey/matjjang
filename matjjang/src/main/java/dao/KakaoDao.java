@@ -27,8 +27,10 @@ private JdbcTemplate jdbc;
 	public int kakaoInsert(MemberInfo mi) {
 		String sql = "insert into t_member_info values ('" + mi.getMi_id() + "', '" + mi.getMi_pw() + "', '" + mi.getMi_name() + "', '" + mi.getMi_phone() + 
 				"', '" + mi.getMi_birth() + "', '" + mi.getMi_gender() + "', '" + mi.getMi_email() + "', 'a', now(), null)";
-		
 		int result = jdbc.update(sql);
+		
+		sql = "insert into t_bookmark_folder(si_id, mi_id, bf_title) values (null, '" + mi.getMi_id() + "', '¸ÀÁý Æú´õ')";  
+		result = jdbc.update(sql);
 		
 		return result;
 	}

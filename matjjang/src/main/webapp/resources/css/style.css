@@ -85,7 +85,7 @@ ul li {list-style:none; margin:0;}
 .mypage .mp_favorit_list .folder_add_box .btn_folder_add span {display: block; padding-right: 18px; font-size:.75em; background: url(/matjjang/resources/img/bg_btn_line02.png) no-repeat right center; }
 .mypage .mp_favorit_list .folder_box {margin: 38px 0; background: #fff; border: 1px solid #e2e2e2;} 
 .mypage .mp_favorit_list .folder_box .floder_store {margin-top: -15px; position: relative; margin-left: -1px; padding: 32px 11px 12px; background: url(/matjjang/resources/img/bg_folder.gif) no-repeat 0 0;}
-.mypage .mp_favorit_list .folder_box .floder_store h3 {display:flex; justify-content:space-between; font-size: 1.5em; letter-spacing: -.50px; font-weight: 700; line-height: 24px; padding-bottom: 14px;}
+.mypage .mp_favorit_list .folder_box .floder_store h3 {display:flex; justify-content:space-between; font-size: 1.4em; letter-spacing: -.50px; font-weight: 700; line-height: 24px; padding-bottom: 14px;}
 .mypage .mp_favorit_list .folder_box .floder_store h3 strong {color: #ffc107; font-weight: 700; font-size: .700em; vertical-align:top; padding-left: 4px;}
 .mypage .mp_favorit_list .folder_box .floder_store ul {overflow:hidden;}
 .mypage .mp_favorit_list .folder_box .floder_store ul li {float: left; width: 153px; height: 123px; overflow: hidden; position: relative; margin-left: 12px; background: url(/matjjang/resources/img/bg_no_data04.jpg) no-repeat center center;}

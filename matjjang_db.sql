@@ -124,7 +124,7 @@ select * from t_store_bookmark;
 -- 음식점 댓글 테이블
 create table t_store_reply (
 	sr_idx int primary key auto_increment,	-- 댓글번호
-	si_id char(5) not null,					-- 맛집ID
+	si_id char(5) not null,					-- 음식점ID
 	mi_id varchar(20) not null,				-- 회원아이디
 	sr_ismem char(1) default 'y',			-- 회원여부
     sr_star float not null,					-- 음식점 별점				
@@ -182,6 +182,36 @@ select * from t_store_reply where sr_isview = 'y' and si_id = 'AA528' order by s
 
 insert into t_store_reply_gnb(mi_id, sr_idx, srg_gnb) values('test1', '4', '1');
 delete from t_store_reply_gnb where sr_idx = 6 and mi_id = 'test1';
+
+-- 즐겨찾기 폴더 테이블
+create table t_bookmark_folder (
+	bf_idx int primary key auto_increment,	-- 폴더 번호
+    si_id char(5),					        -- 음식점ID
+    mi_id varchar(20) not null, 			-- 회원 아이디
+	bf_title varchar(20) not null, 			-- 폴더명
+    bf_cnt int  default 0, 		            -- 폴더 즐겨찾기 개수
+    constraint fk_bookmark_folder_mi_id foreign key (mi_id) references t_member_info(mi_id),
+    constraint fk_bookmark_folder_si_id foreign key (si_id) references t_store_info(si_id)
+); 
+
+select * from t_bookmark_folder;
+
+insert into t_bookmark_folder(si_id, mi_id, bf_title, bf_cnt) values (null, 'test', '맛집 폴더', 0);
+
+-- 나눈 이유 즐겨찾기 폴더 따로 마이페이지에서 for문 돌리고 그 안에서 이미지를 다시 for문 돌려야 하기 때문
+
+create table t_bookmark_folder_images (
+	bfi_idx int primary key auto_increment,	-- 폴더 이미지 번호
+    bf_idx int not null, 					-- 폴더 번호					
+    bfi_img varchar(50) default '',			-- 이미지
+    constraint fk_bookmark_folder_images_bf_idx foreign key (bf_idx) references t_bookmark_folder(bf_idx)
+); 
+
+insert into t_bookmark_folder_images(bf_idx, bfi_img) values (1, '맛집 사진1.jpg');
+
+select a.*, b.mi_id, b.si_id from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = 'test';
+select * from t_bookmark_folder_images;
+ 
 
 -- 맛집게시판 테이블
 create table t_free_list (

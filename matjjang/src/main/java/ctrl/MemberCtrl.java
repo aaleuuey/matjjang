@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import svc.*;
-import vo.MemberInfo;
+import vo.*;
 
 @Controller
 public class MemberCtrl {
@@ -93,10 +94,15 @@ public class MemberCtrl {
 		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
 		String miid = loginInfo.getMi_id();
 		
+		List<BookmarkInfo> bookmarkView = memberSvc.getBookmarkView(miid);
+		List<BookmarkImageInfo> bookmarkImages = memberSvc.getBookmarkImages(miid);
+		
 		int bkcnt = memberSvc.getBookMarkCount(miid);
 		int rvcnt = memberSvc.getReviewCount(miid);
 		int htcnt = memberSvc.getHeartCount(miid);
 		
+		model.addAttribute("bookmarkView", bookmarkView);
+		model.addAttribute("bookmarkImages", bookmarkImages);
 		model.addAttribute("bkcnt", bkcnt);
 		model.addAttribute("rvcnt", rvcnt);
 		model.addAttribute("htcnt", htcnt);
