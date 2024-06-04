@@ -79,8 +79,8 @@ public class StoreSvc {
 		return bookmark;
 	}
 
-	public int storeBookmark(String siid, String mi_id) {
-		int result = storeDao.storeBookmark(siid, mi_id);
+	public int storeBookmark(String siid, String mi_id, String siimg1) {
+		int result = storeDao.storeBookmark(siid, mi_id, siimg1);
 		return result;
 	}
 }

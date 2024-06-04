@@ -2,7 +2,7 @@ package vo;
 
 public class BookmarkImageInfo {
 	private int bfi_idx, bf_idx;
-	private String bfi_img, mi_id, si_id;
+	private String bfi_img, bf_title, mi_id, si_id;
 	
 	public int getBfi_idx() {
 		return bfi_idx;
@@ -21,6 +21,12 @@ public class BookmarkImageInfo {
 	}
 	public void setBfi_img(String bfi_img) {
 		this.bfi_img = bfi_img;
+	}
+	public String getBf_title() {
+		return bf_title;
+	}
+	public void setBf_title(String bf_title) {
+		this.bf_title = bf_title;
 	}
 	public String getMi_id() {
 		return mi_id;

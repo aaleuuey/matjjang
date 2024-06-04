@@ -145,6 +145,7 @@ public class StoreCtrl {
 		String si_lng = si.getSi_lng();
 		int si_review = si.getSi_review();
 		String si_name = si.getSi_name();
+		String si_img1 = si.getSi_img1();
 		
 		model.addAttribute("storeView", storeView);
 		model.addAttribute("siid", siid);
@@ -156,6 +157,7 @@ public class StoreCtrl {
 		model.addAttribute("si_lng", si_lng);
 		model.addAttribute("si_review", si_review);
 		model.addAttribute("si_name", si_name);
+		model.addAttribute("si_img1", si_img1);
 		
 		return "store/storeView";
 		
@@ -182,11 +184,14 @@ public class StoreCtrl {
 		request.setCharacterEncoding("utf-8");
 		
 		String siid = request.getParameter("siid");
+		String siimg1 = request.getParameter("siimg1");
+		
+		System.out.println(request.getParameter("siimg1"));
 		
 		HttpSession session = request.getSession();
 		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
 		
-		int result = storeSvc.storeBookmark(siid, loginInfo.getMi_id());
+		int result = storeSvc.storeBookmark(siid, loginInfo.getMi_id(), siimg1);
 		
 		return result + "";
 	}

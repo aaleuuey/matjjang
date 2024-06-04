@@ -108,7 +108,7 @@
 							<span>좋아요</span>
 							<img id="heart" src="resources/img/bg_icon_good.png" alt="좋아요 버튼">
 						</button>
-						<button onclick="setBookmark('${loginInfo.getMi_id()}', '${siid}')"><span>즐겨찾기</span>
+						<button onclick="setBookmark('${loginInfo.getMi_id()}', '${siid}', '${si_img1}')"><span>즐겨찾기</span>
 							<img id="bookmark" src="resources/img/bg_icon_bookmark2.png" alt="즐겨찾기 버튼">
 						</button>
 						<a href="#review_bow" data-target="location_review">
@@ -473,11 +473,11 @@ function setHeart(miid, siid) {
 }
 
 //게시글 즐겨찾기 클릭 시 
-function setBookmark(miid, siid) {
+function setBookmark(miid, siid, siimg1) {
     $.ajax({
         type: "POST",
         url: "/matjjang/storeProcBookmark",
-        data: { "miid" : miid, "siid" : siid},
+        data: { "miid" : miid, "siid" : siid, "siimg1" : siimg1},
         success: function(result) {
             if (result > 0) {
             	alert("즐겨찾기가 추가되었습니다.")

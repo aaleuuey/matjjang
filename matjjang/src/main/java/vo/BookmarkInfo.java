@@ -2,19 +2,13 @@ package vo;
 
 public class BookmarkInfo {
 	private int bf_idx;
-	private String si_id, mi_id, bf_title, bf_cnt;
+	private String mi_id, bf_title, bf_cnt;
 	
 	public int getBf_idx() {
 		return bf_idx;
 	}
 	public void setBf_idx(int bf_idx) {
 		this.bf_idx = bf_idx;
-	}
-	public String getSi_id() {
-		return si_id;
-	}
-	public void setSi_id(String si_id) {
-		this.si_id = si_id;
 	}
 	public String getMi_id() {
 		return mi_id;

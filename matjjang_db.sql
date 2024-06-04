@@ -186,31 +186,48 @@ delete from t_store_reply_gnb where sr_idx = 6 and mi_id = 'test1';
 -- 즐겨찾기 폴더 테이블
 create table t_bookmark_folder (
 	bf_idx int primary key auto_increment,	-- 폴더 번호
-    si_id char(5),					        -- 음식점ID
     mi_id varchar(20) not null, 			-- 회원 아이디
 	bf_title varchar(20) not null, 			-- 폴더명
     bf_cnt int  default 0, 		            -- 폴더 즐겨찾기 개수
-    constraint fk_bookmark_folder_mi_id foreign key (mi_id) references t_member_info(mi_id),
-    constraint fk_bookmark_folder_si_id foreign key (si_id) references t_store_info(si_id)
+    constraint fk_bookmark_folder_mi_id foreign key (mi_id) references t_member_info(mi_id)
 ); 
 
 select * from t_bookmark_folder;
 
-insert into t_bookmark_folder(si_id, mi_id, bf_title, bf_cnt) values (null, 'test', '맛집 폴더', 0);
+select * from t_bookmark_folder where mi_id = 'test' order by bf_idx desc;
+
+select bf_idx from t_bookmark_folder where mi_id = 'test' order by bf_idx desc limit 1;
+
+update t_bookmark_folder set bf_cnt = 1 where mi_id = 'test' and bf_idx = (select bf_idx from t_bookmark_folder where mi_id = 'test' order by bf_idx desc limit 1);
+
+select * from t_bookmark_folder where si_id is null;
+
+update t_bookmark_folder set bf_cnt = 0 where mi_id = 'test';
+
+insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 폴더', 1);
+insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 폴더2', 0);
+insert into t_bookmark_folder(si_id, mi_id, bf_title, bf_cnt) values ('', 'test', '맛집 폴더3', 0);
 
 -- 나눈 이유 즐겨찾기 폴더 따로 마이페이지에서 for문 돌리고 그 안에서 이미지를 다시 for문 돌려야 하기 때문
 
 create table t_bookmark_folder_images (
 	bfi_idx int primary key auto_increment,	-- 폴더 이미지 번호
-    bf_idx int not null, 					-- 폴더 번호					
+    bf_idx int not null, 					-- 폴더 번호		
+	si_id char(5) not null,                 -- 음식점ID
     bfi_img varchar(50) default '',			-- 이미지
-    constraint fk_bookmark_folder_images_bf_idx foreign key (bf_idx) references t_bookmark_folder(bf_idx)
+    constraint fk_bookmark_folder_images_bf_idx foreign key (bf_idx) references t_bookmark_folder(bf_idx),
+	constraint fk_bookmark_folder_images_si_id foreign key (si_id) references t_store_info(si_id)
 ); 
 
-insert into t_bookmark_folder_images(bf_idx, bfi_img) values (1, '맛집 사진1.jpg');
+insert into t_bookmark_folder_images(bf_idx, si_id, bfi_img) values (1, 'AA925', '맛집 사진1.jpg');
+insert into t_bookmark_folder_images(bf_idx, si_id, bfi_img) values (1, 'AA867', '라벤더1.jpg');
+insert into t_bookmark_folder_images(bf_idx, si_id, bfi_img) values (2, 'AA867', '무늬 담쟁이3.jpg');
 
-select a.*, b.mi_id, b.si_id from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = 'test';
+select a.*, b.mi_id from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = 'test';
 select * from t_bookmark_folder_images;
+
+update t_bookmark_folder_images set bf_idx = 2 where si_id = 'AA867';
+select a.*, b.mi_id, b.bf_title from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = 'test';
  
 
 -- 맛집게시판 테이블

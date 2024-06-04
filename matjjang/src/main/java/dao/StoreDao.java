@@ -203,6 +203,8 @@ public class StoreDao {
 		
 		String sql = "select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = ? order by a.sr_idx desc limit ?, ?";
 		
+		System.out.println(sql);
+		
 		List<StoreReplyList> moreReviews = jdbc.query(sql, new Object[]{siid, currentReviews, addReviews}, (ResultSet rs, int rowNum) -> {	
 	        StoreReplyList srl = new StoreReplyList();
 	        srl.setMi_id(rs.getString("mi_id"));
@@ -283,7 +285,7 @@ public class StoreDao {
 	    return bookmark;
 	}
 
-	public int storeBookmark(String siid, String mi_id) {
+	public int storeBookmark(String siid, String mi_id, String siimg1) {
 		int result = 0;
 	    		
 	    String sql = "select * from t_store_bookmark where si_id = '" + siid + "' and mi_id = '" + mi_id + "' ";
@@ -296,9 +298,39 @@ public class StoreDao {
 	        jdbc.update(sql, siid, mi_id);
 	        
 	        result = 0;
+	        
+	        String sql2 = "select bf_idx, bf_cnt from t_bookmark_folder where mi_id = ? order by bf_idx desc limit 1";
+	        List<Map<String, Object>> rows2 = jdbc.queryForList(sql2, mi_id);
+	        
+	        if (!rows2.isEmpty()) {
+	            Map<String, Object> row = rows2.get(0);
+	            int bfIdx = (int) row.get("bf_idx");
+	            int bfCnt = (int) row.get("bf_cnt");
+	            
+	            String sql3 = "update t_bookmark_folder set bf_cnt = ? where bf_idx = ?";
+	            jdbc.update(sql3, bfCnt - 1, bfIdx);
+	            
+	            sql3 = "delete from t_bookmark_folder_images where si_id = ?";
+	            jdbc.update(sql3, siid);
+	        }
 	    } else {
 	        sql = "insert into t_store_bookmark (si_id, mi_id, sb_bookmark) values (?, ?, 1)";
 	        result = jdbc.update(sql, siid, mi_id);
+	        
+	        String sql2 = "select bf_idx, bf_cnt from t_bookmark_folder where mi_id = ? order by bf_idx desc limit 1";
+	        List<Map<String, Object>> rows2 = jdbc.queryForList(sql2, mi_id);
+	        
+	        if (!rows2.isEmpty()) {
+	            Map<String, Object> row = rows2.get(0);
+	            int bfIdx = (int) row.get("bf_idx");
+	            int bfCnt = (int) row.get("bf_cnt");
+	            
+	            String sql3 = "update t_bookmark_folder set bf_cnt = ? where bf_idx = ?";
+	            jdbc.update(sql3, bfCnt + 1, bfIdx);
+	            
+	            sql3 = "insert t_bookmark_folder_images (bf_idx, si_id, bfi_img) values (?, ?, ?)";
+	            jdbc.update(sql3, bfIdx, siid, siimg1);
+	        }
 	    }
 	    
 	    return result;

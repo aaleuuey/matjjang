@@ -64,14 +64,14 @@ public class MemberDao {
 	}
 
 	public List<BookmarkInfo> getBookmarkView(String miid) {
-		String sql = "select * from t_bookmark_folder where mi_id = '" + miid + "' ";
+		String sql = "select * from t_bookmark_folder where mi_id = '" + miid + "' order by bf_idx desc";
 		System.out.println(sql);
 		
 		List<BookmarkInfo> bookmarkView = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
 			BookmarkInfo bk = new BookmarkInfo();
-			bk.setSi_id(rs.getString("si_id"));
 			bk.setBf_title(rs.getString("bf_title"));
 			bk.setBf_cnt(rs.getString("bf_cnt"));
+			bk.setBf_idx(rs.getInt("bf_idx"));
 			
 			return bk;
 		});
@@ -79,13 +79,15 @@ public class MemberDao {
 	}
 
 	public List<BookmarkImageInfo> getBookmarkImages(String miid) {
-		String sql = "select a.*, b.mi_id, b.si_id from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = '" + miid + "' ";
+		String sql = "select a.*, b.mi_id, b.bf_title from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = '" + miid + "' ";
+		
 		System.out.println(sql);
 		
 		List<BookmarkImageInfo> bookmarkImages = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
 			BookmarkImageInfo bki = new BookmarkImageInfo();
 			bki.setSi_id(rs.getString("si_id"));
 			bki.setBfi_img(rs.getString("bfi_img"));
+			bki.setBf_idx(rs.getInt("bf_idx"));
 			
 			return bki;
 		});
