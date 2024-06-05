@@ -28,16 +28,36 @@
 		<div id="tab1" class="tab_content mp_favorit_list active">
 			<div>
 				<div class="folder_add_box">
-					<div class="txt_save_info"><strong>2</strong>개의 장소를 저장했습니다.</div>
 					<a href="javascript:folderShow();" class="btn_folder_add"><span>폴더추가</span></a>
 				</div>
+				<div class="layer_mp_folder layer_wrap" id="layer_mp_folder_add">
+	                <div class="bgModal" id="bgModal"></div>
+	                <div class="layer_mp_folder_add" id="folderModal">
+	                    <div class="layer_header">
+	                        <h3>폴더 추가</h3>
+	                    </div>
+	                    <div class="mp_folder_add">
+	                        <p class="txt_ment">맛집을 저장하고 싶은 폴더의 이름을 입력하세요.</p>
+	                        <div class="txtbox">
+	                            <div><label class="label"></label><textarea name="title" id="txArea" class="focusIn"></textarea></div>
+	                        </div>
+	                        <div class="btn_box">
+	                            <ul>
+	                                <li><a href="javascript:folderHide();" class="btnTy10">취소</a></li>
+	                                <li><a href="javascript:setFolder('${miid}');" id="submitBtn" class="btnTy11">저장</a></li>
+	                            </ul>
+	                        </div>
+	                    </div>
+	                    <a href="javascript:folderHide();" class="btn_layer_close"></a>
+	                </div>
+	            </div>
 				<div>
 					<c:forEach items="${bookmarkView}" var="bookmark">
 					<div class="folder_box">
 						<div class="floder_store">
 							<h3>
 								<span>${bookmark.bf_title}<strong>(${bookmark.bf_cnt})</strong></span>
-								<a href="javascript:modifyFolder();" class="btn_foloder_setup"><img src="/matjjang/resources/img/btn_folder_setup.png" alt="설정"></a>
+								<a href="javascript:modifyFolder();" id="btn_foloder_setup" class="btn_foloder_setup"><img src="/matjjang/resources/img/btn_folder_setup.png" alt="설정"></a>
 							</h3>
 							<ul>
 								<c:forEach items="${bookmarkImages}" var="bkImgs">
@@ -53,58 +73,36 @@
 							
 						</div>
 					</div>	
+					<div class="layer_mp_folder layer_wrap" id="layer_mp_folder_modify">
+		                <div class="layer_mp_folder_add folderModify" id="folderModify">
+		                    <div class="layer_header">
+		                        <h3>폴더 수정/삭제</h3>
+		                    </div>
+		                    <div class="mp_folder_add">
+		                        <p class="txt_ment">폴더명을 입력하세요.</p>
+		                        <div class="txtbox">
+		                            <div><label class="label"></label><textarea name="title" id="txArea2" class="focusIn"></textarea></div>
+		                        </div>
+		                        <div class="btn_box">
+		                        	<ul>
+		                        		<li>
+		                        			<a href="javascript:folderHide();" class="btnTy10">취소</a>
+		                        		</li>
+		                        		<li>
+		                        			<a href="javascript:updateFolder('${miid}', ${bookmark.bf_idx});" class="btnTy11">저장</a>
+		                        		</li>
+		                        		<li>
+		                        			<a href="javascript:deleteFolder('${miid}', ${bookmark.bf_idx});" class="btnTy12">폴더삭제</a>
+		                        		</li>
+		                        	</ul>
+		                        </div>
+		                    </div>
+		                    <a href="javascript:folderHide();" class="btn_layer_close"></a>
+		                </div>
+		            </div>
 					</c:forEach>			
 				</div>
 			</div>
-			<div class="layer_mp_folder layer_wrap" id="layer_mp_folder_add">
-                <div class="bgModal" id="bgModal"></div>
-                <div class="layer_mp_folder_add" id="folderModal">
-                    <div class="layer_header">
-                        <h3>폴더 추가</h3>
-                    </div>
-                    <div class="mp_folder_add">
-                        <p class="txt_ment">맛집을 저장하고 싶은 폴더의 이름을 입력하세요.</p>
-                        <div class="txtbox">
-                            <div><label class="label"></label><textarea name="title" class="focusIn"></textarea></div>
-                        </div>
-                        <div class="btn_box">
-                            <ul>
-                                <li><a href="javascript:folderHide();" class="btnTy10">취소</a></li>
-                                <li><a href="#" class="btnTy11">저장</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <a href="javascript:folderHide();" class="btn_layer_close"></a>
-                </div>
-            </div>
-            <div class="layer_mp_folder layer_wrap" id="layer_mp_folder_modify">
-                <div class="bgModal"></div>
-                <div class="layer_mp_folder_add" id="folderModify">
-                    <div class="layer_header">
-                        <h3>폴더 추가</h3>
-                    </div>
-                    <div class="mp_folder_add">
-                        <p class="txt_ment">폴더명을 입력하세요.</p>
-                        <div class="txtbox">
-                            <div><label class="label"></label><textarea name="title" class="focusIn"></textarea></div>
-                        </div>
-                        <div class="btn_box">
-                        	<ul>
-                        		<li>
-                        			<a href="javascript:folderHide();" class="btnTy10">취소</a>
-                        		</li>
-                        		<li>
-                        			<a href="#" class="btnTy11">저장</a>
-                        		</li>
-                        		<li>
-                        			<a href="#" class="btnTy12">폴더삭제</a>
-                        		</li>
-                        	</ul>
-                        </div>
-                    </div>
-                    <a href="javascript:folderHide();" class="btn_layer_close"></a>
-                </div>
-            </div>
 		</div>
 		<div id="tab2" class="tab_content">
 		</div>
@@ -139,7 +137,6 @@
 	</div>
 </div>
 <script>
-
 	// tab
 	const tabItem = document.querySelectorAll(".tab_item");
 	const tabContent = document.querySelectorAll(".tab_content");
@@ -169,26 +166,77 @@
 	});
 	
 	function folderShow() {
-		var con = document.getElementById("folderModal");
-		var bg = document.getElementById("bgModal");
-		con.style.display = "block";
-		bg.style.display = "block";
+		$(function(){
+			$("#folderModal").show();
+			$("#bgModal").show();
+		});
 	}
 	
-	function modifyFolder() {
-		var con = document.getElementById("folderModify");
-		var bg = document.getElementById("bgModal");
-		con.style.display = "block";
-		bg.style.display = "block";
-	}
+	$(function(){
+		$('.btn_foloder_setup').click(function() {
+			$(this).parents(".folder_box").next(".layer_mp_folder").children(".folderModify").show();
+			$("#bgModal").show();
+		});
+	});
 	
 	function folderHide() {
-		var con = document.getElementById("folderModal");
-		var con2 = document.getElementById("folderModify");
-		var bg = document.getElementById("bgModal");
-		con.style.display = "none";
-		con2.style.display = "none";
-		bg.style.display = "none";
+		$(function(){
+			$("#folderModal").hide();
+			$(".folderModify").hide();
+			$("#bgModal").hide();
+		});
+	}
+	
+	
+	// 폴더 추가
+	function setFolder(miid) {
+		var txCont = document.getElementById('txArea').value;
+		
+		$.ajax({
+	        type: "POST",
+	        url: "/matjjang/folderAddProc",
+	        data: { "miid" : miid, "txCont" : txCont},
+	        success: function(result) {
+	        	location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('오류 발생: ' + error);
+            }
+	    });
+	}
+	
+	// 폴더 수정
+	function updateFolder(miid, bfidx) {
+		var txCont = document.getElementById('txArea2').value;
+		
+		$.ajax({
+	        type: "POST",
+	        url: "/matjjang/folderUpdate",
+	        data: { "miid" : miid, "bfidx" : bfidx ,"txCont" : txCont},
+	        success: function(result) {
+	        	alert("변경 되었습니다.");
+	        	location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('오류 발생: ' + error);
+            }
+	    });
+	}
+	
+	// 폴더 삭제
+	function deleteFolder(miid, bfidx) {
+		$.ajax({
+	        type: "POST",
+	        url: "/matjjang/folderDelete",
+	        data: { "miid" : miid, "bfidx" : bfidx },
+	        success: function(result) {	
+	        	alert("삭제 되었습니다.");
+	        	location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('오류 발생: ' + error);
+            }
+	    });
 	}
 </script>
 <%@ include file="../inc/foot.jsp" %>

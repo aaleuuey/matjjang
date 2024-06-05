@@ -121,6 +121,8 @@ create table t_store_bookmark (
 select * from t_store_bookmark;
 
 
+
+
 -- 음식점 댓글 테이블
 create table t_store_reply (
 	sr_idx int primary key auto_increment,	-- 댓글번호
@@ -192,7 +194,11 @@ create table t_bookmark_folder (
     constraint fk_bookmark_folder_mi_id foreign key (mi_id) references t_member_info(mi_id)
 ); 
 
+delete from t_bookmark_folder;
+
 select * from t_bookmark_folder;
+
+delete from t_bookmark_folder where mi_id = 'test' and bf_idx = 8;
 
 select * from t_bookmark_folder where mi_id = 'test' order by bf_idx desc;
 
@@ -202,9 +208,9 @@ update t_bookmark_folder set bf_cnt = 1 where mi_id = 'test' and bf_idx = (selec
 
 select * from t_bookmark_folder where si_id is null;
 
-update t_bookmark_folder set bf_cnt = 0 where mi_id = 'test';
+update t_bookmark_folder set bf_cnt = 0 where mi_id = 'test' and bf_idx = 15;
 
-insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 폴더', 1);
+insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 폴더', 0);
 insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 폴더2', 0);
 insert into t_bookmark_folder(si_id, mi_id, bf_title, bf_cnt) values ('', 'test', '맛집 폴더3', 0);
 
@@ -212,23 +218,29 @@ insert into t_bookmark_folder(si_id, mi_id, bf_title, bf_cnt) values ('', 'test'
 
 create table t_bookmark_folder_images (
 	bfi_idx int primary key auto_increment,	-- 폴더 이미지 번호
-    bf_idx int not null, 					-- 폴더 번호		
+    bf_idx int not null, 					-- 폴더 번호
 	si_id char(5) not null,                 -- 음식점ID
     bfi_img varchar(50) default '',			-- 이미지
     constraint fk_bookmark_folder_images_bf_idx foreign key (bf_idx) references t_bookmark_folder(bf_idx),
 	constraint fk_bookmark_folder_images_si_id foreign key (si_id) references t_store_info(si_id)
 ); 
 
-insert into t_bookmark_folder_images(bf_idx, si_id, bfi_img) values (1, 'AA925', '맛집 사진1.jpg');
-insert into t_bookmark_folder_images(bf_idx, si_id, bfi_img) values (1, 'AA867', '라벤더1.jpg');
-insert into t_bookmark_folder_images(bf_idx, si_id, bfi_img) values (2, 'AA867', '무늬 담쟁이3.jpg');
+delete from t_bookmark_folder_images;
+
+insert into t_bookmark_folder_images(bfi_idx, bf_idx, sb_idx ,si_id, bfi_img) values (1, 17, 29, 'AA925', '맛집 사진1.jpg');
+insert into t_bookmark_folder_images(bfi_idx, bf_idx, sb_idx ,si_id, bfi_img) values (2, 17, 30, 'AA867', '라벤더1.jpg');
+insert into t_bookmark_folder_images(bfi_idx, bf_idx, sb_idx ,si_id, bfi_img) values (3, 18, 31, 'BB220', '무늬 담쟁이3.jpg');
 
 select a.*, b.mi_id from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = 'test';
+
+select a.*, b.mi_id from t_bookmark_folder_images a, t_bookmark_folder b, t_store_bookmark c where a.bf_idx = b.bf_idx and a.si_id = c.si_id and a.bf_idx = 17;
+delete t_store_bookmark from t_store_bookmark join t_bookmark_folder_images a on t_store_bookmark.si_id = a.si_id join t_bookmark_folder b on a.bf_idx = b.bf_idx where a.bf_idx = 17;
 select * from t_bookmark_folder_images;
+
 
 update t_bookmark_folder_images set bf_idx = 2 where si_id = 'AA867';
 select a.*, b.mi_id, b.bf_title from t_bookmark_folder_images a, t_bookmark_folder b where a.bf_idx = b.bf_idx and mi_id = 'test';
- 
+
 
 -- 맛집게시판 테이블
 create table t_free_list (

@@ -48,4 +48,22 @@ public class MemberSvc {
 		List<BookmarkImageInfo> bookmarkImages = memberDao.getBookmarkImages(miid);
 		return bookmarkImages;
 	}
+
+	public int folderAdd(String miid, String txCont) {
+		int result = memberDao.folderAdd(miid, txCont);
+		
+		return result;
+	}
+
+	public int folderUpdate(String miid, int bfidx, String txCont) {
+		int result = memberDao.folderUpdate(miid, bfidx, txCont);
+		
+		return result;
+	}
+
+	public int folderDelete(String miid, int bfidx) {
+		int result = memberDao.folderDelete(miid, bfidx);
+		
+		return result;
+	}
 }

@@ -93,4 +93,34 @@ public class MemberDao {
 		});
 		return bookmarkImages;
 	}
+
+	public int folderAdd(String miid, String txCont) {
+		String sql = "insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values (?, ?, 0);";
+		
+		int result = jdbc.update(sql, miid, txCont);
+		
+		return result;
+	}
+
+	public int folderUpdate(String miid, int bfidx, String txCont) {
+		String sql = "update t_bookmark_folder set bf_title = ? where mi_id = ? and bf_idx = ?";
+		
+		int result = jdbc.update(sql, txCont, miid, bfidx);
+		
+		return result;
+	}
+
+	public int folderDelete(String miid, int bfidx) {
+		String sql = "delete t_store_bookmark from t_store_bookmark join t_bookmark_folder_images a "
+				+ "on t_store_bookmark.si_id = a.si_id join t_bookmark_folder b on a.bf_idx = b.bf_idx where a.bf_idx = " + bfidx;
+		int result = jdbc.update(sql);
+		
+		sql = "delete from t_bookmark_folder_images where bf_idx = " + bfidx;
+		result = jdbc.update(sql);
+		
+		sql = "delete from t_bookmark_folder where mi_id = '" + miid + "' and bf_idx = " + bfidx;
+		result = jdbc.update(sql);
+		
+		return result;
+	}
 }

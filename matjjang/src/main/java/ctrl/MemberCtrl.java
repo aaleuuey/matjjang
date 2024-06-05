@@ -106,8 +106,51 @@ public class MemberCtrl {
 		model.addAttribute("bkcnt", bkcnt);
 		model.addAttribute("rvcnt", rvcnt);
 		model.addAttribute("htcnt", htcnt);
+		model.addAttribute("miid", miid);
 		
 		return "member/mypage";
+	}
+	
+	@PostMapping("/folderAddProc")
+	@ResponseBody
+	public String folderAddProc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		String miid = request.getParameter("miid");
+		String txCont = request.getParameter("txCont");
+		
+		int result = memberSvc.folderAdd(miid, txCont);
+		
+		return result + "";
+	}
+	
+	@PostMapping("/folderUpdate")
+	@ResponseBody
+	public String folderUpdateProc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		String miid = request.getParameter("miid");
+		int bfidx = Integer.parseInt(request.getParameter("bfidx"));
+		String txCont = request.getParameter("txCont");
+		
+		System.out.println(request.getParameter("txCont"));
+		
+		int result = memberSvc.folderUpdate(miid, bfidx, txCont);
+		
+		return result + "";
+	}
+	
+	@PostMapping("/folderDelete")
+	@ResponseBody
+	public String folderDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		String miid = request.getParameter("miid");
+		int bfidx = Integer.parseInt(request.getParameter("bfidx"));
+		
+		int result = memberSvc.folderDelete(miid, bfidx);
+		
+		return result + "";
 	}
 
 }
