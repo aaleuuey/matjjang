@@ -96,6 +96,8 @@ public class MemberCtrl {
 		
 		List<BookmarkInfo> bookmarkView = memberSvc.getBookmarkView(miid);
 		List<BookmarkImageInfo> bookmarkImages = memberSvc.getBookmarkImages(miid);
+		List<StoreReplyList> replyList = memberSvc.getReplyList(miid);
+		List<HeartInfo> heartInfo = memberSvc.getHeartInfo(miid);
 		
 		int bkcnt = memberSvc.getBookMarkCount(miid);
 		int rvcnt = memberSvc.getReviewCount(miid);
@@ -103,6 +105,8 @@ public class MemberCtrl {
 		
 		model.addAttribute("bookmarkView", bookmarkView);
 		model.addAttribute("bookmarkImages", bookmarkImages);
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("heartInfo", heartInfo);
 		model.addAttribute("bkcnt", bkcnt);
 		model.addAttribute("rvcnt", rvcnt);
 		model.addAttribute("htcnt", htcnt);
@@ -152,5 +156,77 @@ public class MemberCtrl {
 		
 		return result + "";
 	}
+	
+	
+	@GetMapping("/info")
+	public String info(Model model, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		List<MemberInfo> memberInfo = memberSvc.getMemberInfo(loginInfo.getMi_id());
+		
+		MemberInfo mi = memberInfo.get(0);
+		
+		String mi_name = mi.getMi_name();
+		String mi_phone = mi.getMi_phone();
+		String mi_email = mi.getMi_email();
+		
+		model.addAttribute("mi_name", mi_name);
+		model.addAttribute("mi_phone", mi_phone);
+		model.addAttribute("mi_email", mi_email);
+		
+		return "member/info";
+	}
+	
+	@PostMapping("/infoChange")
+	public String infoChange(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		String mi_name = request.getParameter("mi_name");
+		String mi_email = request.getParameter("mi_email");
+		String mi_phone = request.getParameter("mi_phone");
+		
+		int result = memberSvc.getInfoChange(mi_name, mi_email, mi_phone, loginInfo.getMi_id());
+		
+		if (result >= 1) {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('변경 되었습니다.');");
+			out.println("history.back();");
+			out.println("</script>");
+			out.close();
+		}
+		
+		return "redirect:/member/info";
+	}
+	
+	
+	@GetMapping("/leave")
+	public String leave(Model model, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		return "member/leave";
+	}
+	
+	@GetMapping("/memberLeave")
+	public String memberOut(HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		String miid = loginInfo.getMi_id();
+		
+		int result = memberSvc.memberLeave(miid);
+		
+		if (result > 0) {
+			session.invalidate();
+		}
 
+		return "redirect:/";
+	}
 }

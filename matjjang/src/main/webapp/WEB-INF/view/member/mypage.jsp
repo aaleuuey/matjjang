@@ -9,7 +9,7 @@
 				<dt>이한나</dt>
 			</dl>
 		</div>
-		<a class="btn_profile_modify" href="/users/604940/private/info">프로필 수정</a>
+		<a class="btn_profile_modify" href="/matjjang/info">프로필 수정</a>
 	</div>
 	<div class="mp_conts">
 		<div class="mp_tab">
@@ -105,31 +105,84 @@
 			</div>
 		</div>
 		<div id="tab2" class="tab_content">
+			<div class="mp_review">
+				<div>
+					<ul>
+						<c:forEach items="${replyList}" var="replyList">
+						<li>
+							<div class="cont">
+								<div class="cnt">
+									<div class="score_story"><span><strong>${replyList.sr_star}</strong><a target="_blank" href="/matjjang/storeView?siid=${replyList.si_id}">${replyList.si_name}</a></span>
+										<div class="date">${replyList.sr_date}</div>
+										<p>${replyList.sr_content}</p>
+									</div>
+									<ul></ul>
+								</div>
+								<div class="photo">
+									<ul>
+										<c:if test="${not empty replyList.sr_img1}">
+										<li>
+											<a href="#layer_review_photo">
+												<img src="resources/img/storeReply/${replyList.sr_img1}" width="153" height="123">
+											</a>
+										</li>
+										</c:if>
+										<c:if test="${not empty replyList.sr_img2}">
+										<li>
+											<a href="#layer_review_photo">
+												<img src="resources/img/storeReply/${replyList.sr_img2}" width="153" height="123">
+											</a>
+										</li>
+										</c:if>
+										<c:if test="${not empty replyList.sr_img3}">
+										<li>
+											<a href="#layer_review_photo">
+												<img src="resources/img/storeReply/${replyList.sr_img3}" width="153" height="123">
+											</a>
+										</li>
+										</c:if>
+									</ul>
+								</div>
+								<div class="btn_like_reply">
+									<ul>
+										<li><a target="_blank" class="btn_like" href="/matjjang/storeView?siid=${replyList.si_id}">좋아요${replyList.sr_good}</a></li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						</c:forEach>
+					</ul>
+				</div>
+				<div class="layer_wrap" id="layer_review_photo">
+					<div class="bgModal"></div>
+				</div>
+			</div>
 		</div>
 		<div id="tab3" class="tab_content">
 			<div class="mp_like_place">
 				<div class="listTy1">
 					<ul>
+						<c:forEach items="${heartInfo}" var="heartInfo">
 						<li>
 							<div class="cont">
-								<a target="_self" href="/P/320351">
+								<a target="_blank" href="/matjjang/storeView?siid=${heartInfo.si_id}">
 									<span class="img">
-										<img src="https://img.siksinhot.com/place/1554870952814204.jpg?w=408&amp;h=328&amp;c=Y" width="408" height="328">
-										<strong class="ico_best"><img src="/static2/images/common/ico_best_2.png" alt="best"></strong>
+										<img src="/ad_matjjang/resources/img/store/${heartInfo.si_img1}" width="408" height="328">
 									</span>
 									<div class="cnt">
-										<em class="score">3.9</em>
+										<em class="score">${heartInfo.si_star}</em>
 										<div class="box_tit">
-											<strong class="store">삼성원조양곱창</strong>
+											<strong class="store">${heartInfo.si_name}</strong>
 											<div class="ico_right"></div>
 										</div>
 										<ul style="padding:0;">
-											<li>청담동</li>
+											<li>${heartInfo.si_addr1}</li>
 										</ul>
 									</div>
 								</a>
 							</div>
 						</li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>

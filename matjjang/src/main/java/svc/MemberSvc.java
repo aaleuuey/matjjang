@@ -5,7 +5,9 @@ import java.util.List;
 import dao.MemberDao;
 import vo.BookmarkImageInfo;
 import vo.BookmarkInfo;
+import vo.HeartInfo;
 import vo.MemberInfo;
+import vo.StoreReplyList;
 
 public class MemberSvc {
 	private MemberDao memberDao;
@@ -64,6 +66,35 @@ public class MemberSvc {
 	public int folderDelete(String miid, int bfidx) {
 		int result = memberDao.folderDelete(miid, bfidx);
 		
+		return result;
+	}
+
+	public List<StoreReplyList> getReplyList(String miid) {
+		List<StoreReplyList> replyList = memberDao.getReplyList(miid);
+		
+		return replyList;
+	}
+
+	public List<HeartInfo> getHeartInfo(String miid) {
+		List<HeartInfo> heartInfo = memberDao.getHeartInfo(miid);
+		
+		return heartInfo;
+	}
+
+	public List<MemberInfo> getMemberInfo(String miid) {
+		List<MemberInfo> memberInfo = memberDao.getMemberInfo(miid);
+		
+		return memberInfo;
+	}
+
+	public int getInfoChange(String mi_name, String mi_email, String mi_phone, String mi_id) {
+		int result = memberDao.getInfoChange(mi_name, mi_email, mi_phone, mi_id);
+		
+		return result;
+	}
+
+	public int memberLeave(String miid) {
+		int result = memberDao.memberLeave(miid);
 		return result;
 	}
 }

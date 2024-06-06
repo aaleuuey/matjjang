@@ -9,8 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import vo.BookmarkImageInfo;
 import vo.BookmarkInfo;
+import vo.HeartInfo;
 import vo.MemberInfo;
 import vo.StoreInfo;
+import vo.StoreReplyList;
 
 public class MemberDao {
 	private JdbcTemplate jdbc;
@@ -119,6 +121,96 @@ public class MemberDao {
 		result = jdbc.update(sql);
 		
 		sql = "delete from t_bookmark_folder where mi_id = '" + miid + "' and bf_idx = " + bfidx;
+		result = jdbc.update(sql);
+		
+		return result;
+	}
+
+	public List<StoreReplyList> getReplyList(String miid) {
+		String sql = "select a.*, b.si_name from t_store_reply a join t_store_info b on a.si_id = b.si_id where mi_id = '" + miid + "' and sr_isview = 'y'";
+
+		List<StoreReplyList> replyList = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
+			
+			StoreReplyList srl = new StoreReplyList();
+			srl.setSi_id(rs.getString("si_id"));
+			srl.setSi_name(rs.getString("si_name"));
+			srl.setSr_star(rs.getString("sr_star"));
+			srl.setSr_content(rs.getString("sr_content"));
+			srl.setSr_good(rs.getInt("sr_good"));
+			srl.setSr_img1(rs.getString("sr_img1"));
+			srl.setSr_img2(rs.getString("sr_img2"));
+			srl.setSr_img3(rs.getString("sr_img3"));
+			srl.setSr_date(rs.getString("sr_date"));
+			
+			return srl;
+		});
+		
+		return replyList;
+	}
+
+	public List<HeartInfo> getHeartInfo(String miid) {
+		String sql = "select a.*, b.si_name, b.si_img1, b.si_star, b.si_addr1, b.si_open, b.si_close from t_store_heart a join t_store_info b on a.si_id = b.si_id where mi_id = '" + miid + "'";
+		
+		List<HeartInfo> heartInfo = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
+			HeartInfo hi = new HeartInfo();
+			hi.setMi_id(rs.getString("mi_id"));
+			hi.setSi_id(rs.getString("si_id"));
+			hi.setSi_name(rs.getString("si_name"));
+			hi.setSi_img1(rs.getString("si_img1"));
+			hi.setSi_star(rs.getString("si_star"));
+			hi.setSi_addr1(rs.getString("si_addr1"));
+			hi.setSi_open(rs.getString("si_open"));
+			hi.setSi_close(rs.getString("si_close"));
+			
+			return hi;
+		});
+		
+		return heartInfo;
+	}
+
+	public List<MemberInfo> getMemberInfo(String miid) {
+		String sql = "select * from t_member_info where mi_id = '" + miid + "'";
+		
+		List<MemberInfo> memberInfo = jdbc.query(sql, (ResultSet rs, int rowNum) -> {
+			MemberInfo mi = new MemberInfo();
+			mi.setMi_name(rs.getString("mi_name"));
+			mi.setMi_phone(rs.getString("mi_phone"));
+			mi.setMi_email(rs.getString("mi_email"));
+			
+			return mi;
+		});
+		
+		return memberInfo;
+	}
+
+	public int getInfoChange(String mi_name, String mi_email, String mi_phone, String mi_id) {
+		String sql = "update t_member_info set mi_name = '" + mi_name + "', mi_email = '" + mi_email + "', mi_phone = '" + mi_phone + "' where mi_id = '" + mi_id + "'";
+		
+		int result = jdbc.update(sql);
+		
+		return result;
+	}
+
+	public int memberLeave(String miid) {
+		String sql = "update t_member_info set mi_status = 'c' where mi_id = '" + miid + "'";
+		int result = jdbc.update(sql);
+		
+		sql = "delete from t_store_heart where mi_id = '" + miid + "'";
+		result = jdbc.update(sql);
+		
+		sql = "delete from t_store_bookmark where mi_id = '" + miid + "'";
+		result = jdbc.update(sql);
+		
+		sql = "delete from t_store_reply_gnb where mi_id = '" + miid + "'";
+		result = jdbc.update(sql);
+		
+		sql = "delete from t_store_reply where mi_id = '" + miid + "'";
+		result = jdbc.update(sql);
+		
+		sql = "delete t_bookmark_folder_images from t_bookmark_folder_images join t_bookmark_folder on t_bookmark_folder_images.bf_idx = t_bookmark_folder.bf_idx where t_bookmark_folder.mi_id = '" + miid + "'";
+		result = jdbc.update(sql);
+		
+		sql = "delete from t_bookmark_folder where mi_id = '" + miid + "'";
 		result = jdbc.update(sql);
 		
 		return result;

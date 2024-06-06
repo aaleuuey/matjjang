@@ -2,7 +2,7 @@ package vo;
 
 public class StoreReplyList {
 	private int sr_idx, sr_good;
-	private String si_id, mi_id, mi_name, sr_ismem, sr_content, sr_star, sr_img1, sr_img2, sr_img3, sr_isview, sr_date;
+	private String si_id, si_name, mi_id, mi_name, sr_ismem, sr_content, sr_star, sr_img1, sr_img2, sr_img3, sr_isview, sr_date;
 	
 	public int getSr_idx() {
 		return sr_idx;
@@ -27,6 +27,12 @@ public class StoreReplyList {
 	}
 	public void setSi_id(String si_id) {
 		this.si_id = si_id;
+	}
+	public String getSi_name() {
+		return si_name;
+	}
+	public void setSi_name(String si_name) {
+		this.si_name = si_name;
 	}
 	public String getMi_id() {
 		return mi_id;

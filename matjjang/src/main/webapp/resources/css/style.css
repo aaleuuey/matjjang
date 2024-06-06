@@ -118,4 +118,60 @@ ul li {list-style:none; margin:0;}
 .mypage .layer_mp_folder_add .btn_box .btnTy10, .mypage .layer_mp_folder_add .btn_box .btnTy11, .mypage .layer_mp_folder_add .btn_box .btnTy12 {margin-right: 5px; display: inline-block; width: 78px; height: 38px; background: #fff; border: 1px solid #e1e1e1; line-height: 38px; text-align: center; color: #000; letter-spacing: -.50px; font-size: 0.88em; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;} 
 .mypage .layer_mp_folder_add .btn_box .btnTy11 {border: 1px solid #ff7400; background: #ff7400; color:#fff;}
 .mypage .layer_mp_folder_add .btn_box .btnTy12 {border: 1px solid #999; background: #999; color: #fff;} 
-.mypage .layer_wrap .btn_layer_close {position: absolute; right: 0; top: -46px; z-index: 6; width: 26px; height: 26px; background: url(/matjjang/resources/img/btn_layer_close.png) no-repeat 0 center;}  
+.mypage .layer_wrap .btn_layer_close {position: absolute; right: 0; top: -46px; z-index: 6; width: 26px; height: 26px; background: url(/matjjang/resources/img/btn_layer_close.png) no-repeat 0 center;}
+.mypage .mp_review ul {padding-left:0; padding-bottom:0;}
+.mypage .mp_review ul li {position: relative; border-bottom: 1px solid #d7d7d7; padding: 15px 5px 20px; overflow: hidden; font-size: inherit;}  
+.mypage .mp_review ul li .cont {position: relative; margin: 0;}
+.mypage .mp_review ul li .cont .score_story span {float: left; font-weight: 700; font-size: 1.15em; color: #000;}
+.mypage .mp_review ul li .cont .score_story span strong {color: #ff7400; padding-right: 3px;}
+.mypage .mp_review ul li .cont .score_story span a {text-decoration: underline; color:#222;}
+.mypage .mp_review ul li .cont .score_story .date {float: left; color: #999; padding-left: 11px; margin-top: 5px; margin-left: 11px; font-size:0.9em;}
+.mypage .mp_review ul li .cont .score_story p {clear: both; color: #444; font-size: 0.98em; word-break: break-all; padding: 16px 0 0; line-height: 21px; letter-spacing: -1px;}
+.mypage .mp_review ul li .cont .cnt ul {overflow: hidden; border-bottom: none; padding: 3px 0 0;}
+.mypage .mp_review ul li .cont .photo {position: relative; padding: 17px 0;}
+.mypage .mp_review ul li .cont .photo ul {overflow: hidden; padding: 0;}
+.mypage .mp_review ul li .cont .photo ul li {float: left; width: 151px; height: 123px; padding: 0; margin: 0 0 0 11px; overflow: hidden; position: relative;}
+.mypage .mp_review ul li .cont .photo ul li:first-child {margin-left:0;}
+.mypage .mp_review ul li .cont .photo ul li a {padding: 0; height: auto; line-height: 0; border: none; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;}
+.mypage .mp_review ul li .cont .photo ul li img {position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover;} 
+.mypage .mp_review ul li .cont .btn_like_reply ul {overflow: hidden; padding: 0; margin: 0;}
+.mypage .mp_review ul li .cont .btn_like_reply ul li {float: left; padding: 0 12px 0 0; margin: 0; border: none;} 
+.mypage .mp_review ul li .cont .btn_like_reply ul li .btn_like {padding-left: 16px; background: url(/matjjang/resources/img/bg_icon_good.png) no-repeat 0 center; background-size:18%; font-size:0.8em;}
+.mypage .mp_review ul li .cont .btn_like_reply ul li a {color: #999; display: inline-block; height: 16px; line-height: 16px;}
+
+.info .profile_tabs {background: #eee;}
+.info .profile_tabs ul {overflow: hidden; margin: 0 auto; width: 922px;}
+.info .profile_tabs .authcd_y li {float: left; width: 50%;}
+.info .profile_tabs ul li a {display: block; height: 50px; line-height: 50px; text-align: center; background: #e6e6e6; color: #000; font-size: 1.05em;}
+.info .profile_tabs ul .on a {background: #000; color: #ffd900; font-weight: 700;}
+.info .mp_profile_write {margin: 0 auto; width: 922px; overflow: hidden;}
+.info .mp_profile_write .write_info {padding: 80px 0 68px 111px; border-bottom: 1px solid #d7d7d7;}
+.info .mp_profile_write .write_info ul > li {position: relative; overflow: hidden; padding-top: 40px; padding-left: 29px;}
+.info .mp_profile_write .write_info ul li:first-child {padding-top:0;}
+.info .mp_profile_write .write_info ul li .tit {float: left; width: 94px; line-height: 38px; padding-right: 10px; color: #999; letter-spacing: -.25px; font-size: 1em;}
+.info .mp_profile_write .write_info ul li .cnt {margin-left: 94px; overflow: hidden; position: relative;}
+.info .mp_profile_write .write_info ul li .overflow {overflow: hidden; padding-left:0; padding-bottom: 15px;}
+.info .mp_profile_write .write_info ul li .overflow li {float: left; padding: 0;}
+.info .mp_profile_write .write_info ul li .overflow li .input01 {width:304px; border: 1px solid #d7d7d7; height: 38px; padding: 0 12px; position: relative; background: #fff;}
+.info .input01 input {width: 100%; height: 33px; border: 0 none; font-size: 0.85em; color: #999; background: #fff; outline:0; padding:0;}
+.info .input01 input::placeholder {color:#999; font-size:0.9em;} 
+.info .mp_profile_write .btn_box {text-align: center; padding-top: 50px;}
+.info .mp_profile_write .btn_box ul li {display:inline-block;}
+.info .btnTy14 {width: 120px; height: 54px; line-height: 54px; text-align: center; color: #fff; font-size: 1.15em; font-weight: 700; background: #999; letter-spacing: -.75px; display: inline-block; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
+.info .mp_profile_write .btn_box .btnTy15 {margin-left: 17px; width: 120px; height: 56px; line-height: 54px; text-align: center; color: #fff; border:0; font-size: 1.15em; font-weight: 700; background: #ffc107; letter-spacing: -.75px; display: inline-block; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
+
+.leave .profile_tabs {background: #eee;}
+.leave .profile_tabs ul {overflow: hidden; margin: 0 auto; width: 922px;}
+.leave .profile_tabs .authcd_y li {float: left; width: 50%;}
+.leave .profile_tabs ul li a {display: block; height: 50px; line-height: 50px; text-align: center; background: #e6e6e6; color: #000; font-size: 1.05em;}
+.leave .profile_tabs ul .on a {background: #000; color: #ffd900; font-weight: 700;}
+.leave .mp_profile_write {margin: 0 auto; width: 922px; overflow: hidden;} 
+.leave .mp_profile_write .mp_member_out {padding: 76px 0 77px 99px; border-bottom: 1px solid #d7d7d7;}
+.leave .mp_profile_write .mp_member_out p {font-size: 1.3em; font-weight: 700; letter-spacing: -.50px; padding-bottom: 40px;}
+.leave .mp_profile_write .mp_member_out ol li {font-size: 1.1em; font-weight: 700; letter-spacing: -.25px; padding-top: 34px;}
+.leave .mp_profile_write .mp_member_out ol li:first-child {padding-top:0;}
+.leave .mp_profile_write .mp_member_out ol li span {display: block; font-weight: 400; color: #999; font-size: .875em; padding-top: 9px; padding-left: 19px; line-height: 20px;}
+.leave .mp_profile_write .btn_box {text-align: center; padding-top: 50px;}
+.leave .mp_profile_write .btn_box ul li {display:inline-block;}
+.leave .btnTy14 {width: 120px; height: 54px; line-height: 54px; text-align: center; color: #fff; font-size: 1.15em; font-weight: 700; background: #999; letter-spacing: -.75px; display: inline-block; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}
+.leave .mp_profile_write .btn_box .btnTy15 {margin-left: 17px; width: 120px; height: 56px; line-height: 54px; text-align: center; color: #fff; border:0; font-size: 1.15em; font-weight: 700; background: #ffc107; letter-spacing: -.75px; display: inline-block; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;}

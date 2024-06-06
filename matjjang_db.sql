@@ -106,6 +106,8 @@ create table t_store_heart (
 
 select * from t_store_heart;
 
+select a.*, b.si_name, b.si_img1 from t_store_heart a join t_store_info b on a.si_id = b.si_id where mi_id = 'test';
+
 insert into t_store_heart (si_id, mi_id, sh_heart) values ('BB301', 'test', 'y');
 
 -- 음식점 즐겨찾기 테이블
@@ -120,12 +122,14 @@ create table t_store_bookmark (
 
 select * from t_store_bookmark;
 
+delete from t_store_bookmark;
 
 
 
--- 음식점 댓글 테이블
+
+-- 음식점 리뷰 테이블
 create table t_store_reply (
-	sr_idx int primary key auto_increment,	-- 댓글번호
+	sr_idx int primary key auto_increment,	-- 리뷰번호
 	si_id char(5) not null,					-- 음식점ID
 	mi_id varchar(20) not null,				-- 회원아이디
 	sr_ismem char(1) default 'y',			-- 회원여부
@@ -142,6 +146,8 @@ create table t_store_reply (
 );
 
 select * from t_store_reply; 
+
+select a.*, b.si_name from t_store_reply a join t_store_info b on a.si_id = b.si_id where mi_id = 'test';
 
 delete from t_store_reply; 	
 select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi_id = b.mi_id where a.sr_isview = 'y' and a.si_id = 'AA776' order by a.sr_idx desc;
@@ -178,6 +184,7 @@ select a.*, b.mi_id, b.mi_name from t_store_reply a join t_member_info b on a.mi
 
 select count(*) a, count(*) b, count(*) c from t_store_bookmark a, t_store_reply b, t_store_heart c where a.mi_id = b.mi_id and b.mi_id = c.mi_id and a.mi_id = 'test'; 
 select a.mi_id, a.pi_id, a.oc_date, a.oc_option, a.oc_cnt, a.oc_price, a.first_cnt, a.oc_idx, b.pi_img1, b.pi_name, b.pi_price, b.pi_dc, b.pi_stock from t_order_cart a, t_product_info b where a.pi_id = b.pi_id and a.mi_id = 'test1';
+
 select * from t_store_reply;
 
 select * from t_store_reply where sr_isview = 'y' and si_id = 'AA528' order by sr_idx desc limit 10, 5;
@@ -225,6 +232,8 @@ create table t_bookmark_folder_images (
 	constraint fk_bookmark_folder_images_si_id foreign key (si_id) references t_store_info(si_id)
 ); 
 
+drop table t_bookmark_folder_images;
+
 delete from t_bookmark_folder_images;
 
 insert into t_bookmark_folder_images(bfi_idx, bf_idx, sb_idx ,si_id, bfi_img) values (1, 17, 29, 'AA925', '맛집 사진1.jpg');
@@ -235,6 +244,9 @@ select a.*, b.mi_id from t_bookmark_folder_images a, t_bookmark_folder b where a
 
 select a.*, b.mi_id from t_bookmark_folder_images a, t_bookmark_folder b, t_store_bookmark c where a.bf_idx = b.bf_idx and a.si_id = c.si_id and a.bf_idx = 17;
 delete t_store_bookmark from t_store_bookmark join t_bookmark_folder_images a on t_store_bookmark.si_id = a.si_id join t_bookmark_folder b on a.bf_idx = b.bf_idx where a.bf_idx = 17;
+
+delete t_store_bookmark from t_store_bookmark join t_bookmark_folder_images a on t_store_bookmark.si_id = a.si_id join t_bookmark_folder b on a.bf_idx = b.bf_idx where a.bf_idx = 31;
+
 select * from t_bookmark_folder_images;
 
 
