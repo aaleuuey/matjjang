@@ -97,4 +97,10 @@ public class MemberSvc {
 		int result = memberDao.memberLeave(miid);
 		return result;
 	}
+
+	public MemberInfo getFindIdCheck(String mi_name, String mi_email) {
+		MemberInfo memberInfo = memberDao.getFindIdCheck(mi_name, mi_email);
+		
+		return memberInfo;
+	}
 }

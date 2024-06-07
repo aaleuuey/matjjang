@@ -36,10 +36,10 @@
 		<div class="mem_box">
 			<ul>
 				<li>
-					<a href="/login/findPassword">아이디 찾기</a>
+					<a href="/matjjang/findId">아이디 찾기</a>
 				</li>
 				<li>
-					<a href="/join/intro">비밀번호 찾기</a>
+					<a href="/matjjang/findPw">비밀번호 찾기</a>
 				</li>
 			</ul>
 		</div>

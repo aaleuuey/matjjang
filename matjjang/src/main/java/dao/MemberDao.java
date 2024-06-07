@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import vo.BookmarkImageInfo;
@@ -214,5 +215,20 @@ public class MemberDao {
 		result = jdbc.update(sql);
 		
 		return result;
+	}
+
+	public MemberInfo getFindIdCheck(String mi_name, String mi_email) {
+	    String sql = "select * from t_member_info where mi_name = ? and mi_email = ?";
+	    try {
+	    	
+	        return jdbc.queryForObject(sql, new Object[]{mi_name, mi_email}, (ResultSet rs, int rowNum) -> {
+	            MemberInfo mi = new MemberInfo();
+	            mi.setMi_id(rs.getString("mi_id"));
+	            return mi;
+	        });
+	        
+	    } catch (EmptyResultDataAccessException e) {
+	        return null;  // 결과가 없을 경우 null 반환
+	    }
 	}
 }

@@ -229,4 +229,29 @@ public class MemberCtrl {
 
 		return "redirect:/";
 	}
+	
+	@GetMapping("/findId")
+	public String findIdProc() {
+		return "member/findId";
+	}
+	
+	@PostMapping("/findIdCheck")
+	public String findIdCheck(Model model, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		String mi_name = request.getParameter("mi_name");
+		String mi_email = request.getParameter("mi_email");
+		
+		MemberInfo memberInfo = memberSvc.getFindIdCheck(mi_name, mi_email);
+		
+		model.addAttribute("memberInfo", memberInfo);
+		
+		
+		return "member/findIdResult";
+	}
+
+	@GetMapping("/findPw")
+	public String findPw() {
+		return "member/findPw";
+	}
 }
