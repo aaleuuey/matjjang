@@ -141,14 +141,14 @@ ul li {list-style:none; margin:0;}
 
 .info .profile_tabs {background: #eee;}
 .info .profile_tabs ul {overflow: hidden; margin: 0 auto; width: 922px;}
-.info .profile_tabs .authcd_y li {float: left; width: 50%;}
-.info .profile_tabs ul li a {display: block; height: 50px; line-height: 50px; text-align: center; background: #e6e6e6; color: #000; font-size: 1.05em;}
+.info .profile_tabs .authcd_y li {float: left; width: 33.3%;}
+.info .profile_tabs ul li a {display: block; height: 50px; line-height: 50px; text-align: center; background: #e6e6e6; color: #000; font-size: 1.05em; border:1px solid #eee;}
 .info .profile_tabs ul .on a {background: #000; color: #ffd900; font-weight: 700;}
 .info .mp_profile_write {margin: 0 auto; width: 922px; overflow: hidden;}
 .info .mp_profile_write .write_info {padding: 80px 0 68px 111px; border-bottom: 1px solid #d7d7d7;}
 .info .mp_profile_write .write_info ul > li {position: relative; overflow: hidden; padding-top: 40px; padding-left: 29px;}
 .info .mp_profile_write .write_info ul li:first-child {padding-top:0;}
-.info .mp_profile_write .write_info ul li .tit {float: left; width: 94px; line-height: 38px; padding-right: 10px; color: #999; letter-spacing: -.25px; font-size: 1em;}
+.info .mp_profile_write .write_info ul li .tit {float: left; width: 118px; line-height: 38px; padding-right: 10px; color: #999; letter-spacing: -.25px; font-size: 1em;}
 .info .mp_profile_write .write_info ul li .cnt {margin-left: 94px; overflow: hidden; position: relative;}
 .info .mp_profile_write .write_info ul li .overflow {overflow: hidden; padding-left:0; padding-bottom: 15px;}
 .info .mp_profile_write .write_info ul li .overflow li {float: left; padding: 0;}
@@ -162,8 +162,8 @@ ul li {list-style:none; margin:0;}
 
 .leave .profile_tabs {background: #eee;}
 .leave .profile_tabs ul {overflow: hidden; margin: 0 auto; width: 922px;}
-.leave .profile_tabs .authcd_y li {float: left; width: 50%;}
-.leave .profile_tabs ul li a {display: block; height: 50px; line-height: 50px; text-align: center; background: #e6e6e6; color: #000; font-size: 1.05em;}
+.leave .profile_tabs .authcd_y li {float: left; width: 33.3%;}
+.leave .profile_tabs ul li a {display: block; height: 50px; line-height: 50px; text-align: center; background: #e6e6e6; color: #000; font-size: 1.05em; border:1px solid #eee;}
 .leave .profile_tabs ul .on a {background: #000; color: #ffd900; font-weight: 700;}
 .leave .mp_profile_write {margin: 0 auto; width: 922px; overflow: hidden;} 
 .leave .mp_profile_write .mp_member_out {padding: 76px 0 77px 99px; border-bottom: 1px solid #d7d7d7;}

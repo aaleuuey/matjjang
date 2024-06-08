@@ -7,6 +7,7 @@
 	<div class="profile_tabs">
 		<ul class="authcd_y">
 			<li class="on"><a href="/matjjang/info">회원정보변경</a></li>
+			<li class="false"><a href="/matjjang/changePw">비밀번호변경</a></li>
 			<li class="false"><a href="/matjjang/leave">회원탈퇴</a></li>
 		</ul>
 	</div>

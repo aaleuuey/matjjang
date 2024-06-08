@@ -30,9 +30,15 @@ create table t_member_info (
 	mi_lastlogin datetime				-- 최종 로그인
 );
 
-drop table t_member_info;
-
 select * from t_member_info;
+
+select mi_pw from t_member_info where mi_pw = ?;
+
+select * from t_member_info where mi_id = 'test';
+
+update t_member_info set mi_status = 'a' where mi_id = 'test';
+
+select * from t_member_info where mi_name = '이한나' and mi_email = 'lhn@naver.com';
 
 insert into t_member_info values ('test', '1234', '이한나', '010-9182-6545', '2001-03-02', '여', 'lhn@naver.com', 'a', now(), null);
 insert into t_member_info values ('test1', '1234', '홍길동', '010-1234-6578', '1998-10-20', '남', 'hgd@naver.com', 'a', now(), null);
@@ -92,7 +98,7 @@ values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', 1.5, '월~금', '
 
 select * from t_store_info;
 
-update t_store_info set si_review = 10 where si_id = 'BB301';
+update t_store_info set si_review = 0;
 
 -- 음식점 좋아요 테이블
 create table t_store_heart (
@@ -106,7 +112,9 @@ create table t_store_heart (
 
 select * from t_store_heart;
 
-select a.*, b.si_name, b.si_img1 from t_store_heart a join t_store_info b on a.si_id = b.si_id where mi_id = 'test';
+delete from t_store_heart where si_id = '';
+
+select a.*, b.si_name, b.si_img1, b.si_star, b.si_addr1, b.si_open, b.si_close from t_store_heart a join t_store_info b on a.si_id = b.si_id where mi_id = 'test'; 
 
 insert into t_store_heart (si_id, mi_id, sh_heart) values ('BB301', 'test', 'y');
 
@@ -121,10 +129,6 @@ create table t_store_bookmark (
 );
 
 select * from t_store_bookmark;
-
-delete from t_store_bookmark;
-
-
 
 
 -- 음식점 리뷰 테이블
@@ -201,8 +205,6 @@ create table t_bookmark_folder (
     constraint fk_bookmark_folder_mi_id foreign key (mi_id) references t_member_info(mi_id)
 ); 
 
-delete from t_bookmark_folder;
-
 select * from t_bookmark_folder;
 
 delete from t_bookmark_folder where mi_id = 'test' and bf_idx = 8;
@@ -215,7 +217,7 @@ update t_bookmark_folder set bf_cnt = 1 where mi_id = 'test' and bf_idx = (selec
 
 select * from t_bookmark_folder where si_id is null;
 
-update t_bookmark_folder set bf_cnt = 0 where mi_id = 'test' and bf_idx = 15;
+update t_bookmark_folder set bf_cnt = 0 where mi_id = 'test' and bf_idx = 34;
 
 insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 폴더', 0);
 insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 폴더2', 0);
@@ -232,9 +234,7 @@ create table t_bookmark_folder_images (
 	constraint fk_bookmark_folder_images_si_id foreign key (si_id) references t_store_info(si_id)
 ); 
 
-drop table t_bookmark_folder_images;
-
-delete from t_bookmark_folder_images;
+select * from t_bookmark_folder_images;
 
 insert into t_bookmark_folder_images(bfi_idx, bf_idx, sb_idx ,si_id, bfi_img) values (1, 17, 29, 'AA925', '맛집 사진1.jpg');
 insert into t_bookmark_folder_images(bfi_idx, bf_idx, sb_idx ,si_id, bfi_img) values (2, 17, 30, 'AA867', '라벤더1.jpg');
@@ -245,7 +245,9 @@ select a.*, b.mi_id from t_bookmark_folder_images a, t_bookmark_folder b where a
 select a.*, b.mi_id from t_bookmark_folder_images a, t_bookmark_folder b, t_store_bookmark c where a.bf_idx = b.bf_idx and a.si_id = c.si_id and a.bf_idx = 17;
 delete t_store_bookmark from t_store_bookmark join t_bookmark_folder_images a on t_store_bookmark.si_id = a.si_id join t_bookmark_folder b on a.bf_idx = b.bf_idx where a.bf_idx = 17;
 
-delete t_store_bookmark from t_store_bookmark join t_bookmark_folder_images a on t_store_bookmark.si_id = a.si_id join t_bookmark_folder b on a.bf_idx = b.bf_idx where a.bf_idx = 31;
+delete t_bookmark_folder_images from t_bookmark_folder_images join t_store_bookmark a on t_store_bookmark.si_id = a.si_id join t_store_bookmark b on a.bf_idx = b.bf_idx where b.mi_id = 'test';
+
+delete t_bookmark_folder_images from t_bookmark_folder_images join t_bookmark_folder on t_bookmark_folder_images.bf_idx = t_bookmark_folder.bf_idx where t_bookmark_folder.mi_id = 'test';
 
 select * from t_bookmark_folder_images;
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -220,15 +221,54 @@ public class MemberDao {
 	public MemberInfo getFindIdCheck(String mi_name, String mi_email) {
 	    String sql = "select * from t_member_info where mi_name = ? and mi_email = ?";
 	    try {
-	    	
 	        return jdbc.queryForObject(sql, new Object[]{mi_name, mi_email}, (ResultSet rs, int rowNum) -> {
 	            MemberInfo mi = new MemberInfo();
 	            mi.setMi_id(rs.getString("mi_id"));
 	            return mi;
-	        });
-	        
+	        });    
 	    } catch (EmptyResultDataAccessException e) {
 	        return null;  // 결과가 없을 경우 null 반환
+	    }
+	}
+
+	public int PasswordChange(String td_pw, String miid, String mi_pw) {
+		
+	    String sql = "select mi_pw from t_member_info where mi_id = ?";
+	    String currentPw = jdbc.queryForObject(sql, new Object[]{miid}, String.class);
+
+	    // 현재 비밀번호가 일치하는지 확인
+	    if (currentPw.equals(td_pw)) {
+	        sql = "update t_member_info set mi_pw = ? where mi_id = ?";
+	        int result = jdbc.update(sql, mi_pw, miid);
+	        return result;
+	    } else {
+	        // 비밀번호가 일치하지 않으면 0을 반환
+	        return 0;
+	    }
+	}
+
+	public int getFindPwCheck(String mi_id, String mi_email) {
+		String sql = "select count(*) from t_member_info where mi_id = '" + mi_id + "' and mi_email = '" + mi_email + "' ";
+		
+		int result = jdbc.queryForObject(sql, Integer.class);
+		
+		return result;
+	}
+
+	public MemberInfo PwUpdate(String mi_id, String mi_email) {
+	    String sql = "update t_member_info set mi_pw = ? where mi_id = ? and mi_email = ?";
+	    String newPwd = RandomStringUtils.randomAlphanumeric(10);
+	    
+	    int result = jdbc.update(sql, newPwd, mi_id, mi_email);
+	    
+	    if (result > 0) {
+	        MemberInfo memberInfo = new MemberInfo();
+	        
+	        memberInfo.setMi_pw(newPwd); // 새로운 비밀번호 설정
+	        
+	        return memberInfo;
+	    } else {
+	        return null; // 업데이트 실패 시 null 반환
 	    }
 	}
 }

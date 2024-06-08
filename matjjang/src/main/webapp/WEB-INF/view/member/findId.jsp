@@ -12,17 +12,17 @@
 	</div>
 </header>
 <div class="findId">
-	<form name="frmLogin" action="findIdCheck" method="post" onsubmit="return chkVal1(this);">
+	<form name="frmLogin" action="findIdCheck" method="post">
 		<h1 class="h3 mb-5 fw-bold">아이디 찾기</h1>
 		<div class="input01">
 			<div>
-				<input type="text" name="mi_name" value="" placeholder="이름을 입력해주세요.">
+				<input type="text" name="mi_name" value="" placeholder="이름을 입력해주세요." required />
 			</div>
 		</div>
 		
 		<div class="input01">
 			<div>
-				<input type="text" name="mi_email" value="" placeholder="이메일을 입력해주세요.">
+				<input type="text" name="mi_email" value="" placeholder="이메일을 입력해주세요." required />
 			</div>
 		</div>
 		<button class="btn btn-warning w-100 py-2 mb-2" type="submit">아이디 찾기</button>
@@ -38,18 +38,3 @@
 		</div>
 	</form>
 </div>
-<script>
-function chkVal1(form){
-	if (form.mi_name.value == "") {
-		alert("이름을 입력해주세요.");
-		form.mi_name.focus();
-		return false;
-	}
-	
-	if (form.mi_email.value == "") {
-		alert("이메일을 입력해주세요.");
-		form.mi_email.focus();
-		return false;
-	}
-}
-</script>

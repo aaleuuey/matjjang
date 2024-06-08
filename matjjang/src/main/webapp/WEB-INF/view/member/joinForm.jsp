@@ -95,24 +95,6 @@
 					<span class="emailchk"></span>
 				</div>
 			</div>
-		
-		<!-- <div class="mb-3">
-				<label for="address" class="mb-2">우편번호
-					<span class="text-muted">
-						<input id="addrFind" type="button" value="찾기" onclick="sample4_execDaumPostcode()" style="border-radius:4px; border:1.5px solid #ced4da;" /><br /><span id="guide" style="color:#999;display:none; position:absolute; top:-500px; left:-500px;"></span>
-					</span>
-				</label> 
-				<input type="text" class="form-control" id="sample4_postcode" placeholder="찾기를 눌러 주소를 입력하세요" required>
-			</div>
-
-			<div class="mb-3">
-				<label for="address2" class="mb-2">주소</label>
-				<input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="display:none;">
-				<input type="text" id="sample4_extraAddress" placeholder="참고항목" style="display:none;">
-				<input type="text" class="form-control mb-2" id="sample4_roadAddress" placeholder="주소를 입력해주세요." required>
-				<input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소를 입력해주세요." required>
-			</div> -->
-	
 			<button class="btn btn-warning py-2 mb-3" type="submit" style="position: relative; width: 454px; margin-left: -12px;">가입 완료</button>
 		</div>
 	</div>

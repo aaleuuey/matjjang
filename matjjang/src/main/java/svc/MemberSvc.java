@@ -103,4 +103,22 @@ public class MemberSvc {
 		
 		return memberInfo;
 	}
+
+	public int PasswordChange(String td_pw, String miid, String mi_pw) {
+		int result = memberDao.PasswordChange(td_pw, miid, mi_pw);
+		
+		return result;
+	}
+
+	public int getFindPwCheck(String mi_id, String mi_email) {
+		int result  = memberDao.getFindPwCheck(mi_id, mi_email);
+		
+		return result;
+	}
+
+	public MemberInfo PwUpdate(String mi_id, String mi_email) {
+		MemberInfo memberInfo = memberDao.PwUpdate(mi_id, mi_email);
+		
+		return memberInfo;
+	}
 }

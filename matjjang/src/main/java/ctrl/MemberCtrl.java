@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import svc.*;
 import vo.*;
@@ -206,6 +207,46 @@ public class MemberCtrl {
 		return "redirect:/member/info";
 	}
 	
+	@GetMapping("/changePw")
+	public String changePw(Model model, HttpServletRequest request) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		return "member/changePw";
+	}
+	
+	@PostMapping("/pwChg")
+	public String pwChg(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		HttpSession session = request.getSession();
+		MemberInfo loginInfo = (MemberInfo)session.getAttribute("loginInfo");
+		
+		String miid = loginInfo.getMi_id();
+	    String td_pw = request.getParameter("td_pw");	    
+		String mi_pw = request.getParameter("mi_pw");
+		
+		int result = memberSvc.PasswordChange(td_pw, miid, mi_pw);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (result > 0) {
+			session.invalidate();
+			out.println("<script>");
+			out.println("alert('변경 되었습니다. 다시 로그인 해주세요.');");
+			out.println("location.href='login';"); 
+			out.println("</script>");
+		} else {
+	        out.println("<script>");
+	        out.println("alert('현재 비밀번호가 일치하지 않습니다. 다시 시도해주세요.');");
+	        out.println("location.href='changePw';");
+	        out.println("</script>");
+	    }	
+		
+		out.close();
+		
+		return "redirect:/login";
+	}
 	
 	@GetMapping("/leave")
 	public String leave(Model model, HttpServletRequest request) throws Exception {
@@ -253,5 +294,37 @@ public class MemberCtrl {
 	@GetMapping("/findPw")
 	public String findPw() {
 		return "member/findPw";
+	}
+	
+	@PostMapping("/findPwCheck")
+	public String findPwCheck(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		String mi_id = request.getParameter("mi_id");
+		String mi_email = request.getParameter("mi_email");
+		
+		int result  = memberSvc.getFindPwCheck(mi_id, mi_email);
+		
+		if (result == 0) {
+			out.println("<script>");
+			out.println("alert('기입된 정보가 잘못되었습니다. 다시 입력해주세요.');");
+			out.println("location.href='findPw';"); 
+			out.println("</script>");
+			out.close();
+			
+			return "member/findPw";
+			
+		} else {
+			
+			MemberInfo memberInfo = memberSvc.PwUpdate(mi_id, mi_email);
+			
+			model.addAttribute("memberInfo", memberInfo);
+			
+			return "member/findPwResult";
+		}
+		
 	}
 }
