@@ -228,7 +228,7 @@ public class StoreDao {
 		String sql = "update t_store_info set si_review = si_review - 1 where si_review > 0 and si_id = '" + siid + "' ";
 		int result = jdbc.update(sql);
 		
-		sql = "update t_store_reply set sr_isview = 'n' where mi_id = '" + mi_id + "' and sr_idx = " + sridx;
+		sql = "delete from t_store_reply where mi_id = '" + mi_id + "' and sr_idx = " + sridx;
 		result = jdbc.update(sql);
 		
 		return result;

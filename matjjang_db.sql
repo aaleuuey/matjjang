@@ -32,16 +32,20 @@ create table t_member_info (
 
 select * from t_member_info;
 
+select count(*) from t_member_info where mi_id = 'test' and mi_email = 'lhn@naver.com';
+
 select mi_pw from t_member_info where mi_pw = ?;
 
 select * from t_member_info where mi_id = 'test';
+
+update t_member_info set mi_pw = '1234' where mi_id = 'test' and mi_email = 'lhn@naver.com';
 
 update t_member_info set mi_status = 'a' where mi_id = 'test';
 
 select * from t_member_info where mi_name = '이한나' and mi_email = 'lhn@naver.com';
 
-insert into t_member_info values ('test', '1234', '이한나', '010-9182-6545', '2001-03-02', '여', 'lhn@naver.com', 'a', now(), null);
-insert into t_member_info values ('test1', '1234', '홍길동', '010-1234-6578', '1998-10-20', '남', 'hgd@naver.com', 'a', now(), null);
+insert into t_member_info values ('test', '1234', '이한나', '010-1111-2222', '2001-03-02', '여', 'lhn@naver.com', 'a', now(), null);
+insert into t_member_info values ('test', '1234', '테스터', '010-1234-6578', '1998-10-20', '남', 'test@naver.com', 'a', now(), null);
 
 insert into t_member_info values ('', '', '', '', '', '', '', 'a', now(), null);
 
@@ -97,6 +101,12 @@ insert into t_store_info(si_id, sc_id, si_name, si_img1, si_img2, si_img3, si_st
 values ('AA106', 'AA', 'OO음식점', 'AAbb10101.jpg', '', '', 1.5, '월~금', '9:00', '21:00', '주차/발렛', '서울특별시 강남구 도산대로101길 6', '서울특별시 강남구 청담동 129-10', 37.3595704, 127.105399, '01012345678', '안녕하세요 OO음식점 입니다.', 0, 0, 'y', 1, now(), 0);
 
 select * from t_store_info;
+
+select count(*) from t_store_reply where mi_id = 'test';
+
+update t_store_info set si_review = 1 where si_id = 'AA098';
+
+delete from t_store_info;
 
 update t_store_info set si_review = 0;
 
@@ -224,6 +234,7 @@ insert into t_bookmark_folder(mi_id, bf_title, bf_cnt) values ('test', '맛집 �
 insert into t_bookmark_folder(si_id, mi_id, bf_title, bf_cnt) values ('', 'test', '맛집 폴더3', 0);
 
 -- 나눈 이유 즐겨찾기 폴더 따로 마이페이지에서 for문 돌리고 그 안에서 이미지를 다시 for문 돌려야 하기 때문
+
 
 create table t_bookmark_folder_images (
 	bfi_idx int primary key auto_increment,	-- 폴더 이미지 번호

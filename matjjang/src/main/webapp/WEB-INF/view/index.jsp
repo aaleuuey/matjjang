@@ -13,21 +13,13 @@
 		    <div class="carousel-item active">
 				<div class="imgbox"><img src="resources/img/matj-banner.jpg"></div>
 				<div class="container">
-					<div class="carousel-caption text-start">
-					<h1>Another example headline.</h1>
-						<p>Some representative placeholder content for the second slide of the carousel.</p>
-						<p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-					</div>
+					<div class="carousel-caption text-start"></div>
 				</div>
 		    </div>
 		    <div class="carousel-item">
 		     	<div class="imgbox"><img src="resources/img/matj-banner02.jpg"></div>
 				<div class="container">
-					<div class="carousel-caption">
-						<h1>Another example headline.</h1>
-						<p>Some representative placeholder content for the second slide of the carousel.</p>
-						<p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-					</div>
+					<div class="carousel-caption"></div>
 				</div>
 		    </div>
 		    <div class="carousel-item">

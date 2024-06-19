@@ -37,7 +37,7 @@ public class MemberDao {
 				"', '" + mi.getMi_birth() + "', '" + mi.getMi_gender() + "', '" + mi.getMi_email() + "', 'a', now(), null)";
 		int result = jdbc.update(sql);
 		
-		sql = "insert into t_bookmark_folder(si_id, mi_id, bf_title) values (null, '" + mi.getMi_id() + "', '¸ÀÁý Æú´õ')"; 
+		sql = "insert into t_bookmark_folder(mi_id, bf_title) values ('" + mi.getMi_id() + "', '¸ÀÁý Æú´õ')"; 
 		result = jdbc.update(sql);
 		
 		return result;

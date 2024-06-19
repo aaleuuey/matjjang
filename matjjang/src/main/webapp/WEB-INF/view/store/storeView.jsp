@@ -282,7 +282,7 @@
 			</div>
 		</div>
 		</c:forEach>
-		<a href="javascript:setReview();" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a>
+		<!-- <a href="javascript:setReview();" class="more_list" data-reactid="202"><span data-reactid="203">리뷰 더보기 +</span></a> -->
 	</div>
 
 </section>
@@ -343,7 +343,7 @@ $(document).ready(function() {
      }
 });
 
-//페이지 로드 시 더보기 버튼을 초기화
+/* //페이지 로드 시 더보기 버튼을 초기화
 $(document).ready(function() {
 	
     // 서버에서 가져온 총 리뷰 개수를 전역 변수로 설정
@@ -372,7 +372,7 @@ $(document).ready(function() {
     // 페이지 로드 시 초기화 함수 호출
     toggleMoreButton();
 });
-
+ */
 
 // 리뷰 더보기 클릭 시
 function setReview() {

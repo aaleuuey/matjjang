@@ -36,7 +36,7 @@ public class StoreCtrl {
 	public String storeList(Model model, HttpServletRequest request) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		
-		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 5, bsize = 5;
+		int cpage = 1, pcnt = 0, spage = 0, rcnt = 0, psize = 6, bsize = 5;
 		// 페이지번호,  페이지 크기,  블록크기,  레코드(게시글),  페이지개수 등을 저장할 변수
 		
 		if (request.getParameter("cpage") != null)

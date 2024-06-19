@@ -20,7 +20,8 @@
 	</ul>
 
 	<div class="col-md-3 text-end">
-		<a href="/matjjang/login" class="btn btn-outline-light me-2">로그인</a>
-		<a href="/matjjang/joinForm" class="btn btn-outline-light">회원가입</a>
+		<span style="color:#fff;"><strong style="color:#ff7400;">관리자</strong>님 안녕하세요!</span>
+		<!-- <a href="/matjjang/login" class="btn btn-outline-light me-2">로그인</a>
+		<a href="/matjjang/joinForm" class="btn btn-outline-light">회원가입</a> -->
 	</div>
 </header>
